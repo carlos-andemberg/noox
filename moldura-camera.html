@@ -71,7 +71,7 @@
      ?peixes=0                 sem os peixinhos cruzando
      ?falas=0                  sem os balõezinhos
      ?falas=Oi,Tudo bem?       troca as falas (separe com vírgula)
-     ?zoom                     só na prévia: mostra a moldura de pertinho
+     ?zoom                     só na prévia da tela do LoL: mostra a moldura de pertinho
 
    Abrindo no navegador aparece um fundo de exemplo, com o HUD do
    LoL e o overlay dele de mentirinha no lugar (clique em qualquer
@@ -108,7 +108,7 @@ const CONFIG = {
 
   nautilus: {                    // Titã das Profundezas: aço naval, bronze e o brilho verde-água
     falas: ["Soltem as âncoras!", "Ninguém escapa das profundezas", "O mar guarda os seus segredos", "Peso morto no convés!",
-            "As profundezas chamam...", "Afundem com o navio!", "Glub glub...", "Cuidado onde pisa, invocador"],
+            "As profundezas chamam...", "Afundem com o navio!", "Glub glub...", "Cuidado onde você pisa..."],
     falaEvento: "Âncora neles!",  // o que o caranguejo fala quando a âncora estoura
     cores: {
       metal: "#53687a", metalClaro: "#8aa3b5", metalEscuro: "#33434f",
@@ -750,7 +750,8 @@ const CONFIG = {
         d += '<circle cx="' + f(px) + '" cy="' + f(py) + '" r="' + f(r) + '" fill="url(#gPer)" ' + ct(1 * s) + '/>' +
           '<circle cx="' + f(px - r * .3) + '" cy="' + f(py - r * .35) + '" r="' + f(r * .3) + '" fill="#fff" opacity=".85"/>';
       }
-      if (tipo === 'b') d += '<g transform="translate(' + f(x - .4 * s) + ' ' + f(y + n * passo + 4 * s) + ') rotate(16) scale(' + f(s * .9) + ')">' +
+      const fx = tipo === 'd' ? x + n * passo + 4 * s : x - .4 * s, fy = tipo === 'd' ? y - .4 * s : y + n * passo + 4 * s;
+      d += '<g transform="translate(' + f(fx) + ' ' + f(fy) + ') rotate(16) scale(' + f(s * .9) + ')">' +
         '<path d="' + dEstrela(0, 0, 9) + '" fill="url(#gEstMar)" ' + ct(1.2) + '/>' +
         '<circle cx="-1.6" cy="-1.2" r=".8" fill="#fff" opacity=".8"/><circle cx="2" cy="1.6" r=".6" fill="#fff" opacity=".6"/></g>';
       return '<g class="cauda-' + tipo + '">' + d + '</g>';
@@ -932,7 +933,7 @@ const CONFIG = {
       sombraPlaca: COR.aguaEscura,
       balaoTrim: COR.aguaClara, balaoTexto: '#0e5062',
       emblemaS: .95, aroS: .82, mascS: .92, conchaS: 1,
-      BON_VB: [-46, -100, 92, 106], TAM_BON: 1.15, G: [-24, -86],       // o carimbo da Nami e a ponta do cetro
+      BON_VB: [-46, -100, 92, 112], TAM_BON: 1.15, G: [-24, -86],       // o carimbo da Nami (o rabão desce até y≈11) e a ponta do cetro
       PEIXE_VB: [-17, -10, 36, 20], TAM_PEIXE: .72,
       CORES_PEIXE: [['#ffffff', '#ff9a4e', '#ff7a3c'], ['#fff4e8', '#ff8438', '#e05a1e'], ['#ffffff', '#ffb36b', '#f2a03c'], ['#fff', '#e8604a', '#ff9a4e']],
     };
@@ -1012,11 +1013,15 @@ const CONFIG = {
         medidor.font = fs + 'px ' + FAMILIA;
         let m = medidor.measureText(NOME), tw = m.width;
         const TH = Math.max(fs * 1.62, 28 * k), nV = TH * .42, maxL = fim - topo - 2 * pad - nV;
-        if (tw > maxL) { fs *= maxL / tw; medidor.font = fs + 'px ' + FAMILIA; m = medidor.measureText(NOME); tw = m.width; }
-        placa = { modo: 'deitado', TH, nV, fs, pad, asc: m.actualBoundingBoxAscent || fs * .7, desc: m.actualBoundingBoxDescent || 0, y1: topo + tw + 2 * pad + nV };
+        if (maxL >= 8 * k) {                            // câmera baixa demais até pro nome deitado: fica sem placa
+          if (tw > maxL) { fs = Math.max(4 * k, fs * maxL / tw); medidor.font = fs + 'px ' + FAMILIA; m = medidor.measureText(NOME); tw = m.width; }
+          placa = { modo: 'deitado', TH, nV, fs, pad, asc: m.actualBoundingBoxAscent || fs * .7, desc: m.actualBoundingBoxDescent || 0, y1: topo + Math.min(tw, maxL) + 2 * pad + nV };
+        }
       }
-      Object.assign(placa, { cx: xl, x0: xl - placa.TH / 2, x1: xl + placa.TH / 2, y0: topo });
-      placa.cy = (placa.y0 + placa.y1 - placa.nV) / 2;
+      if (placa) {
+        Object.assign(placa, { cx: xl, x0: xl - placa.TH / 2, x1: xl + placa.TH / 2, y0: topo });
+        placa.cy = (placa.y0 + placa.y1 - placa.nV) / 2;
+      }
     }
 
     // ---- o mascote fica do lado de fora, perto do chão (o koi flutua; no solto, em cima da borda);
@@ -1024,7 +1029,7 @@ const CONFIG = {
     const mascP = !MASCOTE ? null
       : SOLTA ? { x: X + W * .3, y: NAUT ? Y + 1.4 * k : Y - 6 * k }
       : { x: X + 120 * k, y: NAUT ? Y + 1.4 * k : Y - 8 * k };       // em cima da borda da câmera (o chão é o painel de itens do LoL)
-    bonP = SOLTA ? { x: X + W * .66, y: Y + 1.2 * k } : { x: Math.max(RX + 70 * k, X - 96 * k), y: Y - 2 * k, plat: true };
+    bonP = SOLTA ? { x: X + W * .66, y: Y + 1.2 * k, plat: true } : { x: Math.max(RX + 70 * k, X - 96 * k), y: Y - 2 * k, plat: true };
 
     // ---- o evento: sai voando pra cima-esquerda e estoura dentro da área desenhada ----
     const sBon = TAM_BON * k;
@@ -1392,7 +1397,7 @@ const CONFIG = {
     }
     brilhoPlaca();
     onda();
-    if (masc) falar(T.falaEvento, 2.4);
+    if (masc && FALAS.length) falar(T.falaEvento, 2.4);   // ?falas=0 silencia até a fala do evento
   }
 
   // ================================================================
@@ -1529,6 +1534,7 @@ const CONFIG = {
       } else if (p.tipo === 'chuva') {                  // gotinha comprida caindo
         p.x += p.vx * dt; p.y += p.vy * dt;
         a *= pertoCam(p.x, p.y, 30 * k) * Math.min(1, u * 6) * naFonte(p.x, p.y, 36);
+        if (!SOLTA) a *= Math.max(0, Math.min(1, (SH * .885 + 14 * k - p.y) / (26 * k)));   // some antes do HUD do LoL
         if (a <= 0) continue;
         const L = 26 * k, n = Math.hypot(p.vx, p.vy), ux = p.vx / n, uy = p.vy / n, g = ctx.createLinearGradient(p.x - ux * L, p.y - uy * L, p.x, p.y);
         g.addColorStop(0, 'rgba(140,240,222,0)'); g.addColorStop(.7, 'rgba(170,246,232,.85)'); g.addColorStop(1, '#fff');
@@ -1654,6 +1660,7 @@ const CONFIG = {
     if (t >= proxFaisca && flores.length) {            // brilhinho de vez em quando na placa, no emblema, no mascote ou nas conchas
       const fl = escolhe(flores);
       faisca(fl.x + rnd(-.8, .8) * fl.r, fl.y + rnd(-.8, .8) * fl.r, rnd(4, 6.5) * k, rnd(.5, .8), escolhe(brilhos));
+      if (masc && Math.random() < .3) bolhaSolta(masc.x - (NAUT ? 0 : 15 * masc.s), masc.y - (NAUT ? 12 : 18) * masc.s);   // o mascote solta bolhinhas
       proxFaisca = t + rnd(1, 2.4);
     }
     if (PEIXES && t >= proxPeixe) {                    // um peixinho cruza a área nadando

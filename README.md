@@ -15,7 +15,7 @@ Moldura animada do fundo do mar pra câmera do [Nooxblad3](https://www.twitch.tv
 
 Borda de **aço naval** com filete de bronze, rebites no miolo e elos de corrente verde-água por dentro. No canto de cima-esquerdo fica uma **escotilha de bronze** com o vidro verde-água respirando luz, na frente de um **timão** que gira devagar (com uma rosa-dos-ventos fininha girando ao contrário). Da escotilha desce a **placa de metal rebitada** com o nome, uma letra embaixo da outra, em [Lilita One](https://fonts.google.com/specimen/Lilita+One), com o corte em V na ponta. A **corrente da âncora** fica deitada na borda de cima.
 
-Um **caranguejinho** fica sentado em cima da borda da câmera: pisca os olhinhos de talinho, mexe as garras e de vez em quando solta um **balãozinho**: Soltem as âncoras!, Ninguém escapa das profundezas, O mar guarda os seus segredos, Peso morto no convés!, As profundezas chamam..., Afundem com o navio!, Glub glub..., Cuidado onde pisa, invocador. **Bolhas** sobem devagar, balançando, e às vezes um **peixinho** cruza a tela nadando.
+Um **caranguejinho** fica sentado em cima da borda da câmera: pisca os olhinhos de talinho, mexe as garras e de vez em quando solta um **balãozinho**: Soltem as âncoras!, Ninguém escapa das profundezas, O mar guarda os seus segredos, Peso morto no convés!, As profundezas chamam..., Afundem com o navio!, Glub glub..., Cuidado onde você pisa.... **Bolhas** sobem devagar, balançando, e às vezes um **peixinho** cruza a tela nadando.
 
 A cada 30 segundos tem **âncora**: o Nautilus surge num redemoinho de bolhas, de escafandro gigante com o visor laranja aceso, balança a âncora pra trás e **arremessa** — ela sai voando com a corrente atrás e estoura numa **carga de profundidade**: anéis de choque, respingos, peixes espantados pra todo lado, bolhas e chuva de gotinhas. A escotilha acende, o timão dá uma volta, a placa pula, os enfeites pulam em onda e o caranguejo grita "Âncora neles!".
 
@@ -80,7 +80,7 @@ Junte com `&`, ex.: `moldura-camera.html?tela=lol&campeao=nami&bolhas=16&evento=
 | `peixes=0` | Sem os peixinhos cruzando |
 | `falas=0` | Sem os balõezinhos |
 | `falas=Oi,Tudo bem?` | Troca as falas (separe com vírgula) |
-| `zoom` | Só na prévia: mostra a moldura de pertinho |
+| `zoom` | Só na prévia da tela do LoL: mostra a moldura de pertinho (no `?solta` a fonte já é só a moldura) |
 
 **Mudou a câmera de lugar?** No OBS, botão direito na câmera → **Transformar → Editar transformação**. Copie a posição e o tamanho pro gerador de link. O tamanho da tela fica em **Configurações → Vídeo → Resolução base**.
 

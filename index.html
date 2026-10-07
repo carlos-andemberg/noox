@@ -171,7 +171,7 @@
   const SOLTA = { largura: 365, altura: 217 };
   const FALAS = {
     nautilus: ['Soltem as âncoras!', 'Ninguém escapa das profundezas', 'O mar guarda os seus segredos', 'Peso morto no convés!',
-               'As profundezas chamam...', 'Afundem com o navio!', 'Glub glub...', 'Cuidado onde pisa, invocador'],
+               'As profundezas chamam...', 'Afundem com o navio!', 'Glub glub...', 'Cuidado onde você pisa...'],
     nami: ['A maré está subindo!', 'Eu decido o rumo da maré', 'Sinta o puxão da maré', 'A calmaria vem antes da onda',
            'A água sempre acha o caminho', 'As marés obedecem a mim', 'Glub!', 'Vem nadar comigo!'],
   };
@@ -251,9 +251,9 @@
     else {
       const bo = n('bolhas');
       if (bo !== null && bo !== PADRAO.bolhas) p.push('bolhas=' + Math.max(0, Math.min(300, Math.round(bo))));
-      const vel = n('velocidade');
-      if (vel !== null && Math.abs(vel - PADRAO.velocidade) > .01) p.push('velocidade=' + vel);
     }
+    const vel = n('velocidade');                       // a velocidade também vale pros peixinhos
+    if (($('temBolhas').checked || $('peixes').checked) && vel !== null && Math.abs(vel - PADRAO.velocidade) > .01) p.push('velocidade=' + vel);
     const ev = n('evento');
     if (ev !== null && ev !== PADRAO.evento) p.push('evento=' + Math.max(0, ev));
     if (!$('temFalas').checked) p.push('falas=0');
@@ -263,7 +263,8 @@
 
   function build() {
     $('velTxt').textContent = String(n('velocidade')).replace('.', ',') + '×';
-    $('bolhas').disabled = $('velocidade').disabled = !$('temBolhas').checked;
+    $('bolhas').disabled = !$('temBolhas').checked;
+    $('velocidade').disabled = !$('temBolhas').checked && !$('peixes').checked;
     $('falas').disabled = !$('temFalas').checked;
     const link = p => { const u = new URL('moldura-camera.html', location.href); u.search = '?' + p.join('&'); return u.href; };
     const solta = modelo === 'solta', p = params(modelo), url = link(p);
