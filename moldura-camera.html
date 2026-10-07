@@ -11,31 +11,37 @@
    Moldura do fundo do mar, com DOIS CAMPEÕES do LoL pra escolher:
 
    ?campeao=nautilus (o padrão)
-     Borda de aço naval com filete de bronze e elos de corrente
-     por dentro. No canto, uma escotilha de bronze com o vidro
-     verde-água brilhando, na frente de um timão que gira devagar.
-     Da escotilha desce a placa de metal com o nome, uma letra
-     embaixo da outra, e a corrente da âncora fica deitada na
-     borda. Um caranguejinho fica sentado perto das cracas, mexe
-     as garras e solta balõezinhos. Bolhas sobem devagar e, de vez
-     em quando, um peixinho cruza a tela.
+     Borda de aço naval com filete de bronze, cantoneiras
+     rebitadas nos cantos de cima e elos de corrente por dentro.
+     O nome fica numa PLACA DE NAVIO deitada na borda de cima.
+     Na lateral esquerda, por fora, uma escotilha de bronze com o
+     vidro verde-água brilhando, na frente de um timão que gira
+     devagar; a corrente da âncora desce pela borda da esquerda.
+     Na borda de cima, perto do canto direito, uma argola de
+     amarração de bronze. Um caranguejinho fica sentado na borda,
+     mexe as garras e solta balõezinhos. Bolhas sobem devagar e,
+     de vez em quando, um peixinho cruza a tela.
      De tempos em tempos tem ÂNCORA: o Nautilus surge num
-     redemoinho, gira e arremessa a âncora com a corrente, que
-     estoura numa carga de profundidade: anéis de choque, respingos,
-     peixes espantados e chuva de gotinhas.
+     redemoinho, gira a âncora e ARREMESSA na argola do canto
+     direito — a corrente estica e ele se arrasta até lá, igual
+     ao Q, batendo na borda com faíscas, anéis de choque e
+     peixes espantados.
 
    ?campeao=nami
-     Borda de água viva com filete dourado e cordão de pérolas por
-     dentro. No canto, a pérola do Invocamarés num engaste de
-     concha, na frente do aro das marés girando. Do canto desce o
-     estandarte de onda com o nome, e o cordão de pérolas fica
-     deitado na borda, com uma estrela-do-mar no laço. Um koizinho
-     nada parado perto das conchas e solta balõezinhos. Bolhas
-     sobem e às vezes um koi cruza a tela.
-     De tempos em tempos tem VAGALHÃO: a Nami surge num redemoinho,
-     ergue o cetro, a pérola junta luz e ela lança uma bolha
-     d'água que estoura numa coroa de splash, com kois pulando e
-     chuva de gotinhas.
+     Borda de água viva com filete dourado, leques de concha nos
+     cantos de cima e cordão de pontinhos de pérola por dentro.
+     O nome fica num ESTANDARTE DE ONDA deitado na borda de cima.
+     Na lateral esquerda, por fora, a pérola do Invocamarés num
+     engaste de concha, na frente do aro das marés girando; o
+     cordão de pérolas desce pela borda da esquerda com uma
+     estrela-do-mar na ponta. Perto do canto direito, uma
+     presilha de concha com pérola. Um koizinho nada parado em
+     cima da borda, solta bolhinhas e balõezinhos; às vezes um
+     koi cruza a tela.
+     De tempos em tempos tem VAGALHÃO: a Nami surge num
+     redemoinho, ergue o cetro e uma ONDA varre e INUNDA a câmera
+     com água translúcida — dá pra ver o streamer por baixo —
+     com kois nadando dentro, espuma e bolhas, até a água escoar.
 
    DOIS MODELOS
      ?tela=lol   a tela do LoL: câmera embaixo, entre o painel de
@@ -63,7 +69,7 @@
      ?bolhas=16                quantas bolhas subindo (0 a 300; 0 = sem bolhas)
      ?velocidade=0.6           velocidade das bolhas (1 = o padrão, 2 = rápido)
      ?evento=45                segundos entre uma âncora/onda e outra (0 = desliga)
-     ?nautilus=0 / ?nami=0     evento sem o campeão (sai do canto)
+     ?nautilus=0 / ?nami=0     evento sem o campeão (a âncora sai da escotilha / a onda vem sozinha)
      ?mascote=0                sem o caranguejo / koizinho
      ?emblema=0                sem a escotilha / pérola (e o aro girando)
      ?corrente=0               sem a corrente da âncora / cordão de pérolas
@@ -192,6 +198,7 @@ const CONFIG = {
   .cintila { transform-box:fill-box; transform-origin:50% 50%; animation:cintila var(--t) ease-in-out var(--d) infinite; }
   .brilho-borda { animation:corre var(--t) linear infinite; }
   .reflexo-v { transform-box:fill-box; transform-origin:50% 50%; animation:reflexo-v 6s ease-in-out 1s infinite; }
+  .reflexo-h { transform-box:fill-box; transform-origin:50% 50%; animation:reflexo-h 6s ease-in-out 1s infinite; }
 
   /* emblema do canto (escotilha / pérola) e o aro girando atrás */
   .gira { transform-box:fill-box; transform-origin:50% 50%; animation:gira 44s linear infinite; }
@@ -219,6 +226,7 @@ const CONFIG = {
 
   @keyframes corre    { from { stroke-dashoffset:var(--de) } to { stroke-dashoffset:var(--ate) } }
   @keyframes reflexo-v { 0% { transform:translateY(0) skewY(-20deg) } 40%, 100% { transform:translateY(var(--dist)) skewY(-20deg) } }
+  @keyframes reflexo-h { 0% { transform:translateX(0) skewX(-20deg) } 40%, 100% { transform:translateX(var(--dist)) skewX(-20deg) } }
   @keyframes pisca    { 0%, 100% { opacity:0; transform:scale(.2) rotate(0deg) } 50% { opacity:1; transform:scale(1) rotate(45deg) } }
   @keyframes cintila  { 0%, 100% { transform:scale(.86) rotate(0deg) } 50% { transform:scale(1.12) rotate(14deg) } }
   @keyframes gira     { to { transform:rotate(360deg) } }
@@ -578,11 +586,30 @@ const CONFIG = {
         '</g>' +
       '</g></g></g>';
     };
-    // rebites nos cantos da placa do nome
+    // rebites nos quatro cantos da placa do nome
     const placaExtra = p => {
       const reb = (x, y) => '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="' + f(1.7 * k) + '" fill="url(#gBronze)" stroke="' + CONT + '" stroke-width="' + f(.8 * k) + '"/>';
-      return reb(p.x0 + 3.4 * k, p.y0 + 3.6 * k) + reb(p.x1 - 3.4 * k, p.y0 + 3.6 * k) +
-             reb(p.x0 + 3.4 * k, p.y1 - p.nV - 4.6 * k) + reb(p.x1 - 3.4 * k, p.y1 - p.nV - 4.6 * k);
+      return reb(p.x0 + 3.8 * k, p.y0 + 3.6 * k) + reb(p.x1 - 3.8 * k, p.y0 + 3.6 * k) +
+             reb(p.x0 + 3.8 * k, p.y1 - 3.6 * k) + reb(p.x1 - 3.8 * k, p.y1 - 3.6 * k);
+    };
+    // a argola de amarração aparafusada na borda, perto do canto direito: é nela que a âncora engata
+    const argolaSVG = (x, y, s) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<rect x="-8" y="-4" width="16" height="10" rx="2.6" fill="url(#gBronze)" ' + ct(1.2) + '/>' +
+        '<path d="M-7.4 -1.4L7.4 -1.4" stroke="#fff" stroke-opacity=".3" stroke-width="1" stroke-linecap="round"/>' +
+        '<circle cx="-5.2" cy="3" r="1.2" fill="url(#gBronze)" ' + ct(.7) + '/><circle cx="5.2" cy="3" r="1.2" fill="url(#gBronze)" ' + ct(.7) + '/>' +
+        '<circle cy="-7.4" r="5" fill="none" stroke="' + CONT + '" stroke-width="4.6"/>' +
+        '<circle cy="-7.4" r="5" fill="none" stroke="url(#gBronze)" stroke-width="2.6"/>' +
+        '<path d="M-4 -9.6A4.6 4.6 0 0 1 -.6 -12" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/>' +
+      '</g></g>';
+    // cantoneira de aço rebitada, abraçando o canto da borda (rot: 0 cima-esq, 90 cima-dir, 180 baixo-dir, 270 baixo-esq)
+    const cantoneiraSVG = (x, y, s, rot) => {
+      const reb = (rx, ry) => '<circle cx="' + rx + '" cy="' + ry + '" r="1.4" fill="' + COR.bronzeClaro + '" stroke="' + CONT + '" stroke-width=".7"/>';
+      return '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + rot + ') scale(' + f(s) + ')">' +
+        '<path d="M-5.4 -5.4L20 -5.4L20 4L4 4L4 20L-5.4 20Z" fill="url(#gMetal)" ' + ct(1.3) + '/>' +
+        '<path d="M-4 -4L18.6 -4M-4 -4L-4 18.6" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1" stroke-linecap="round"/>' +
+        reb(14.6, -.6) + reb(-.6, 14.6) + reb(-.6, -.6) +
+      '</g>';
     };
     // o NAUTILUS do evento: o escafandro gigante, de lado, pronto pra girar a âncora (a âncora e a corrente são pintadas no canvas)
     const bonecoSVG = () => {
@@ -678,7 +705,7 @@ const CONFIG = {
         '<path d="M' + f(hs * .68) + ' ' + f(hs * .78) + 'l' + f(2.4 * k) + ' 0" stroke="' + COR.verde + '" stroke-opacity=".5" stroke-width="' + f(.8 * k) + '" stroke-linecap="round"/>' +
       '</pattern>';
     return {
-      defs, emblemaSVG, aroSVG, caudaSVG, conchasSVG, adesivo, mascoteSVG, placaExtra, bonecoSVG, peixeSVG, ancoraSVG,
+      defs, emblemaSVG, aroSVG, caudaSVG, conchasSVG, adesivo, mascoteSVG, placaExtra, bonecoSVG, peixeSVG, ancoraSVG, argolaSVG, cantoneiraSVG,
       adesivoTipos: ['ancora', 'estrela'],
       renda: { cores: [CONT, COR.verde, COR.verdeClaro] },               // os "elos" tracejados por dentro da borda
       halo: [COR.verde, COR.bronzeClaro],                               // o brilho difuso por fora da borda
@@ -819,13 +846,30 @@ const CONFIG = {
         '</g>' +
       '</g></g></g></g>';
     };
-    // peroletas na beirada da placa do nome
+    // peroletas nos quatro cantos do estandarte do nome
     const placaExtra = p => {
       const per = (x, y) => '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="' + f(1.6 * k) + '" fill="url(#gPer)" stroke="' + CONT + '" stroke-width="' + f(.7 * k) + '"/>' +
         '<circle cx="' + f(x - .5 * k) + '" cy="' + f(y - .55 * k) + '" r="' + f(.5 * k) + '" fill="#fff" opacity=".9"/>';
-      return per(p.x0 + 3.2 * k, p.y0 + 3.4 * k) + per(p.x1 - 3.2 * k, p.y0 + 3.4 * k) +
-             per(p.cx, p.y1 - p.nV * .3);
+      return per(p.x0 + 3.4 * k, p.y0 + 3.4 * k) + per(p.x1 - 3.4 * k, p.y0 + 3.4 * k) +
+             per(p.x0 + 3.4 * k, p.y1 - 3.4 * k) + per(p.x1 - 3.4 * k, p.y1 - 3.4 * k);
     };
+    // a presilha de concha com pérola e argolinha dourada, perto do canto direito (é nela que a âncora engataria)
+    const argolaSVG = (x, y, s) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<circle cy="-7" r="4.6" fill="none" stroke="' + CONT + '" stroke-width="4.2"/>' +
+        '<circle cy="-7" r="4.6" fill="none" stroke="url(#gOuro)" stroke-width="2.4"/>' +
+        '<path d="M-3.6 -9A4.2 4.2 0 0 1 -.6 -11.2" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".9" stroke-linecap="round"/>' +
+        '<g transform="translate(0 2.4)">' +
+          '<path d="M-8.4 1.8C-8.4 -2.8 -4.6 -6 0 -6C4.6 -6 8.4 -2.8 8.4 1.8C5.6 4.2 -5.6 4.2 -8.4 1.8Z" fill="url(#gOuro)" ' + ct(1.2) + '/>' +
+          '<path d="M-6.2 -3.6L-4.2 2.6M-3.2 -5L-2 3.2M0 -5.4L0 3.4M3.2 -5L2 3.2M6.2 -3.6L4.2 2.6" fill="none" stroke="' + COR.douradoEscuro + '" stroke-width=".8" stroke-linecap="round"/>' +
+          '<circle cy="-1" r="2.6" fill="url(#gPer)" ' + ct(.9) + '/><circle cx="-.8" cy="-1.8" r=".8" fill="#fff"/>' +
+        '</g>' +
+      '</g></g>';
+    // leque de vieira abraçando o canto da borda, abrindo pra dentro (rot: 0 cima-esq, 90 cima-dir, 180 baixo-dir, 270 baixo-esq)
+    const cantoneiraSVG = (x, y, s, rot) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + rot + ') scale(' + f(s) + ')"><g transform="translate(4.6 4.6) rotate(135)">' +
+        vieira(0, 2.4, 1.35, 0) +
+      '</g></g>';
     // a NAMI do evento: a sereia com o cetro erguido (a luz da pérola e a bolha são pintadas no canvas)
     const bonecoSVG = () => {
       const pele = '#f2b899', peleSombra = '#d99270';
@@ -925,7 +969,7 @@ const CONFIG = {
         '<circle cx="' + f(hs * .8) + '" cy="' + f(hs * .76) + '" r="' + f(.8 * k) + '" fill="' + COR.agua + '" opacity=".6"/>' +
       '</pattern>';
     return {
-      defs, emblemaSVG, aroSVG, caudaSVG, conchasSVG, adesivo, mascoteSVG, placaExtra, bonecoSVG, peixeSVG, ancoraSVG: null,
+      defs, emblemaSVG, aroSVG, caudaSVG, conchasSVG, adesivo, mascoteSVG, placaExtra, bonecoSVG, peixeSVG, ancoraSVG: null, argolaSVG, cantoneiraSVG,
       adesivoTipos: ['gota', 'estrela'],
       renda: { cores: [CONT, '#fff', COR.aguaClara] },                  // o cordão de pontinhos por dentro da borda
       halo: [COR.agua, COR.douradoClaro],
@@ -946,8 +990,6 @@ const CONFIG = {
   const ARTE = NAUT ? arteNautilus() : arteNami();
   const BON_VB = ARTE.BON_VB, TAM_BON = ARTE.TAM_BON, G = ARTE.G;
   const PEIXE_VB = ARTE.PEIXE_VB, TAM_PEIXE = ARTE.TAM_PEIXE, CORES_PEIXE = ARTE.CORES_PEIXE;
-  // o evento sai voando pra cima e pra esquerda: D é a direção, N é o "pra cima" dela
-  const ANG = 25 * Math.PI / 180, D = [-Math.cos(ANG), -Math.sin(ANG)], N = [Math.sin(ANG), -Math.cos(ANG)];
 
   // o contorno da borda: só nos lados que não encostam na beirada da tela
   function caminhoBorda(xl, yt, xr, yb, r, fora) {
@@ -985,57 +1027,39 @@ const CONFIG = {
   const FAMILIA = '"' + C.fonte + '", "Segoe UI", sans-serif';
   const sM = ARTE.mascS * k, sE = ARTE.emblemaS * k, sAro = ARTE.aroS * k, sC = ARTE.conchaS * k;
   let placa = null, placaEl = null, mascEl = null, aroEl = null, bolhas = [], comecou = false, zonasB = [], flores = [];
-  let embP = null, bonP = null, alvo = null;
+  let embP = null, bonP = null, gancho = null;
 
-  function formaPlaca(i) {                              // a placa vertical, com o corte em V embaixo; i = recuo pra dentro
-    const p = placa, x0 = p.x0 + i, x1 = p.x1 - i, y0 = p.y0 + i * .6, y1 = p.y1 - i * 1.8, nV = p.nV - i * .4;
-    return 'M' + f(x0) + ' ' + f(y0) + 'L' + f(x1) + ' ' + f(y0) + 'L' + f(x1) + ' ' + f(y1) + 'L' + f(p.cx) + ' ' + f(y1 - nV) + 'L' + f(x0) + ' ' + f(y1) + 'Z';
+  function formaPlaca(i) {                              // a placa deitada na borda de cima, de cantos chanfrados; i = recuo pra dentro
+    const p = placa, x0 = p.x0 + i, x1 = p.x1 - i, y0 = p.y0 + i, y1 = p.y1 - i, c = Math.max(1, 3.4 * k - i * .5);
+    return 'M' + f(x0 + c) + ' ' + f(y0) + 'L' + f(x1 - c) + ' ' + f(y0) + 'L' + f(x1) + ' ' + f(y0 + c) + 'L' + f(x1) + ' ' + f(y1 - c) +
+      'L' + f(x1 - c) + ' ' + f(y1) + 'L' + f(x0 + c) + ' ' + f(y1) + 'L' + f(x0) + ' ' + f(y1 - c) + 'L' + f(x0) + ' ' + f(y0 + c) + 'Z';
   }
 
   function montar() {
     const xl = X + ins, xr = X + W - ins, yt = Y + ins, yb = Y + H - ins, r = Math.max(3, RAIO - ins), o = r * (1 - Math.SQRT1_2);
     const partes = [], frente = [];
-    embP = EMBLEMA ? { x: xl + o, y: yt + o } : null;
+    embP = EMBLEMA ? { x: X - 20 * k, y: Y + Math.min(H * .42, 150 * k) } : null;   // a escotilha / pérola fica na lateral esquerda, por fora
 
-    // ---- a placa do nome: pendurada no emblema, desce pela borda da esquerda com as letras uma embaixo da outra ----
+    // ---- a placa do nome: deitada na borda de cima, com o nome na horizontal (placa de navio / estandarte) ----
     if (NOME) {
-      const topo = embP ? embP.y + 21 * sE : Y + 14 * k, fim = Math.min(yb, SH) - (CONCHAS ? 42 : 16) * k, pad = 9 * k;
-      const letras = [...NOME.toUpperCase()], un = letras.reduce((a, c) => a + (c === ' ' ? .5 : 1), 0);
-      let fs = 21 * k;
-      if (topo + 2 * pad + fs * (un * .96 + .66) > fim) fs = Math.max(6 * k, (fim - topo - 2 * pad) / (un * .96 + .66));   // .66 fs = o corte em V
-      if (fs >= 13 * k) {                               // letras empilhadas
+      const maxW = Math.min(W - 128 * k, 300 * k), pad = 10 * k;
+      if (maxW > 44 * k) {                              // câmera estreita demais fica sem placa
+        let fs = 19 * k;
         medidor.font = fs + 'px ' + FAMILIA;
-        const larg = Math.max(...letras.map(c => medidor.measureText(c).width)), cap = medidor.measureText('L').actualBoundingBoxAscent || fs * .72;
-        const TH = Math.max(fs * 1.5, larg + 12 * k, 26 * k), nV = TH * .42, adv = fs * .96;
-        placa = { modo: 'letras', TH, nV, fs, adv, pad, cap, letras, y1: topo + 2 * pad + un * adv + nV };
-      } else {                                          // nome comprido: deitado, lendo de baixo pra cima
-        fs = 21 * k;
-        medidor.font = fs + 'px ' + FAMILIA;
-        let m = medidor.measureText(NOME), tw = m.width;
-        const TH = Math.max(fs * 1.62, 28 * k), nV = TH * .42, maxL = fim - topo - 2 * pad - nV;
-        if (maxL >= 8 * k) {                            // câmera baixa demais até pro nome deitado: fica sem placa
-          if (tw > maxL) { fs = Math.max(4 * k, fs * maxL / tw); medidor.font = fs + 'px ' + FAMILIA; m = medidor.measureText(NOME); tw = m.width; }
-          placa = { modo: 'deitado', TH, nV, fs, pad, asc: m.actualBoundingBoxAscent || fs * .7, desc: m.actualBoundingBoxDescent || 0, y1: topo + Math.min(tw, maxL) + 2 * pad + nV };
-        }
-      }
-      if (placa) {
-        Object.assign(placa, { cx: xl, x0: xl - placa.TH / 2, x1: xl + placa.TH / 2, y0: topo });
-        placa.cy = (placa.y0 + placa.y1 - placa.nV) / 2;
+        let m = medidor.measureText(NOME.toUpperCase()), tw = m.width;
+        if (tw > maxW - 2 * pad) { fs = Math.max(8 * k, fs * (maxW - 2 * pad) / tw); medidor.font = fs + 'px ' + FAMILIA; m = medidor.measureText(NOME.toUpperCase()); tw = Math.min(m.width, maxW - 2 * pad); }
+        const TH = Math.max(fs * 1.62, 24 * k), PW = tw + 2 * pad;
+        const pcx = Math.max(X + 64 * k + PW / 2, Math.min(X + W * .56, X + W - 72 * k - PW / 2));
+        placa = { fs, pad, TH, PW, cx: pcx, cy: yt + .5 * k, asc: m.actualBoundingBoxAscent || fs * .72, desc: m.actualBoundingBoxDescent || 0 };
+        placa.x0 = pcx - PW / 2; placa.x1 = pcx + PW / 2; placa.y0 = placa.cy - TH / 2; placa.y1 = placa.cy + TH / 2;
       }
     }
 
     // ---- o mascote fica do lado de fora, perto do chão (o koi flutua; no solto, em cima da borda);
     //      o campeão aparece no ar, num redemoinho, do lado do canto (no solto, em cima da borda) ----
     const mascP = !MASCOTE ? null
-      : SOLTA ? { x: X + W * .3, y: NAUT ? Y + 1.4 * k : Y - 6 * k }
-      : { x: X + 120 * k, y: NAUT ? Y + 1.4 * k : Y - 8 * k };       // em cima da borda da câmera (o chão é o painel de itens do LoL)
-    bonP = SOLTA ? { x: X + W * .66, y: Y + 1.2 * k, plat: true } : { x: Math.max(RX + 70 * k, X - 96 * k), y: Y - 2 * k, plat: true };
-
-    // ---- o evento: sai voando pra cima-esquerda e estoura dentro da área desenhada ----
-    const sBon = TAM_BON * k;
-    const [gx, gy] = BONECO ? [bonP.x + G[0] * sBon, bonP.y + G[1] * sBon] : embP ? [embP.x, embP.y] : [X + 10 * k, Y + 10 * k];
-    const dist = Math.max(40 * k, Math.min((gx - RX - 115 * k) / -D[0], (gy - RY - 105 * k) / -D[1], 300 * k));   // o estouro inteiro cabe na área
-    alvo = { x: gx + D[0] * dist, y: gy + D[1] * dist, dx: gx, dy: gy };
+      : { x: X + 36 * k, y: NAUT ? Y + 1.4 * k : Y - 8 * k };        // em cima da borda da câmera, na pontinha esquerda
+    bonP = SOLTA ? { x: X + W * .4, y: Y + 1.2 * k, plat: true } : { x: Math.max(RX + 70 * k, X - 96 * k), y: Y - 2 * k, plat: true };
 
     // ---- defs ----
     const hs = 14 * k;
@@ -1070,43 +1094,35 @@ const CONFIG = {
       for (const [x, y, esp] of cantos) { partes.push(ARTE.conchasSVG(x, y, sC, esp)); flores.push({ x, y, r: 14 * k }); }
     }
 
-    // ---- o canto: o aro girando, a corrente / cordão deitado na borda e o emblema por cima ----
-    const cx0 = embP ? embP.x : xl + o, cy0 = embP ? embP.y : yt + o;
+    // ---- a lateral e os cantos: o aro girando com o emblema por fora, a corrente / cordão descendo
+    //      pela borda da esquerda, as cantoneiras e a argola de amarração (é nela que a âncora engata) ----
+    const cx0 = embP ? embP.x : X - 20 * k, cy0 = embP ? embP.y : Y + Math.min(H * .42, 150 * k);
     if (embP) partes.push(ARTE.aroSVG(cx0, cy0, sAro));
-    if (CORRENTE) {
-      const wC = B * .78;
-      if (!abre.cima) partes.push(ARTE.caudaSVG('d', cx0 + 26 * k, yt, 64 * k, wC));
-      if (!abre.esq && !placa) partes.push(ARTE.caudaSVG('b', xl, cy0 + 26 * k, 64 * k, wC));
-    }
+    if (CORRENTE && !abre.esq) partes.push(ARTE.caudaSVG('b', xl, yt + 10 * k, Math.min(84 * k, H * .48), B * .78));
+    if (!abre.cima && !abre.esq) partes.push(ARTE.cantoneiraSVG(xl, yt, 1.1 * k, 0));
+    if (!abre.cima && !abre.dir) partes.push(ARTE.cantoneiraSVG(xr, yt, 1.1 * k, 90));
+    if (!abre.baixo && !abre.dir) partes.push(ARTE.cantoneiraSVG(xr, yb, 1.1 * k, 180));
+    if (!abre.baixo && !abre.esq) partes.push(ARTE.cantoneiraSVG(xl, yb, 1.1 * k, 270));
+    gancho = { x: xr - 18 * k, y: yt - 2 * k };
+    frente.push(ARTE.argolaSVG(gancho.x, gancho.y + 4 * k, k));
+    flores.push({ x: gancho.x, y: gancho.y, r: 8 * k });
 
     // ---- a placa do nome ----
     if (placa) {
       const p = placa, fam = FAMILIA.replace(/"/g, ''), esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const txt = (c, x, y, extra) => '<text x="' + f(x) + '" y="' + f(y) + '" text-anchor="middle" font-family=\'' + fam + '\' font-size="' + f(p.fs) + '" ' + extra + '>' + esc(c) + '</text>';
-      const sombra = 'fill="' + ARTE.sombraPlaca + '" stroke="' + ARTE.sombraPlaca + '" stroke-width="' + f(4.2 * k) + '" stroke-linejoin="round"';
-      const cheio = 'fill="url(#gTexto)" stroke="' + CONT + '" stroke-width="' + f(3.6 * k) + '" stroke-linejoin="round" paint-order="stroke"';
-      let letras = '';
-      if (p.modo === 'letras') {
-        let pos = 0;
-        for (const c of p.letras) {
-          if (c === ' ') { pos += .5; continue; }
-          const base = p.y0 + p.pad + p.adv * (pos + .5) + p.cap / 2;
-          letras += txt(c, p.cx + 1.3 * k, base + 1.8 * k, sombra) + txt(c, p.cx, base, cheio);
-          pos++;
-        }
-      } else {
-        const base = p.cy + (p.asc - p.desc) / 2;
-        letras = '<g transform="rotate(-90 ' + f(p.cx) + ' ' + f(p.cy) + ')">' + txt(NOME, p.cx, base + 2 * k, sombra) + txt(NOME, p.cx, base, cheio) + '</g>';
-      }
+      const base = p.cy + (p.asc - p.desc) / 2, NM = esc(NOME.toUpperCase());
+      const txt = (dx, dy, extra) => '<text x="' + f(p.cx + dx) + '" y="' + f(base + dy) + '" text-anchor="middle" font-family=\'' + fam + '\' font-size="' + f(p.fs) + '" ' + extra + '>' + NM + '</text>';
       frente.push('<g class="placa">' +
-        '<path d="' + formaPlaca(0) + '" transform="translate(' + f(2.6 * k) + ' ' + f(2.6 * k) + ')" fill="rgba(0,0,0,.3)"/>' +
+        '<path d="' + formaPlaca(0) + '" transform="translate(' + f(2.2 * k) + ' ' + f(2.6 * k) + ')" fill="rgba(0,0,0,.3)"/>' +
         '<path d="' + formaPlaca(0) + '" fill="url(#gPlaca)" stroke="' + CONT + '" stroke-width="' + f(2.8 * k) + '" stroke-linejoin="round"/>' +
-        '<path d="' + formaPlaca(3.4 * k) + '" fill="none" stroke="' + ARTE.filete + '" stroke-width="' + f(1.2 * k) + '" stroke-linejoin="round"/>' +
-        '<g clip-path="url(#clipPlaca)"><rect class="reflexo-v" style="--dist:' + f(p.y1 - p.y0 + 90 * k) + 'px" x="' + f(p.x0 - 4 * k) + '" y="' + f(p.y0 - 60 * k) + '" width="' + f(p.TH + 8 * k) + '" height="' + f(30 * k) + '" fill="url(#gReflexo)"/></g>' +
-        letras + ARTE.placaExtra(p) +
-        '<g class="cintila" ' + anima(2.4, 3.4, 0) + '>' + brilho(p.x0, p.y1 - 1 * k, 6 * k, '#fff') + '</g>' +
+        '<path d="' + formaPlaca(3.2 * k) + '" fill="none" stroke="' + ARTE.filete + '" stroke-width="' + f(1.2 * k) + '" stroke-linejoin="round"/>' +
+        '<g clip-path="url(#clipPlaca)"><rect class="reflexo-h" style="--dist:' + f(p.PW + 70 * k) + 'px" x="' + f(p.x0 - 46 * k) + '" y="' + f(p.y0 - 4 * k) + '" width="' + f(26 * k) + '" height="' + f(p.TH + 8 * k) + '" fill="url(#gReflexo)"/></g>' +
+        txt(1.4 * k, 1.8 * k, 'fill="' + ARTE.sombraPlaca + '" stroke="' + ARTE.sombraPlaca + '" stroke-width="' + f(4.2 * k) + '" stroke-linejoin="round"') +
+        txt(0, 0, 'fill="url(#gTexto)" stroke="' + CONT + '" stroke-width="' + f(3.6 * k) + '" stroke-linejoin="round" paint-order="stroke"') +
+        ARTE.placaExtra(p) +
+        '<g class="cintila" ' + anima(2.4, 3.4, 0) + '>' + brilho(p.x1 - 1 * k, p.y0 + 1 * k, 6 * k, '#fff') + '</g>' +
       '</g>');
-      for (const u of [.2, .5, .8]) flores.push({ x: p.cx, y: p.y0 + (p.y1 - p.y0) * u, r: p.TH / 2 });
+      for (const u of [.25, .5, .75]) flores.push({ x: p.x0 + (p.x1 - p.x0) * u, y: p.cy, r: p.TH / 2 });
     }
 
     // ---- o emblema por cima da ponta da placa; o mascote por último ----
@@ -1219,45 +1235,73 @@ const CONFIG = {
   // ================================================================
   //  o evento: o campeão surge num redemoinho e lança a âncora / a bolha d'água
   // ================================================================
-  const EV = { surge: .3, carga: 1, solta: 1.15, some: 2.8 };   // tempos (s) desde o começo
+  // NAUTILUS: gira a âncora, ARREMESSA na argola do canto direito e se arrasta até lá, igual ao Q
+  // NAMI: ergue o cetro e uma ONDA varre e inunda a câmera com água translúcida, até escoar
+  const EV = { surge: .3, carga: 1, solta: 1.15, arrasta: 1.6, chega: 2.1, some: NAUT ? 3.2 : 4.4 };   // tempos (s) desde o começo
   const CONGELA = num('pausa', 0, 0, 10);               // só pra conferir o desenho: para o campeão nesse instante
   const SBON = TAM_BON * k;
-  let evT0 = -99, evAte = -99, bon = null, seta = null, chuvaFila = [], tiraEv = 0;
+  let evT0 = -99, evAte = -99, bon = null, bonOx = 0, ancora = null, ondaAgua = null, tiraEv = 0;
   const suave = u => u * u * (3 - 2 * u);
   const volta = u => 1 + 2.7 * Math.pow(u - 1, 3) + 1.7 * Math.pow(u - 1, 2);   // passa um pouquinho e volta
-  const doBon = (lx, ly) => [bonP.x + lx * SBON, bonP.y + ly * SBON];   // ponto do campeão (unidades do desenho) na tela
+  const doBon = (lx, ly) => [bonP.x + bonOx + lx * SBON, bonP.y + ly * SBON];   // ponto do campeão (unidades do desenho) na tela
   const tempoBon = t => CONGELA ? Math.min(t - bon.t0, CONGELA) : t - bon.t0;
   const gotaCores = NAUT ? ['#b8fff0', '#7fe3d2', '#52e8cc', '#fff'] : ['#a4f4e9', '#6fe3d4', '#3fd4c5', '#fff'];
 
   function evento(t) {
-    evT0 = t; evAte = t + 3.8;
+    evT0 = t; evAte = t + (NAUT ? 4 : 5);
     cena.classList.add('evento');
     clearTimeout(tiraEv);
-    tiraEv = setTimeout(() => cena.classList.remove('evento'), 3800);
+    tiraEv = setTimeout(() => cena.classList.remove('evento'), NAUT ? 4000 : 5000);
     if (aroEl && aroEl.animate) aroEl.animate([{ transform: 'rotate(0deg) scale(1)' }, { transform: 'rotate(220deg) scale(1.25)', offset: .4 }, { transform: 'rotate(360deg) scale(1)' }],
       { duration: 1800, easing: 'cubic-bezier(.2,.7,.3,1)' });
     if (embP) for (let i = 0; i < 8; i++) faisca(embP.x + rnd(-14, 14) * k, embP.y + rnd(-16, 12) * k, rnd(4, 7) * k, rnd(.5, .9), escolhe(brilhos));
     if (BONECO && carimboBon) {
-      bon = { t0: t, soltou: false, sumiu: false };
+      bon = { t0: t, soltou: false, sumiu: false, bateu: false };
+      bonOx = 0;
       puf(bonP.x - 4 * k, bonP.y - 40 * SBON, .55);
-    } else lancar(t, alvo.dx, alvo.dy);
+    } else if (NAUT) lancarAncora(t, embP ? embP.x + 16 * k : X + 10 * k, embP ? embP.y - 12 * k : Y + 10 * k, true);
+    else ondaAgua = { t0: t + .2, kois: [], spray: [] };
   }
-  function lancar(t, x, y) {                            // a âncora / bolha sai voando até o alvo
-    seta = { x0: x, y0: y, x, y, t0: t, dur: Math.max(.3, Math.hypot(alvo.x - x, alvo.y - y) / (480 * k)) };
+  function lancarAncora(t, x, y, sozinha) {             // a âncora sai voando da mão (ou da escotilha) até a argola
+    ancora = { x0: x, y0: y, x, y, t0: t, fase: 'voa', sozinha, dur: Math.max(.24, Math.hypot(gancho.x - x, gancho.y - y) / (860 * k)) };
   }
   function atualizaBoneco(t) {
     const tl = tempoBon(t);
     if (!bon.soltou && tl >= EV.solta) {
       bon.soltou = true;
-      const [x, y] = doBon(G[0], G[1]);
-      lancar(t, x, y);
+      if (NAUT) { const [x, y] = doBon(G[0], G[1]); lancarAncora(t, x, y, false); }
+      else ondaAgua = { t0: t, kois: [], spray: [] };
     }
     if (tl > EV.surge && tl < EV.solta && Math.random() < .45) {       // brilhinho juntando na mão / na pérola do cetro
       const [x, y] = doBon(G[0], G[1]);
       faisca(x + rnd(-9, 9) * k, y + rnd(-9, 9) * k, rnd(2.5, 4.5) * k, rnd(.3, .5), escolhe(['#fff', brilhos[1]]));
     }
-    if (!bon.sumiu && tl >= EV.some) { bon.sumiu = true; puf(bonP.x - 4 * k, bonP.y - 40 * SBON, .5); }
-    if (tl >= EV.some + .4) bon = null;
+    if (NAUT && bon.soltou) {                           // a corrente puxa: ele desliza pela borda até a argola
+      const fim = gancho.x - 30 * k - bonP.x;
+      if (tl >= EV.arrasta && tl < EV.chega) {
+        bonOx = suave((tl - EV.arrasta) / (EV.chega - EV.arrasta)) * fim;
+        if (Math.random() < .6) bolhaSolta(bonP.x + bonOx - rnd(6, 20) * k, bonP.y - rnd(8, 70) * k);
+      } else if (tl >= EV.chega) {
+        bonOx = fim;
+        if (!bon.bateu) { bon.bateu = true; impacto(gancho.x, gancho.y, t); }
+      }
+    }
+    if (!bon.sumiu && tl >= EV.some) { bon.sumiu = true; puf(bonP.x + bonOx - 4 * k, bonP.y - 40 * SBON, .5); if (NAUT) ancora = null; }
+    if (tl >= EV.some + .4) { bon = null; bonOx = 0; }
+  }
+  function impacto(x, y, t) {                           // a âncora engata e ele chega: faíscas, anéis de choque e peixes espantados
+    parts.push({ tipo: 'estouro', x, y, tam: .72, rot: rnd(0, 1), idade: 0, vida: .7, grande: true });
+    for (let i = 0; i < 12; i++) gota(x - 6 * k, y - 4 * k, .85, true);
+    for (let i = 0; i < 7; i++) peixeSolto(x - 14 * k, y - 6 * k, .9);
+    for (let i = 0; i < 8; i++) faisca(x + rnd(-26, 18) * k, y + rnd(-22, 10) * k, rnd(4, 7.5) * k, rnd(.5, .9), escolhe(brilhos));
+    for (let i = 0; i < 8; i++) bolhaSolta(x + rnd(-24, 10) * k, y + rnd(-12, 10) * k);
+    for (const p of bolhas) {                           // as bolhas que estavam subindo levam um empurrão
+      const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy) || 1;
+      if (d < 240 * k) { const fz = (1 - d / (240 * k)) * 150 * k; p.ix += dx / d * fz; p.iy += dy / d * fz - 24 * k; }
+    }
+    brilhoPlaca();
+    onda();
+    if (masc && FALAS.length) falar(T.falaEvento, 2.4);
   }
   // a âncora, pintada no canvas: a argola em (x, y), a haste descendo; gira em volta da argola
   function desenhaAncora(x, y, ang, s, a) {
@@ -1288,7 +1332,7 @@ const CONFIG = {
     else if (tl > EV.some) { const u = Math.min(1, (tl - EV.some) / .35); a = 1 - u; esc = 1 + .15 * u; }
     if (a <= 0) return;
     if (bonP.plat) {                                    // o redemoinho debaixo do campeão
-      const rx = 30 * k * (.6 + .4 * esc), cx = bonP.x + 2 * k, cy = bonP.y + 1.5 * k;
+      const rx = 30 * k * (.6 + .4 * esc), cx = bonP.x + bonOx + 2 * k, cy = bonP.y + 1.5 * k;
       ctx.save();
       ctx.translate(cx, cy); ctx.scale(1, .26);
       const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
@@ -1307,9 +1351,14 @@ const CONFIG = {
       ctx.restore();
     }
     const s = SBON * esc;
+    const arr = NAUT && tl >= EV.arrasta && tl < EV.chega ? Math.sin(Math.min(1, (tl - EV.arrasta) / .22) * Math.PI / 2) : 0;   // deita pra frente no arrasto
+    const chg = NAUT && tl >= EV.chega ? Math.max(0, 1 - (tl - EV.chega) / .22) : 0;                                            // amassada da chegada
     ctx.save();
     ctx.globalAlpha = a;
-    ctx.translate(bonP.x, bonP.y); ctx.scale(s, s);
+    ctx.translate(bonP.x + bonOx, bonP.y);
+    if (arr) ctx.rotate(.2 * arr);
+    if (chg) ctx.scale(1 + .12 * chg, 1 - .1 * chg);
+    ctx.scale(s, s);
     ctx.drawImage(carimboBon, BON_VB[0], BON_VB[1], BON_VB[2], BON_VB[3]);
     ctx.restore();
     if (NAUT) {                                         // a âncora na mão: balança pra trás na carga e some quando voa
@@ -1338,66 +1387,140 @@ const CONFIG = {
     }
     ctx.globalAlpha = 1;
   }
-  function atualizaSeta(t) {
-    const u = Math.min(1, (t - seta.t0) / seta.dur), px = seta.x, py = seta.y;
-    seta.x = seta.x0 + (alvo.x - seta.x0) * u; seta.y = seta.y0 + (alvo.y - seta.y0) * u;
-    for (let i = 0; i < 2; i++) {                       // rastro de bolhinhas / gotinhas
-      const v = Math.random();
-      faisca(px + (seta.x - px) * v + rnd(-3, 3) * k, py + (seta.y - py) * v + rnd(-3, 3) * k, rnd(2.5, 5) * k, rnd(.3, .6), escolhe(brilhos));
-    }
-    if (u >= 1) { seta = null; estouro(alvo.x, alvo.y, t); }
-  }
-  function desenhaSeta(t) {
-    if (!seta) return;
-    const x = seta.x, y = seta.y;
-    if (NAUT) {                                         // a âncora voando de unhas pra frente, com a corrente atrás
-      const andou = Math.hypot(x - seta.x0, y - seta.y0), LC = Math.min(andou, 150 * k);
-      const n = Math.max(3, Math.floor(LC / (13 * k)));
-      for (let i = 1; i <= n; i++) {                    // os elos da corrente, sumindo pra trás
-        const ex = x - D[0] * i * 13 * k, ey = y - D[1] * i * 13 * k, al = Math.max(0, 1 - i / n) * .9;
-        ctx.globalAlpha = al;
-        ctx.strokeStyle = CONT; ctx.lineWidth = 4.6 * k;
-        ctx.beginPath(); ctx.ellipse(ex, ey, 4.4 * k, 2.8 * k, Math.atan2(D[1], D[0]) + (i % 2 ? Math.PI / 2 : 0), 0, 7); ctx.stroke();
-        ctx.strokeStyle = '#cf9440'; ctx.lineWidth = 2.4 * k;
-        ctx.beginPath(); ctx.ellipse(ex, ey, 4.4 * k, 2.8 * k, Math.atan2(D[1], D[0]) + (i % 2 ? Math.PI / 2 : 0), 0, 7); ctx.stroke();
+  function atualizaAncora(t) {
+    if (ancora.fase === 'voa') {
+      const u = Math.min(1, (t - ancora.t0) / ancora.dur);
+      ancora.x = ancora.x0 + (gancho.x - ancora.x0) * u;
+      ancora.y = ancora.y0 + (gancho.y - ancora.y0) * u - Math.sin(u * Math.PI) * 16 * k;
+      if (Math.random() < .8) faisca(ancora.x + rnd(-6, 6) * k, ancora.y + rnd(-6, 6) * k, rnd(2.5, 4.5) * k, rnd(.25, .45), escolhe(brilhos));
+      if (u >= 1) {                                     // CLANG: engatou na argola
+        ancora.fase = 'fincada'; ancora.tFinca = t;
+        ancora.x = gancho.x; ancora.y = gancho.y;
+        parts.push({ tipo: 'estouro', x: gancho.x, y: gancho.y, tam: .38, rot: rnd(0, 1), idade: 0, vida: .45 });
+        for (let i = 0; i < 6; i++) faisca(gancho.x + rnd(-10, 10) * k, gancho.y + rnd(-10, 6) * k, rnd(3, 5.5) * k, rnd(.3, .6), escolhe([brilhos[2], '#fff']));
+        if (ancora.sozinha) { impacto(gancho.x, gancho.y, t); ancora.tira = t + 1.5; }
       }
-      ctx.globalAlpha = 1;
-      const r = 13 * k, gl = ctx.createRadialGradient(x, y, 0, x, y, r);
-      gl.addColorStop(0, 'rgba(255,255,255,.85)'); gl.addColorStop(.4, 'rgba(140,240,220,.5)'); gl.addColorStop(1, 'rgba(82,232,204,0)');
-      ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
-      desenhaAncora(x, y, Math.atan2(D[1], D[0]) - Math.PI / 2 + Math.sin(t * 12) * .08, 1.15 * k, 1);
-    } else {                                            // a bolha d'água voando, com o rastro
-      const L = 46 * k, rx = x - D[0] * L, ry = y - D[1] * L, g = ctx.createLinearGradient(rx, ry, x, y);
-      g.addColorStop(0, 'rgba(120,230,215,0)'); g.addColorStop(1, 'rgba(190,250,242,.75)');
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = g; ctx.lineWidth = 7 * k;
-      ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(x, y); ctx.stroke();
-      const r = 8.4 * k, gb = ctx.createRadialGradient(x - r * .3, y - r * .35, r * .1, x, y, r);
-      gb.addColorStop(0, 'rgba(255,255,255,.95)'); gb.addColorStop(.6, 'rgba(164,244,233,.55)'); gb.addColorStop(1, 'rgba(63,212,197,.85)');
-      ctx.fillStyle = gb; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.4 * k;
-      ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.stroke();
-      ctx.beginPath(); ctx.arc(x - r * .32, y - r * .32, r * .4, Math.PI * .95, Math.PI * 1.55); ctx.stroke();
-      const rg = 15 * k, gl = ctx.createRadialGradient(x, y, 0, x, y, rg);
-      gl.addColorStop(0, 'rgba(255,255,255,.35)'); gl.addColorStop(1, 'rgba(164,244,233,0)');
-      ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(x, y, rg, 0, 7); ctx.fill();
+    } else if (ancora.tira && t >= ancora.tira) {
+      for (let i = 0; i < 4; i++) faisca(gancho.x + rnd(-8, 8) * k, gancho.y + rnd(-8, 4) * k, rnd(3, 5) * k, rnd(.3, .5), escolhe(brilhos));
+      ancora = null;
     }
   }
-  function estouro(x, y, t) {
-    parts.push({ tipo: 'estouro', x, y, tam: 1, rot: rnd(0, 1), idade: 0, vida: .8, grande: true });
-    for (let i = 0; i < 16; i++) gota(x, y, 1);
-    for (let i = 0; i < (NAUT ? 9 : 5); i++) peixeSolto(x, y, 1);
-    if (!NAUT) for (let i = 0; i < 3; i++) peixeSolto(x, y, 1.7);      // os kois grandões pulando
-    for (let i = 0; i < 10; i++) faisca(x + rnd(-30, 30) * k, y + rnd(-26, 26) * k, rnd(4, 8) * k, rnd(.5, 1), escolhe(brilhos));
-    for (let i = 0; i < 10; i++) bolhaSolta(x + rnd(-26, 26) * k, y + rnd(-16, 26) * k);
-    for (let i = 0; i < 16; i++) chuvaFila.push({ t: t + .1 + rnd(0, .9), x: x + rnd(-70, 100) * k, y: y + rnd(-24, 20) * k });
-    for (const p of bolhas) {                           // as bolhas que já estavam subindo levam um empurrão
-      const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy) || 1;
-      if (d < 240 * k) { const fz = (1 - d / (240 * k)) * 170 * k; p.ix += dx / d * fz; p.iy += dy / d * fz - 30 * k; }
+  // a corrente de elos entre a mão e a âncora, com uma barriguinha que estica (e vibra) quando engata
+  function desenhaCorrente(x1, y1, x2, y2, t) {
+    const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, n = Math.max(3, Math.round(L / (12 * k)));
+    const tensa = ancora.fase === 'fincada';
+    const sag = tensa ? 16 * k * Math.exp(-(t - ancora.tFinca) * 6) + Math.sin((t - ancora.tFinca) * 30) * 2.4 * k * Math.exp(-(t - ancora.tFinca) * 4) : 12 * k;
+    for (let i = 1; i < n; i++) {
+      const u = i / n, ex = x1 + dx * u, ey = y1 + dy * u + Math.sin(u * Math.PI) * sag;
+      const ang = Math.atan2(dy, dx) + (i % 2 ? Math.PI / 2 : 0);
+      ctx.globalAlpha = .95;
+      ctx.strokeStyle = CONT; ctx.lineWidth = 4.4 * k;
+      ctx.beginPath(); ctx.ellipse(ex, ey, 4.2 * k, 2.7 * k, ang, 0, 7); ctx.stroke();
+      ctx.strokeStyle = '#cf9440'; ctx.lineWidth = 2.3 * k;
+      ctx.beginPath(); ctx.ellipse(ex, ey, 4.2 * k, 2.7 * k, ang, 0, 7); ctx.stroke();
     }
-    brilhoPlaca();
-    onda();
-    if (masc && FALAS.length) falar(T.falaEvento, 2.4);   // ?falas=0 silencia até a fala do evento
+    ctx.globalAlpha = 1;
+  }
+  function desenhaAncoraVoo(t) {
+    if (!ancora) return;
+    if (!ancora.sozinha && bon && carimboBon) {         // a corrente vai da mão dele até a âncora
+      const [hx, hy] = doBon(G[0], G[1]);
+      desenhaCorrente(hx, hy, ancora.x, ancora.y, t);
+    }
+    const r = 11 * k, gl = ctx.createRadialGradient(ancora.x, ancora.y, 0, ancora.x, ancora.y, r);
+    gl.addColorStop(0, 'rgba(255,255,255,.7)'); gl.addColorStop(.4, 'rgba(140,240,220,.4)'); gl.addColorStop(1, 'rgba(82,232,204,0)');
+    ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(ancora.x, ancora.y, r, 0, 7); ctx.fill();
+    const ang = ancora.fase === 'fincada'
+      ? -2.25 + Math.sin((t - ancora.tFinca) * 26) * .2 * Math.exp(-(t - ancora.tFinca) * 5)   // engatada de lado na argola, vibrando
+      : Math.atan2(gancho.y - ancora.y, gancho.x - ancora.x) - Math.PI / 2 + Math.sin(t * 13) * .1;
+    desenhaAncora(ancora.x, ancora.y, ang, 1.12 * k, 1);
+  }
+  // a ONDA da Nami: varre a câmera, inunda com água translúcida (dá pra ver o streamer) e escoa
+  function desenhaOnda(t, dt) {
+    if (!ondaAgua) return;
+    const tw = t - ondaAgua.t0;
+    if (tw < 0) return;
+    const T1 = .95, T2 = 2.35, T3 = 3.15;               // varrendo até T1, inundado até T2, escoa até T3
+    if (tw >= T3 + .25) { ondaAgua = null; return; }
+    const x0 = X - B - 8 * k, x1b = Math.min(RR - 2 * k, X + W + B + 8 * k), yFundo = Math.min(RB, Y + H + B * .5);
+    const frente = x0 - 40 * k + (x1b + 130 * k - x0) * suave(Math.min(1, tw / T1));
+    let nivel = Y + 14 * k, aG = 1;
+    if (tw > T2) { const u = suave(Math.min(1, (tw - T2) / (T3 - T2))); nivel += (yFundo - nivel) * u; aG = 1 - u * .6; }
+    if (!ondaAgua.ondou && tw > .2) { ondaAgua.ondou = true; onda(); brilhoPlaca(); }
+    if (!ondaAgua.falou && tw > T2) { ondaAgua.falou = true; if (masc && FALAS.length) falar(T.falaEvento, 2.4); }
+    if (tw > T1 * .4 && tw < T2 && ondaAgua.kois.length < 3 && Math.random() < .2)
+      ondaAgua.kois.push({ x: x0 + rnd(24, 70) * k, vx: rnd(55, 95) * k, fase: rnd(0, 7), tam: TAM_PEIXE * k * rnd(.85, 1.25), cor: Math.floor(rnd(0, CORES_PEIXE.length)) });
+    if (tw < T1 && Math.random() < .9)                  // respingos saltando da crista
+      ondaAgua.spray.push({ x: frente + rnd(-6, 14) * k, y: nivel - rnd(16, 40) * k, vx: rnd(30, 120) * k, vy: -rnd(20, 120) * k, r: rnd(1.4, 2.8) * k, vida: rnd(.35, .6), idade: 0 });
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x0, Y - 90 * k, x1b - x0, yFundo - Y + 90 * k); ctx.clip();
+    // o corpo d'água, bem translúcido
+    const gr = ctx.createLinearGradient(0, nivel, 0, yFundo);
+    gr.addColorStop(0, 'rgba(120,235,220,' + f(.46 * aG) + ')');
+    gr.addColorStop(.25, 'rgba(63,212,197,' + f(.36 * aG) + ')');
+    gr.addColorStop(1, 'rgba(23,136,156,' + f(.26 * aG) + ')');
+    const fH = 44 * k;                                  // altura da crista
+    const surf = x => nivel + Math.sin(x * .045 / k + t * 3.2) * 3 * k + Math.sin(x * .013 / k - t * 1.7) * 2 * k;
+    const fimSup = Math.min(frente - 24 * k, x1b + 2 * k);
+    ctx.beginPath();
+    ctx.moveTo(x0 - 2 * k, yFundo + 2 * k);
+    ctx.lineTo(x0 - 2 * k, surf(x0));
+    for (let x = x0; x < fimSup; x += 12 * k) ctx.lineTo(x, surf(x));
+    if (frente < x1b + 60 * k) {                        // a crista enrolando na frente da onda
+      const cy = surf(fimSup);
+      ctx.bezierCurveTo(frente - 10 * k, cy - fH * .9, frente + 22 * k, cy - fH, frente + 20 * k, cy - fH * .42);
+      ctx.bezierCurveTo(frente + 18 * k, cy - fH * .12, frente + 4 * k, cy - 4 * k, frente + 12 * k, cy + 10 * k);
+      ctx.lineTo(frente + 8 * k, yFundo + 2 * k);
+    } else ctx.lineTo(x1b + 2 * k, yFundo + 2 * k);
+    ctx.closePath();
+    ctx.fillStyle = gr; ctx.fill();
+    // a espuma da superfície e da crista
+    ctx.strokeStyle = 'rgba(255,255,255,' + f(.8 * aG) + ')'; ctx.lineWidth = 2.8 * k; ctx.lineCap = 'round';
+    ctx.beginPath();
+    for (let x = x0; x < fimSup; x += 12 * k) (x === x0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, surf(x));
+    if (frente < x1b + 60 * k) {
+      const cy = surf(fimSup);
+      ctx.bezierCurveTo(frente - 10 * k, cy - fH * .9, frente + 22 * k, cy - fH, frente + 20 * k, cy - fH * .42);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(164,244,233,' + f(.4 * aG) + ')'; ctx.lineWidth = 1.4 * k;
+    ctx.beginPath();
+    for (let x = x0; x < Math.min(fimSup, x1b); x += 12 * k) (x === x0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, surf(x) + 5 * k);
+    ctx.stroke();
+    if (tw < T1) for (let i = 0; i < 4; i++) {          // bolinhas de espuma na crista
+      ctx.globalAlpha = .55 * aG; ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(frente + rnd(-8, 18) * k, surf(fimSup) - fH * rnd(.3, 1), rnd(1.6, 3.4) * k, 0, 7); ctx.fill();
+    }
+    // os respingos da crista
+    ctx.fillStyle = '#eafffc';
+    for (let i = ondaAgua.spray.length - 1; i >= 0; i--) {
+      const p = ondaAgua.spray[i];
+      p.idade += dt;
+      if (p.idade >= p.vida) { ondaAgua.spray.splice(i, 1); continue; }
+      p.vy += 420 * k * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+      ctx.globalAlpha = (1 - p.idade / p.vida) * .8;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill();
+    }
+    // os kois nadando dentro da água, por cima da câmera
+    if (carimbosPeixe.length) for (const kp of ondaAgua.kois) {
+      kp.x += kp.vx * dt;
+      if (kp.x > x1b - 26 * k) kp.vx = -Math.abs(kp.vx);
+      if (kp.x < x0 + 26 * k) kp.vx = Math.abs(kp.vx);
+      const ky = Math.max(nivel + 26 * k, Y + 40 * k) + Math.sin(t * 2.6 + kp.fase) * 9 * k;
+      if (ky > yFundo - 14 * k) continue;
+      ctx.save();
+      ctx.globalAlpha = .8 * aG;
+      ctx.translate(kp.x, ky);
+      const bal = Math.sin(t * 5 + kp.fase) * .16;
+      if (kp.vx < 0) ctx.rotate(bal); else { ctx.scale(-1, 1); ctx.rotate(-bal); }
+      ctx.scale(kp.tam, kp.tam);
+      ctx.drawImage(carimbosPeixe[kp.cor], PEIXE_VB[0], PEIXE_VB[1], PEIXE_VB[2], PEIXE_VB[3]);
+      ctx.restore();
+    }
+    // bolhinhas subindo na água cheia
+    if (tw > T1 && tw < T2 && Math.random() < .5) bolhaSolta(rnd(X + 20 * k, X + W - 20 * k), rnd(nivel + 30 * k, yFundo - 10 * k));
+    ctx.restore();
+    ctx.globalAlpha = 1;
   }
 
   // ================================================================
@@ -1405,11 +1528,11 @@ const CONFIG = {
   // ================================================================
   const parts = [], MAXP = 420;
   function faisca(x, y, tam, vida, cor) { if (parts.length < MAXP) parts.push({ tipo: 'faisca', x, y, vx: rnd(-10, 10) * k, vy: rnd(-14, 6) * k, tam, vida, idade: 0, rot: rnd(0, 1.5), cor }); }
-  function gota(x, y, forca) {
+  function gota(x, y, forca, livre) {                   // livre = pode passar perto da câmera (respingo na borda)
     if (parts.length >= MAXP) return;
     const a = rnd(0, Math.PI * 2), v = rnd(60, 180) * k * forca;
     parts.push({ tipo: 'gota', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 60 * k * forca, w: rnd(1.8, 3.2) * k,
-                 fase: rnd(0, 7), vida: rnd(.9, 1.5), idade: 0, cor: escolhe(gotaCores) });
+                 fase: rnd(0, 7), vida: rnd(.9, 1.5), idade: 0, livre, cor: escolhe(gotaCores) });
   }
   function peixeSolto(x, y, forca) {
     if (parts.length >= MAXP) return;
@@ -1421,7 +1544,6 @@ const CONFIG = {
     if (parts.length >= MAXP) return;
     parts.push({ tipo: 'bolhaS', x, y, vx: rnd(-26, 26) * k, vy: -rnd(50, 120) * k, r: rnd(1.8, 4.2) * k, fase: rnd(0, 7), vida: rnd(.9, 1.6), idade: 0 });
   }
-  function chuva(x, y) { if (parts.length < MAXP) parts.push({ tipo: 'chuva', x, y, vx: -50 * k, vy: rnd(360, 450) * k, vida: rnd(.55, .8), idade: 0 }); }
   function puf(x, y, tam) {                             // o splash de chegada e de saída do campeão
     parts.push({ tipo: 'estouro', x, y, tam, rot: rnd(0, 1), idade: 0, vida: .5 });
     for (let i = 0; i < 10; i++) gota(x + rnd(-8, 8) * k, y + rnd(-14, 14) * k, .6);
@@ -1458,23 +1580,12 @@ const CONFIG = {
         g.addColorStop(1, 'rgba(82,220,200,0)');
         ctx.globalAlpha = 1; ctx.fillStyle = g;
         ctx.beginPath(); ctx.arc(p.x, p.y, R, 0, 7); ctx.fill();
-        if (p.grande && NAUT) {                         // carga de profundidade: anel duplo
+        if (p.grande) {                                 // a batida na borda: anel de choque duplo
           ctx.globalAlpha = e;
           ctx.strokeStyle = '#b8fff0'; ctx.lineWidth = 3.4 * s * e + .6;
           ctx.beginPath(); ctx.arc(p.x, p.y, (12 + 86 * u) * s, 0, 7); ctx.stroke();
           ctx.strokeStyle = '#f3cd7d'; ctx.lineWidth = 2 * s * e + .4;
           ctx.beginPath(); ctx.arc(p.x, p.y, (6 + 60 * u) * s, 0, 7); ctx.stroke();
-        } else if (p.grande) {                          // vagalhão: anel e a coroa de splash
-          ctx.globalAlpha = e; ctx.lineCap = 'round';
-          ctx.strokeStyle = '#d9fffa'; ctx.lineWidth = 3 * s * e + .5;
-          ctx.beginPath(); ctx.arc(p.x, p.y, (12 + 80 * u) * s, 0, 7); ctx.stroke();
-          ctx.strokeStyle = '#eafffb'; ctx.lineWidth = 2.2 * s * e + .4;
-          for (let j = -3; j <= 3; j++) {               // a coroa: arcos de água subindo
-            const ax = p.x + j * 13 * s, h = (26 + 34 * u) * s * (1 - Math.abs(j) * .16);
-            ctx.beginPath(); ctx.moveTo(ax - 5 * s, p.y - 2 * s);
-            ctx.quadraticCurveTo(ax + j * 3 * s, p.y - h, ax + j * 2.4 * s + 4 * s, p.y - 4 * s);
-            ctx.stroke();
-          }
         } else {
           ctx.globalAlpha = e; ctx.strokeStyle = NAUT ? '#b8fff0' : '#d9fffa'; ctx.lineWidth = 3 * s * e + .5;
           ctx.beginPath(); ctx.arc(p.x, p.y, (12 + 80 * u) * s, 0, 7); ctx.stroke();
@@ -1497,7 +1608,7 @@ const CONFIG = {
       } else if (p.tipo === 'gota') {
         p.vx *= 1 - Math.min(1, 1.6 * dt); p.vy = p.vy * (1 - Math.min(1, 1.2 * dt)) + 190 * k * dt;
         p.x += p.vx * dt; p.y += p.vy * dt;
-        a *= pertoCam(p.x, p.y, 12 * k);
+        if (!p.livre) a *= pertoCam(p.x, p.y, 12 * k);
         if (a <= 0) continue;
         const n = Math.hypot(p.vx, p.vy) || 1;
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(Math.atan2(p.vy, p.vx) + Math.PI / 2);
@@ -1531,17 +1642,6 @@ const CONFIG = {
         ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = Math.max(.6, p.r * .16);
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.stroke();
         ctx.beginPath(); ctx.arc(p.x - p.r * .3, p.y - p.r * .3, p.r * .4, Math.PI * .95, Math.PI * 1.55); ctx.stroke();
-      } else if (p.tipo === 'chuva') {                  // gotinha comprida caindo
-        p.x += p.vx * dt; p.y += p.vy * dt;
-        a *= pertoCam(p.x, p.y, 30 * k) * Math.min(1, u * 6) * naFonte(p.x, p.y, 36);
-        if (!SOLTA) a *= Math.max(0, Math.min(1, (SH * .885 + 14 * k - p.y) / (26 * k)));   // some antes do HUD do LoL
-        if (a <= 0) continue;
-        const L = 26 * k, n = Math.hypot(p.vx, p.vy), ux = p.vx / n, uy = p.vy / n, g = ctx.createLinearGradient(p.x - ux * L, p.y - uy * L, p.x, p.y);
-        g.addColorStop(0, 'rgba(140,240,222,0)'); g.addColorStop(.7, 'rgba(170,246,232,.85)'); g.addColorStop(1, '#fff');
-        ctx.globalAlpha = a; ctx.strokeStyle = g; ctx.lineWidth = 2.2 * k; ctx.lineCap = 'round';
-        ctx.beginPath(); ctx.moveTo(p.x - ux * L, p.y - uy * L); ctx.lineTo(p.x, p.y); ctx.stroke();
-        ctx.fillStyle = '#fff';
-        ctx.beginPath(); ctx.arc(p.x + ux * 2 * k, p.y + uy * 2 * k, 1.6 * k, 0, 7); ctx.fill();
       }
     }
     ctx.globalAlpha = 1;
@@ -1593,7 +1693,7 @@ const CONFIG = {
       clearTimeout(tiraFala);
       tiraFala = setTimeout(() => mascEl.classList.remove('fala'), 900);
       balao(texto, masc.x + (masc.espelho ? 3 : -3) * k, masc.topo + 4 * k, dur);
-    } else if (placa) balao(texto, placa.x0, placa.y0 + 12 * k, dur);
+    } else if (placa) balao(texto, placa.cx, placa.y0 + 2 * k, dur);
   }
   function fala() {
     if (!FALAS.length || (!masc && !placa)) return;
@@ -1615,8 +1715,8 @@ const CONFIG = {
       ], { duration: 850, easing: 'ease-out' });
     }
     if (!placa) return;
-    for (let i = 0; i < 12; i++) gota(placa.cx + rnd(-.5, .5) * placa.TH, rnd(placa.y0, placa.y1), .7);
-    for (let i = 0; i < 8; i++) faisca(placa.cx + rnd(-.8, .8) * placa.TH, rnd(placa.y0, placa.y1), rnd(4, 7.5) * k, rnd(.5, 1), escolhe(brilhos));
+    for (let i = 0; i < 12; i++) gota(rnd(placa.x0, placa.x1), placa.cy + rnd(-.6, .6) * placa.TH, .7, true);
+    for (let i = 0; i < 8; i++) faisca(rnd(placa.x0, placa.x1), placa.cy + rnd(-.9, .9) * placa.TH, rnd(4, 7.5) * k, rnd(.5, 1), escolhe(brilhos));
   }
   function onda() {                                     // tudo pula, em onda a partir do nome
     const cx = placa ? placa.cx : X + W / 2;
@@ -1649,9 +1749,10 @@ const CONFIG = {
   // ================================================================
   let last = 0, proxEvento = 0, proxFaisca = 0, proxFala = 0, proxPeixe = 0;
   function frame(ms) {
+    try {
     const t = ms / 1000, dt = Math.min(.05, Math.max(0, t - last));
     last = t;
-    if (EVENTO > 0 && t >= proxEvento && !bon && !seta) { evento(t); proxEvento = t + EVENTO; }
+    if (EVENTO > 0 && t >= proxEvento && !bon && !ancora && !ondaAgua) { evento(t); proxEvento = t + EVENTO; }
     if (FALAS.length && t >= proxFala) {               // balãozinho do mascote (fora do evento, que já tem a fala dele)
       const livre = t > evAte + .5;
       if (livre) fala();
@@ -1675,19 +1776,24 @@ const CONFIG = {
       }
       proxPeixe = t + rnd(9, 22);
     }
-    for (let i = chuvaFila.length - 1; i >= 0; i--) if (t >= chuvaFila[i].t) { chuva(chuvaFila[i].x, chuvaFila[i].y); chuvaFila.splice(i, 1); }
     tb += dt * VEL;
     for (const p of bolhas) moverBolha(p, dt);
     if (bon) atualizaBoneco(t);
-    if (seta) atualizaSeta(t);
+    if (ancora) atualizaAncora(t);
 
     ctx.setTransform(K, 0, 0, K, -RX * K, -RY * K);
     ctx.clearRect(RX, RY, RW, RH);
     desenhaBolhas(t);
     desenhaParticulas(t, dt);
     desenhaBoneco(t);
-    desenhaSeta(t);
-    requestAnimationFrame(frame);
+    desenhaAncoraVoo(t);
+    desenhaOnda(t, dt);
+    } catch (e) { console.error('moldura:', e); }   // um tropeço num frame não derruba a animação
+    agenda();
+  }
+  function agenda() {                                  // com a página escondida o rAF para; segue no soquinho
+    if (document.hidden) setTimeout(() => frame(performance.now()), 50);
+    else requestAnimationFrame(frame);
   }
 
   function comecar() {
@@ -1700,9 +1806,9 @@ const CONFIG = {
     last = t; proxEvento = t + (CONGELA ? .6 : 3); proxFaisca = t + 1; proxFala = t + 7; proxPeixe = t + rnd(4, 9);
     addEventListener('pointerdown', () => {            // clique (ou "Interagir" no OBS) = âncora / onda agora
       const now = performance.now() / 1000;
-      if (now - evT0 > 1.2 && !bon && !seta) { evento(now); if (EVENTO > 0) proxEvento = now + EVENTO; }
+      if (now - evT0 > 1.2 && !bon && !ancora && !ondaAgua) { evento(now); if (EVENTO > 0) proxEvento = now + EVENTO; }
     });
-    requestAnimationFrame(frame);
+    agenda();
   }
   Promise.race([Promise.all([document.fonts.load('22px "' + C.fonte + '"', (NOME || 'N') + 'ÂÃÇÉÊÍÓÕÚ'), document.fonts.load('17px "' + C.fonte + '"', FALAS.join('') + T.falaEvento)]),
                 new Promise(r => setTimeout(r, 3000))]).then(comecar, comecar);
