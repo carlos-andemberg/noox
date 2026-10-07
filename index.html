@@ -73,6 +73,10 @@
   .escolha[aria-pressed="true"] b { color:var(--agua); }
   .escolha.naut[aria-pressed="true"] { border-color:var(--laranja); background:rgba(255,179,71,.12); }
   .escolha.naut[aria-pressed="true"] b { color:var(--laranja); }
+  .escolha.lulu[aria-pressed="true"] { border-color:#c9a2f0; background:rgba(160,106,224,.16); }
+  .escolha.lulu[aria-pressed="true"] b { color:#c9a2f0; }
+  .escolhas.tres { grid-template-columns:1fr 1fr 1fr; }
+  @media (max-width:640px) { .escolhas.tres { grid-template-columns:1fr; } }
   .info { margin:0 0 18px; padding:12px 14px; border-radius:12px; background:rgba(57,215,192,.1); border:2px dashed rgba(224,168,79,.4);
           color:rgba(234,255,249,.86); line-height:1.6; }
   .info b { color:var(--bronze); }
@@ -89,9 +93,10 @@
     <p id="descricao"></p>
 
     <div class="label">O campeão</div>
-    <div class="escolhas">
+    <div class="escolhas tres">
       <button class="escolha naut" data-campeao="nautilus" aria-pressed="true"><b>⚓ Nautilus</b><span>aço naval, escotilha com timão, caranguejo e o arrasto da âncora</span></button>
       <button class="escolha" data-campeao="nami" aria-pressed="false"><b>🌊 Nami</b><span>água viva, pérolas, koizinho e a onda que inunda a câmera</span></button>
+      <button class="escolha lulu" data-campeao="lulu" aria-pressed="false"><b>🧚 Lulu</b><span>roxo de fada, glitter, Pix — e o resgate: a Lulu ulta a Jinx quase low e a Ashe foge</span></button>
     </div>
 
     <div class="label">O modelo</div>
@@ -130,12 +135,12 @@
           <label class="check"><input type="checkbox" id="conchas" checked><span id="rotConchas"></span></label>
           <label class="check"><input type="checkbox" id="mascote" checked><span id="rotMascote"></span></label>
           <label class="check"><input type="checkbox" id="boneco" checked><span id="rotBoneco"></span></label>
-          <label class="check"><input type="checkbox" id="temBolhas" checked><span>💧 Bolhas</span></label>
-          <label class="check"><input type="checkbox" id="peixes" checked><span>🐠 Peixinhos</span></label>
+          <label class="check"><input type="checkbox" id="temBolhas" checked><span id="rotBolhas">💧 Bolhas</span></label>
+          <label class="check"><input type="checkbox" id="peixes" checked><span id="rotPeixes">🐠 Peixinhos</span></label>
           <label class="check"><input type="checkbox" id="temFalas" checked><span>💬 Falas</span></label>
         </div>
       </div>
-      <label class="field"><span>Quantas bolhas</span><input type="number" id="bolhas" value="10" min="1" max="300"></label>
+      <label class="field"><span id="rotQtd">Quantas bolhas</span><input type="number" id="bolhas" value="10" min="1" max="300"></label>
       <label class="field"><span>Velocidade · <output id="velTxt"></output></span><input type="range" id="velocidade" value="1" min="0.2" max="2" step="0.1" title="1× é o padrão · 2× é rápido · 0,5× é bem devagar"></label>
       <label class="field"><span id="rotEvento">Âncora a cada (s)</span><input type="number" id="evento" value="30" min="0" max="3600" step="1"></label>
       <label class="field full"><span>Falas do mascote (separe com vírgula)</span><input type="text" id="falas"></label>
@@ -174,6 +179,8 @@
                'As profundezas chamam...', 'Afundem com o navio!', 'Glub glub...', 'Cuidado onde você pisa...'],
     nami: ['A maré está subindo!', 'Eu decido o rumo da maré', 'Sinta o puxão da maré', 'A calmaria vem antes da onda',
            'A água sempre acha o caminho', 'As marés obedecem a mim', 'Glub!', 'Vem nadar comigo!'],
+    lulu: ['Taca glitter!', 'Vai ficar gigante!', 'O roxo é o novo azul', 'Pix, faz a mágica!',
+           'Borboletas!', 'Fica docinho!', 'Hora do chá!', 'Tudo fica melhor gigante'],
   };
   const ROTULOS = {
     nautilus: { titulo: 'Moldura de Nautilus', evento: 'Âncora a cada (s)',
@@ -182,6 +189,9 @@
     nami: { titulo: 'Moldura de Nami', evento: 'Onda a cada (s)',
       descricao: 'Borda de água viva com leques de concha nos cantos, filete dourado e cordão de pontinhos de pérola por dentro. O nome fica num estandarte de onda deitado na borda de cima; na lateral esquerda, a pérola do Invocamarés brilha na frente do aro das marés girando, com o cordão de pérolas descendo pela borda. O koizinho nada em cima da borda, bolhas sobem, kois cruzam a tela — e de tempos em tempos a Nami ergue o cetro e uma ONDA varre e INUNDA a câmera com água translúcida (dá pra ver você por baixo), com espuma, kois nadando dentro e bolhas, até a água escoar.',
       emblema: '🔮 Pérola das marés', corrente: '📿 Cordão de pérolas', conchas: '🐚 Conchas e corais', mascote: '🐟 Koizinho', boneco: '🧜‍♀️ Nami no evento' },
+    lulu: { titulo: 'Moldura de Lulu', evento: 'Resgate a cada (s)',
+      descricao: 'Borda de fada roxa com folhinhas nos cantos, filete dourado e pontinhos de glitter verde por dentro. O nome fica numa placa com estrelinhas deitada na borda de cima; na lateral esquerda, um cogumelo encantado brilha na frente do círculo de fada girando, com um cipó de florzinhas descendo pela borda. O Pix voa em cima da borda soltando brilhinhos, GLITTER sobe no lugar das bolhas e borboletas cruzam a tela — e de tempos em tempos tem o RESGATE: a Jinx (time azul) aparece quase low fugindo de uma Ashe inimiga (time vermelho) que atira flechas de gelo, até a Lulu surgir e ULTAR: Crescimento Selvagem! A Jinx fica GIGANTE com escudo, a Ashe foge e o dia está salvo.',
+      emblema: '🍄 Cogumelo e círculo de fada', corrente: '🌿 Cipó com florzinhas', conchas: '🍄 Cogumelinhos e flores', mascote: '🧚 Pix', boneco: '💜 Resgate com as bonecas' },
   };
   const PADRAO = { nome: 'Nooxblad3', resolucao: '1920x1080', bolhas: 10, velocidade: 1, evento: 30 };
   const campos = ['x', 'y', 'largura', 'altura'];
@@ -203,6 +213,9 @@
     $('descricao').textContent = R.descricao;
     $('rotEvento').textContent = R.evento;
     for (const id of ['emblema', 'corrente', 'conchas', 'mascote', 'boneco']) $('rot' + id[0].toUpperCase() + id.slice(1)).textContent = R[id];
+    $('rotBolhas').textContent = campeao === 'lulu' ? '✨ Glitter' : '💧 Bolhas';
+    $('rotPeixes').textContent = campeao === 'lulu' ? '🦋 Borboletas' : '🐠 Peixinhos';
+    $('rotQtd').textContent = campeao === 'lulu' ? 'Quanto glitter' : 'Quantas bolhas';
     if (!antes || lista($('falas').value) === lista(FALAS[antes].join(', '))) $('falas').value = FALAS[campeao].join(', ');
   }
 

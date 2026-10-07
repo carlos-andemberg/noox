@@ -1,6 +1,6 @@
-# Moldura da câmera do Nooxblad3 ⚓🌊
+# Moldura da câmera do Nooxblad3 ⚓🌊✨
 
-Moldura animada do fundo do mar pra câmera do [Nooxblad3](https://www.twitch.tv/nooxblad3), feita pra fonte **Navegador** do OBS, com dois campeões do LoL pra escolher: **Nautilus** ou **Nami**. O fundo é transparente, e é HTML/CSS/JS puro: sem build e sem dependências.
+Moldura animada pra câmera do [Nooxblad3](https://www.twitch.tv/nooxblad3), feita pra fonte **Navegador** do OBS, com três temas do LoL pra escolher: **Nautilus**, **Nami** ou **Lulu**. O fundo é transparente, e é HTML/CSS/JS puro: sem build e sem dependências.
 
 **No ar:** [noox.carlosandemberg.com.br](https://noox.carlosandemberg.com.br). Lá você escolhe o campeão, a tela e as opções e copia o link pro OBS. A moldura em si fica em `https://noox.carlosandemberg.com.br/moldura-camera.html`.
 
@@ -9,7 +9,7 @@ Moldura animada do fundo do mar pra câmera do [Nooxblad3](https://www.twitch.tv
 | `moldura-camera.html` | A moldura: borda animada com o nome numa placa deitada na borda de cima, o emblema com o aro girando na lateral, o mascote com os balõezinhos, bolhas subindo, peixinhos e o evento do campeão | **1920 × 1080** (tela do LoL) ou **569 × 481** (`?solta`, só a câmera) |
 | `index.html` | Gerador de link: campeão, modelo, nome, posição e tamanho da câmera, quais enfeites entram, quantas bolhas e o intervalo do evento. Também mostra a live com a moldura por cima | — |
 
-## Os dois temas
+## Os três temas
 
 ### ⚓ Nautilus (`?campeao=nautilus`, o padrão)
 
@@ -27,12 +27,20 @@ Um **koizinho** branco-e-laranja nada parado em cima da borda: abana o rabo, mex
 
 A cada 30 segundos tem **VAGALHÃO**: a Nami surge num redemoinho, de cauda de sereia e cetro erguido, a pérola junta luz e uma **onda varre e INUNDA a câmera** — água translúcida (dá pra ver o streamer por baixo o tempo todo), com a crista enrolando de espuma, respingos voando, **kois nadando dentro da água por cima da câmera** e bolhinhas subindo. A água fica um tempinho cheia, balançando, e **escoa** até sumir. O aro das marés dá uma volta, tudo pula em onda e o koizinho grita "Vagalhão!".
 
+### 🧚 Lulu (`?campeao=lulu`)
+
+Borda **roxa de fada** com filete dourado, **folhinhas com frutinha** abraçando os cantos e pontinhos de **glitter verde** por dentro. O nome fica numa placa roxa com **estrelinhas douradas** nos cantos, deitada na borda de cima. Na lateral esquerda, um **cogumelo encantado** de bolinhas brancas respira luz na frente do **círculo de fada** girando (estrelinhas e cogumelinhos, com um aro de pó dourado girando ao contrário); um **cipó com florzinhas** rosa e lilás desce pela borda da esquerda, com uma **borboleta pousada na ponta**. Perto do canto direito, um **sininho de fada** dourado.
+
+O **Pix** (a fadinha azul) voa em cima da borda batendo as asinhas: pisca, solta brilhinhos e os balõezinhos: Taca glitter!, Vai ficar gigante!, O roxo é o novo azul, Pix, faz a mágica!, Borboletas!, Fica docinho!, Hora do chá!, Tudo fica melhor gigante. No lugar das bolhas sobe **glitter** cintilando, e às vezes uma **borboleta** cruza a tela.
+
+A cada 30 segundos tem **RESGATE**: a **Jinx** (time azul, anel e barra de vida azuis) chega correndo aos pulinhos, **quase low**, suando frio — atrás vem uma **Ashe inimiga** (time vermelho, anel e barra vermelhos) atirando **flechas de gelo** que acertam e derrubam a vida dela pra um fiapo. Aí a **Lulu** surge num puf de glitter ao lado da moldura, ergue o cajado e **ULTA: Crescimento Selvagem!** A Jinx leva um knock-up, fica **GIGANTE**, a vida enche com **escudo** brilhando — a Ashe solta um "!", dá um pulinho de susto e **sai correndo** com rastrinho de velocidade. Chuva de glitter, tudo pula em onda, o Pix grita "Crescer!" e as duas somem num puf. O dia está salvo. 💜
+
 ## A tela do LoL
 
 As medidas saíram da própria live, numa tela 1920 × 1080: câmera em **x 1270, y 863, 365 × 217**, encostada na beirada de baixo, entre o painel de itens e o minimapa.
 
 - A beirada de baixo fica sem borda (a moldura continua pra fora da tela). A borda fica em cima, na esquerda e na direita.
-- **À direita da câmera** fica o minimapa: nada passa dali. Os enfeites, as bolhas e os peixinhos ficam na parte do jogo à esquerda da câmera e nunca entram na frente dela. O arrasto do Nautilus acontece **por cima da borda de cima**, e a onda da Nami cobre **só a câmera** (translúcida).
+- **À direita da câmera** fica o minimapa: nada passa dali. Os enfeites, as bolhas e os peixinhos ficam na parte do jogo à esquerda da câmera e nunca entram na frente dela. O arrasto do Nautilus acontece **por cima da borda de cima**, a onda da Nami cobre **só a câmera** (translúcida) e o resgate da Lulu acontece **na parte do jogo à esquerda**.
 - As bolhas e os peixinhos também **param antes do painel de itens e da barra de habilidades**, pra não atrapalhar o jogo.
 - O mascote fica sentado **em cima da borda da câmera** (o chão ali é o painel de itens, então ele subiu na moldura).
 
@@ -45,7 +53,7 @@ As medidas saíram da própria live, numa tela 1920 × 1080: câmera em **x 1270
 
 ### Só a câmera: pra arrastar junto com a webcam
 
-Com `?solta`, a moldura tem borda **em volta toda**: a placa do nome deitada na borda de cima, a escotilha / pérola com o aro girando na lateral esquerda, o mascote e a argola em cima, cantoneiras nos quatro cantos, as cracas/conchas nos cantos de dentro e os adesivos (âncora e estrela-do-mar no Nautilus; gota e estrela na Nami). No evento, o campeão aparece em cima da borda — o Nautilus se arrasta até o canto direito, a onda da Nami inunda a câmera do mesmo jeito.
+Com `?solta`, a moldura tem borda **em volta toda**: a placa do nome deitada na borda de cima, o emblema com o aro girando na lateral esquerda, o mascote e o enfeite do canto em cima, cantoneiras nos quatro cantos, os cachinhos nos cantos de dentro e os adesivos (âncora e estrela-do-mar no Nautilus; gota e estrela na Nami; flor e estrela na Lulu). No evento, tudo acontece em cima da borda — o Nautilus se arrasta até o canto direito, a onda da Nami inunda a câmera e o resgate da Lulu rola com as três bonecas em cima da moldura.
 
 1. **Fontes → + → Navegador**, URL `https://noox.carlosandemberg.com.br/moldura-camera.html?solta` (ou `?solta&campeao=nami`)
 2. **Largura 569, Altura 481**, pra uma câmera de 365 × 217. Com outro tamanho (`largura=`/`altura=`), o gerador de link mostra o tamanho da fonte.
@@ -54,7 +62,7 @@ Com `?solta`, a moldura tem borda **em volta toda**: a placa do nome deitada na 
 
 ### Prévia
 
-Abrindo o link num navegador normal aparece um fundo de mar profundo, com o HUD do LoL e o overlay dele de mentirinha (a meta, o QR e o minimapa), no lugar em que ficam na live. Clique em qualquer lugar pra soltar a âncora / a onda. Dentro do OBS o fundo fica transparente.
+Abrindo o link num navegador normal aparece um fundo de exemplo (mar profundo ou floresta de fada), com o HUD do LoL e o overlay dele de mentirinha (a meta, o QR e o minimapa), no lugar em que ficam na live. Clique em qualquer lugar pra soltar a âncora / a onda / o resgate. Dentro do OBS o fundo fica transparente.
 
 ### Opções no link
 
@@ -62,22 +70,22 @@ Junte com `&`, ex.: `moldura-camera.html?tela=lol&campeao=nami&bolhas=16&evento=
 
 | Opção | O que faz |
 |---|---|
-| `campeao=nautilus` / `campeao=nami` | O tema (o padrão é nautilus) |
+| `campeao=nautilus` / `campeao=nami` / `campeao=lulu` | O tema (o padrão é nautilus) |
 | `tela=lol` | A tela do LoL (o padrão) |
 | `solta` | Modelo só da câmera, com borda em volta toda. Usa só `largura`/`altura` |
 | `x=1270&y=863` | Canto de cima-esquerdo da câmera, em pixels da tela |
 | `largura=365&altura=217` | Tamanho da câmera. Os enfeites crescem ou encolhem junto |
 | `resolucao=1280x720` | Tamanho da tela do OBS, se não for 1920 × 1080. Sem `x`/`y`, a posição encolhe junto |
 | `nome=Noox` | Texto da placa (`nome=` sem nada esconde a placa) |
-| `bolhas=16` | Quantas bolhas subindo (0 a 300; `bolhas=0` tira as bolhas) |
-| `velocidade=0.6` | Velocidade das bolhas e dos peixinhos: `1` é o padrão, `2` é rápido, `0.5` é devagar |
-| `evento=45` | Segundos entre uma âncora/onda e outra (`evento=0` desliga) |
-| `nautilus=0` / `nami=0` | Evento sem o campeão: a âncora sai da escotilha sozinha / a onda vem sozinha |
+| `bolhas=16` | Quantas bolhas (ou glitter, no tema da Lulu) subindo (0 a 300; `bolhas=0` tira) |
+| `velocidade=0.6` | Velocidade das bolhas/glitter e dos peixinhos: `1` é o padrão, `2` é rápido, `0.5` é devagar |
+| `evento=45` | Segundos entre um evento e outro — âncora, onda ou resgate (`evento=0` desliga) |
+| `nautilus=0` / `nami=0` / `lulu=0` | Evento sem o campeão: âncora sai da escotilha / onda sozinha / só glitter |
 | `emblema=0` | Sem a escotilha / pérola (e o aro girando) da lateral |
 | `corrente=0` | Sem a corrente da âncora / cordão de pérolas da borda |
 | `conchas=0` | Sem as cracas / conchas (e os adesivos do modelo solto) |
 | `mascote=0` | Sem o caranguejo / koizinho (os balões saem da placa) |
-| `peixes=0` | Sem os peixinhos cruzando |
+| `peixes=0` | Sem os peixinhos / borboletas cruzando |
 | `falas=0` | Sem os balõezinhos (nem o do evento) |
 | `falas=Oi,Tudo bem?` | Troca as falas (separe com vírgula) |
 | `zoom` | Só na prévia da tela do LoL: mostra a moldura de pertinho (no `?solta` a fonte já é só a moldura) |
@@ -86,7 +94,7 @@ Junte com `&`, ex.: `moldura-camera.html?tela=lol&campeao=nami&bolhas=16&evento=
 
 ### Personalizar
 
-O resto fica no bloco `CONFIG`, no começo de `moldura-camera.html`: as cores dos dois temas, a fonte, o lugar da câmera, as listas de falas, a fala do evento, grossura da borda e cantos. Edite, salve e faça o deploy de novo. No OBS, botão direito na fonte → **Atualizar**.
+O resto fica no bloco `CONFIG`, no começo de `moldura-camera.html`: as cores dos três temas, a fonte, o lugar da câmera, as listas de falas, a fala do evento, grossura da borda e cantos. Edite, salve e faça o deploy de novo. No OBS, botão direito na fonte → **Atualizar**.
 
 ## Publicar
 

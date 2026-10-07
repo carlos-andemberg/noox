@@ -43,6 +43,22 @@
      com água translúcida — dá pra ver o streamer por baixo —
      com kois nadando dentro, espuma e bolhas, até a água escoar.
 
+   ?campeao=lulu
+     Borda de fada: roxa com glitter, filete dourado, folhinhas
+     nos cantos e pontinhos verdes por dentro. O nome fica numa
+     placa deitada na borda de cima. Na lateral esquerda, um
+     cogumelo encantado na frente de um círculo de fada girando;
+     um cipó com florzinhas desce pela borda, com uma borboleta
+     pousada na ponta. O PIX (a fadinha) voa em cima da borda
+     soltando brilhinhos e balõezinhos. Glitter sobe no lugar
+     das bolhas e borboletas cruzam a tela.
+     De tempos em tempos tem RESGATE: a Jinx aparece quase
+     morrendo (time azul), correndo de uma Ashe inimiga (time
+     vermelho) que atira flechas de gelo — até a Lulu surgir num
+     puf de glitter e ULTAR a Jinx: Crescimento Selvagem! Ela
+     fica GIGANTE, a vida enche com escudo, a Ashe sai correndo
+     e o dia está salvo.
+
    DOIS MODELOS
      ?tela=lol   a tela do LoL: câmera embaixo, entre o painel de
                  itens e o minimapa, encostada na beirada de baixo
@@ -59,7 +75,7 @@
      4. Deixe a moldura ACIMA da câmera na lista de fontes.
 
    OPÇÕES NO LINK (junte com &)
-     ?campeao=nautilus         o tema (nautilus ou nami; o padrão é nautilus)
+     ?campeao=nautilus         o tema (nautilus, nami ou lulu; o padrão é nautilus)
      ?tela=lol                 a tela do LoL (o padrão)
      ?solta                    modelo só da câmera (usa só largura/altura)
      ?x=1270&y=863             canto de cima-esquerdo da câmera, em pixels da tela
@@ -69,7 +85,7 @@
      ?bolhas=16                quantas bolhas subindo (0 a 300; 0 = sem bolhas)
      ?velocidade=0.6           velocidade das bolhas (1 = o padrão, 2 = rápido)
      ?evento=45                segundos entre uma âncora/onda e outra (0 = desliga)
-     ?nautilus=0 / ?nami=0     evento sem o campeão (a âncora sai da escotilha / a onda vem sozinha)
+     ?nautilus=0 / ?nami=0 / ?lulu=0   evento sem o campeão (âncora sai da escotilha / onda sozinha / só glitter)
      ?mascote=0                sem o caranguejo / koizinho
      ?emblema=0                sem a escotilha / pérola (e o aro girando)
      ?corrente=0               sem a corrente da âncora / cordão de pérolas
@@ -89,7 +105,7 @@
 const CONFIG = {
   nome: "Nooxblad3",             // texto da placa que desce do canto, uma letra embaixo da outra ("" = esconde)  ·  link: ?nome=Noox
   fonte: "Lilita One",           // letra do nome e dos balões (Google Fonts, no <link> lá em cima)
-  campeao: "nautilus",           // tema padrão  ·  link: ?campeao=nami
+  campeao: "nautilus",           // tema padrão  ·  link: ?campeao=nami ou ?campeao=lulu
 
   tela: { largura: 1920, altura: 1080 },   // tela do OBS em que as medidas abaixo valem
   telas: {                                 // medida da live: câmera embaixo, entre o painel de itens e o minimapa  ·  link: ?tela=lol
@@ -100,8 +116,8 @@ const CONFIG = {
 
   bolhas: 10,                    // quantas bolhas subindo  ·  link: ?bolhas=16
   velocidade: 1,                 // velocidade delas: 2 = rápido, 0.5 = bem devagar  ·  link: ?velocidade=0.6
-  evento: 30,                    // segundos entre uma âncora/onda e outra, 0 = desliga  ·  link: ?evento=45
-  boneco: true,                  // o campeão aparece no evento  ·  link: ?nautilus=0 / ?nami=0
+  evento: 30,                    // segundos entre um evento e outro (âncora / onda / resgate), 0 = desliga  ·  link: ?evento=45
+  boneco: true,                  // o campeão aparece no evento  ·  link: ?nautilus=0 / ?nami=0 / ?lulu=0
   mascote: true,                 // o caranguejo / koizinho  ·  link: ?mascote=0
   emblema: true,                 // a escotilha / pérola do canto, com o aro girando  ·  link: ?emblema=0
   corrente: true,                // a corrente da âncora / cordão de pérolas na borda  ·  link: ?corrente=0
@@ -139,6 +155,20 @@ const CONFIG = {
       contorno: "#0a2e3f",       // azul-petróleo quase preto dos contornos
     },
   },
+  lulu: {                        // Fada Encantadora: roxo, glitter, cogumelos e o resgate da Jinx
+    falas: ["Taca glitter!", "Vai ficar gigante!", "O roxo é o novo azul", "Pix, faz a mágica!",
+            "Borboletas!", "Fica docinho!", "Hora do chá!", "Tudo fica melhor gigante"],
+    falaEvento: "Crescer!",       // o que o Pix grita quando a Lulu ulta a Jinx
+    cores: {
+      roxo: "#a06ae0", roxoClaro: "#c9a2f0", roxoEscuro: "#6e3fb0", lilas: "#e7d4fa",
+      verde: "#8ce85a", verdeClaro: "#c8ffa8", verdeEscuro: "#4da82e",
+      rosa: "#ff9ad4", rosaEscuro: "#e0559e",
+      dourado: "#f2c75c", douradoClaro: "#ffe9ad", douradoEscuro: "#bb8524",
+      cogumelo: "#e05a68", cogumeloClaro: "#ff8a93",
+      pix: "#7ac8ff",
+      contorno: "#241038",       // roxo quase preto dos contornos
+    },
+  },
 
   fundoDemo: "auto",             // "auto" = fundo de exemplo só fora do OBS · true / false força
 };
@@ -166,8 +196,16 @@ const CONFIG = {
       repeating-linear-gradient(104deg, rgba(170,245,235,.05) 0 70px, transparent 70px 190px),
       linear-gradient(170deg, #10505c 0%, #0a3341 55%, #041d28 100%);
   }
+  body.demo.lulu .palco {
+    background:
+      radial-gradient(2px 2px at 18% 24%, #c8ffa8aa 50%, transparent 51%), radial-gradient(1.5px 1.5px at 76% 14%, #ffe9ad99 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 42% 44%, #c9a2f099 50%, transparent 51%), radial-gradient(2px 2px at 88% 52%, #c8ffa877 50%, transparent 51%),
+      radial-gradient(ellipse at 60% -10%, rgba(180,140,235,.22), transparent 55%),
+      linear-gradient(170deg, #2c1a48 0%, #1d1033 55%, #120a22 100%);
+  }
   body.demo.solta .palco { background:linear-gradient(170deg, #122b38, #081722); }
   body.demo.solta.nami .palco { background:linear-gradient(170deg, #0e3d4b, #06202c); }
+  body.demo.solta.lulu .palco { background:linear-gradient(170deg, #241539, #140b24); }
   body.demo .demo-only { display:flex; }
   .cam-box {
     position:absolute; align-items:center; justify-content:center; overflow:hidden;
@@ -188,6 +226,7 @@ const CONFIG = {
           color:rgba(255,255,255,.72) !important; font:600 calc(28px * var(--s, 1)) 'Segoe UI', Arial, sans-serif; }
   .dica b { color:#6fe8d2; font:400 calc(42px * var(--s, 1)) 'Lilita One', 'Segoe UI', sans-serif; }
   body.nami .dica b { color:#8af0e4; }
+  body.lulu .dica b { color:#c9a2f0; }
   .dica.fixa { position:fixed; left:16px; top:12px; gap:2px; font-size:15px; z-index:5; }
   .dica.fixa b { font-size:22px; }
 
@@ -221,6 +260,10 @@ const CONFIG = {
   .fala .ms-nucleo { animation:fala .22s ease-out 4; }
   .fala .ms-nada { animation:fala .22s ease-out 4; }
 
+  /* o Pix: asinhas batendo rápido */
+  .px-asa-e { transform-box:fill-box; transform-origin:100% 60%; animation:asa .18s ease-in-out infinite alternate; }
+  .px-asa-d { transform-box:fill-box; transform-origin:0% 60%; animation:asa2 .18s ease-in-out infinite alternate; }
+
   /* algas, corais e conchinhas balançando */
   .balanco { transform-box:fill-box; transform-origin:50% 100%; animation:balanco var(--t) ease-in-out var(--d) infinite alternate; }
 
@@ -241,6 +284,8 @@ const CONFIG = {
   @keyframes cauda    { from { transform:rotate(-16deg) } to { transform:rotate(16deg) } }
   @keyframes barb     { from { transform:rotate(-12deg) } to { transform:rotate(10deg) } }
   @keyframes fala     { 0%, 100% { transform:rotate(0) translateY(0) } 45% { transform:rotate(-5deg) translateY(-1.5px) } }
+  @keyframes asa      { from { transform:rotate(-24deg) scaleX(1) } to { transform:rotate(14deg) scaleX(.72) } }
+  @keyframes asa2     { from { transform:rotate(24deg) scaleX(1) } to { transform:rotate(-14deg) scaleX(.72) } }
   @keyframes balanco  { from { transform:rotate(calc(var(--a) * -1)) } to { transform:rotate(var(--a)) } }
 </style>
 </head>
@@ -272,8 +317,10 @@ const CONFIG = {
   // ---------- o campeão: nautilus ou nami ----------
   const camp = (q.get('campeao') || '').toLowerCase();
   const pediu = key => q.has(key) && !NAO.test(q.get(key) || '');        // ?nami sozinho também escolhe o tema
-  const TEMA = /nami/.test(camp) || pediu('nami') ? 'nami' : /naut/.test(camp) || pediu('naut') || pediu('nautilus') ? 'nautilus' : C.campeao;
-  const NAUT = TEMA === 'nautilus';
+  const TEMA = /lulu/.test(camp) || pediu('lulu') ? 'lulu'
+             : /nami/.test(camp) || pediu('nami') ? 'nami'
+             : /naut/.test(camp) || pediu('naut') || pediu('nautilus') ? 'nautilus' : C.campeao;
+  const NAUT = TEMA === 'nautilus', LULU = TEMA === 'lulu';
   const T = C[TEMA], COR = T.cores, CONT = COR.contorno;
   document.body.classList.add(TEMA);
 
@@ -301,7 +348,7 @@ const CONFIG = {
   const NB = Math.round(num('bolhas', C.bolhas, 0, 300));
   const VEL = num('velocidade', C.velocidade, .1, 3);
   const EVENTO = num('evento', C.evento, 0, 3600);
-  const BONECO = liga('boneco', liga(NAUT ? 'nautilus' : 'nami', C.boneco));   // ?nautilus=0 / ?nami=0 tira o campeão do evento
+  const BONECO = liga('boneco', liga(TEMA, C.boneco));   // ?nautilus=0 / ?nami=0 / ?lulu=0 tira o campeão do evento
   const MASCOTE = liga('mascote', C.mascote), EMBLEMA = liga('emblema', C.emblema);
   const CORRENTE = liga('corrente', C.corrente), CONCHAS = liga('conchas', C.conchas), PEIXES = liga('peixes', C.peixes);
   let FALAS = T.falas.slice();
@@ -345,8 +392,8 @@ const CONFIG = {
   const zoom = demo && q.has('zoom') && !SOLTA;
   document.querySelector('.cam-box').style.cssText = 'left:' + X + 'px;top:' + Y + 'px;width:' + W + 'px;height:' + H + 'px';
   const dica = document.querySelector('.dica');
-  const acao = NAUT ? 'clique em qualquer lugar pra soltar a âncora ⚓' : 'clique em qualquer lugar pra soltar a onda 🌊';
-  dica.innerHTML = '<b>' + (SOLTA ? 'Só a câmera' : 'Tela do LoL') + ' · ' + (NAUT ? 'Nautilus' : 'Nami') + ' · OBS · ' + SW + ' × ' + SH + '</b><span>' + acao + '</span>';
+  const acao = NAUT ? 'clique em qualquer lugar pra soltar a âncora ⚓' : LULU ? 'clique em qualquer lugar pra Lulu salvar o dia ✨' : 'clique em qualquer lugar pra soltar a onda 🌊';
+  dica.innerHTML = '<b>' + (SOLTA ? 'Só a câmera' : 'Tela do LoL') + ' · ' + (NAUT ? 'Nautilus' : LULU ? 'Lulu' : 'Nami') + ' · OBS · ' + SW + ' × ' + SH + '</b><span>' + acao + '</span>';
   if (SOLTA) {                                          // a fonte é pequena: a dica fica fora dela
     dica.classList.add('fixa');
     dica.innerHTML += '<span>a câmera fica ' + X + ' px da esquerda e ' + Y + ' px do topo da fonte</span>';
@@ -401,7 +448,7 @@ const CONFIG = {
       'A' + f(r) + ' ' + f(r) + ' 0 1 1 ' + f(cx - r) + ' ' + f(cy + r * .25) +
       'C' + f(cx - r) + ' ' + f(cy - r * .25) + ' ' + f(cx - r * .55) + ' ' + f(cy - r * .55) + ' ' + f(cx) + ' ' + f(cy - r * 1.4) + 'Z';
   }
-  const brilhos = NAUT ? ['#fff', '#b8fff0', '#f3cd7d'] : ['#fff', '#a4f4e9', '#ffe9ad'];
+  const brilhos = NAUT ? ['#fff', '#b8fff0', '#f3cd7d'] : LULU ? ['#fff', '#c8ffa8', '#c9a2f0'] : ['#fff', '#a4f4e9', '#ffe9ad'];
   function brilho(cx, cy, r, cor) {
     return '<path d="' + dBrilho(cx, cy, r) + '" fill="' + (cor || brilhos[2]) + '" stroke="' + CONT + '" stroke-width="' + f(Math.max(.8, r * .16)) + '" stroke-linejoin="round"/>';
   }
@@ -984,10 +1031,335 @@ const CONFIG = {
   }
 
   // ================================================================
+  //  tema LULU: roxo de fada, glitter, cogumelos e o resgate da Jinx
+  // ================================================================
+  function arteLulu() {
+    // cogumelo encantado de bolinhas; tronquinho apoiado em (x, y+10*s)
+    const cogumelo = (x, y, s, giro) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + (giro || 0) + ') scale(' + f(s) + ')">' +
+        '<path d="M-4.6 2L-3.6 10Q0 11.6 3.6 10L4.6 2Z" fill="#f0e2c8" ' + ct(1.1) + '/>' +
+        '<path d="M-4.4 5.4Q0 6.6 4.4 5.4" fill="none" stroke="#c9b68e" stroke-width=".9" stroke-linecap="round"/>' +
+        '<path d="M-11.8 2.6C-12.6 -5 -6.8 -10.6 0 -10.6C6.8 -10.6 12.6 -5 11.8 2.6C7.4 4.8 -7.4 4.8 -11.8 2.6Z" fill="url(#gCog)" ' + ct(1.3) + '/>' +
+        '<circle cx="-5.4" cy="-3.6" r="2.2" fill="#fff" opacity=".92"/><circle cx="3" cy="-6" r="1.6" fill="#fff" opacity=".92"/>' +
+        '<circle cx="6.6" cy="-1.4" r="1.9" fill="#fff" opacity=".92"/><circle cx="-1" cy="-.6" r="1.2" fill="#fff" opacity=".85"/>' +
+        '<path d="M-8.8 -5.8Q-4 -9.8 1.6 -9.4" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.2" stroke-linecap="round"/>' +
+      '</g>';
+    const emblemaSVG = (x, y, s) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<circle class="aura" r="25" fill="url(#gAura)"/>' +
+        cogumelo(0, 2, 1.7, 0) +
+        '<path class="cintila" ' + anima(2, 3.2, 0) + ' d="' + dEstrela(14, -14, 4) + '" fill="' + COR.verdeClaro + '"/>' +
+        '<path class="cintila" ' + anima(2.4, 3.6, 0) + ' d="' + dBrilho(-15, -11, 3.4) + '" fill="#fff"/>' +
+      '</g></g>';
+    // o círculo de fada atrás do cogumelo: estrelinhas e cogumelinhos girando, pó dourado ao contrário
+    const aroSVG = (x, y, s) => {
+      let estrelas = '', cogus = '', tracos = '';
+      for (let i = 0; i < 10; i++) {
+        const a = i * Math.PI / 5, cx2 = Math.cos(a) * 45.6, cy2 = Math.sin(a) * 45.6;
+        if (i % 2) estrelas += '<path d="' + dEstrela(cx2, cy2, 3.4) + '" fill="' + COR.verdeClaro + '" stroke="' + CONT + '" stroke-width=".7"/>';
+        else cogus += '<g transform="translate(' + f(cx2) + ' ' + f(cy2) + ') rotate(' + f(a * 180 / Math.PI + 90) + ')">' + cogumelo(0, -2, .4, 0) + '</g>';
+      }
+      for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 + .2, c = Math.cos(a), sn = Math.sin(a); tracos += 'M' + f(c * 34.6) + ' ' + f(sn * 34.6) + 'L' + f(c * 37.8) + ' ' + f(sn * 37.8); }
+      return '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')"><g class="aro">' +
+        '<circle r="56" fill="url(#gHalo)"/>' +
+        '<g class="gira">' +
+          '<circle r="49.4" fill="none" stroke="' + COR.roxoClaro + '" stroke-width="1.6"/>' +
+          '<circle r="41.6" fill="none" stroke="' + COR.verde + '" stroke-opacity=".7" stroke-width="1"/>' +
+          estrelas + cogus +
+        '</g>' +
+        '<g class="gira-contra">' +
+          '<path d="' + tracos + '" stroke="' + COR.douradoClaro + '" stroke-opacity=".8" stroke-width="1.1" stroke-linecap="round"/>' +
+          '<circle r="26" fill="none" stroke="#fff" stroke-width=".9" stroke-dasharray="4.4 2.6"/>' +
+          '<circle r="19.5" fill="none" stroke="' + COR.roxo + '" stroke-width=".8"/>' +
+        '</g>' +
+      '</g></g>';
+    };
+    // florzinha de cinco pétalas
+    const flor = (x, y, s, cor) => {
+      let p = '';
+      for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5 - Math.PI / 2; p += '<circle cx="' + f(Math.cos(a) * 3.1) + '" cy="' + f(Math.sin(a) * 3.1) + '" r="2.5" fill="' + cor + '" stroke="' + CONT + '" stroke-width=".7"/>'; }
+      return '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')">' + p + '<circle r="1.9" fill="url(#gOuro)" stroke="' + CONT + '" stroke-width=".7"/></g>';
+    };
+    const borboletaMini = (x, y, s, giro) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + (giro || 0) + ') scale(' + f(s) + ')">' +
+        '<ellipse cx="-3.4" cy="-1.2" rx="3.4" ry="2.6" transform="rotate(-24 -3.4 -1.2)" fill="url(#gBorb)" ' + ct(.9) + '/>' +
+        '<ellipse cx="3.4" cy="-1.2" rx="3.4" ry="2.6" transform="rotate(24 3.4 -1.2)" fill="url(#gBorb)" ' + ct(.9) + '/>' +
+        '<ellipse cx="-2.9" cy="2.6" rx="2.3" ry="1.8" transform="rotate(-40 -2.9 2.6)" fill="url(#gBorb2)" ' + ct(.8) + '/>' +
+        '<ellipse cx="2.9" cy="2.6" rx="2.3" ry="1.8" transform="rotate(40 2.9 2.6)" fill="url(#gBorb2)" ' + ct(.8) + '/>' +
+        '<ellipse rx="1" ry="3.2" fill="' + CONT + '"/>' +
+        '<path d="M-.6 -2.8Q-2 -5 -3.2 -5.4M.6 -2.8Q2 -5 3.2 -5.4" fill="none" stroke="' + CONT + '" stroke-width=".6" stroke-linecap="round"/>' +
+      '</g>';
+    // o cipó com florzinhas descendo a borda, com uma borboleta pousada na ponta
+    const caudaSVG = (tipo, x, y, L, w) => {
+      const s = w / 9, passo = 11 * s, n = Math.max(3, Math.floor(L / passo)), px0 = x - .4 * s;
+      let caule = 'M' + f(px0) + ' ' + f(y);
+      for (let i = 1; i <= n; i++) caule += 'Q' + f(px0 + (i % 2 ? 3.6 : -3.6) * s) + ' ' + f(y + (i - .5) * passo) + ' ' + f(px0) + ' ' + f(y + i * passo);
+      let d = '<path d="' + caule + '" fill="none" stroke="' + CONT + '" stroke-width="' + f(4 * s) + '" stroke-linecap="round"/>' +
+              '<path d="' + caule + '" fill="none" stroke="url(#gCipo)" stroke-width="' + f(2.3 * s) + '" stroke-linecap="round"/>';
+      for (let i = 0; i < n; i++) d += flor(px0 + 4.8 * s * (i % 2 ? 1 : -1), y + (i + .5) * passo, s * .9, i % 2 ? COR.rosa : COR.roxoClaro);
+      d += borboletaMini(px0 + 1.5 * s, y + n * passo + 5 * s, s * 1.05, 12);
+      return '<g class="cauda-' + (tipo === 'd' ? 'd' : 'b') + '">' + d + '</g>';
+    };
+    // cogumelinhos, florzinha, graminha e a estrelinha nos cantos
+    const conchasSVG = (x, y, s, espelho) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(espelho ? -s : s) + ' ' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<g class="balanco" ' + anima(3.4, 5.2, 4) + '><path d="M-15 1C-16.6 -4 -15.8 -9 -17.6 -13.4C-16 -12.6 -14.4 -9.6 -14.6 -6.4C-13.6 -3.6 -13.4 -1 -13.8 1.6Z" fill="url(#gCipo)" ' + ct(1) + '/></g>' +
+        cogumelo(-7, -10, 1, -8) + cogumelo(5, -7, .72, 6) +
+        flor(13, -3, 1.1, COR.rosa) +
+        '<path d="' + dEstrela(18, -11, 4.2) + '" fill="url(#gEstMar)" ' + ct(.9) + '/>' +
+      '</g></g>';
+    // adesivos do modelo solto: flor e estrela
+    const adesivo = (tipo, x, y, giro, s) => {
+      const d = tipo === 'estrela' ? dEstrela(0, 0, 13) : 'M0 -12.6A12.6 12.6 0 1 1 -0.02 -12.6Z';
+      return '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + giro + ') scale(' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<path d="' + d + '" transform="translate(1.4 2.2)" fill="#000" opacity=".3" stroke="#000" stroke-width="6" stroke-linejoin="round"/>' +
+        '<path d="' + d + '" fill="#fff" stroke="' + CONT + '" stroke-width="7.6" stroke-linejoin="round"/>' +
+        '<path d="' + d + '" fill="#fff" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>' +
+        (tipo === 'estrela'
+          ? '<path d="' + d + '" fill="url(#gEstMar)" ' + ct(1.1) + '/>'
+          : '<path d="' + d + '" fill="url(#gLilas)" ' + ct(1.1) + '/>' + flor(0, 0, 2.1, COR.rosa)) +
+        '<path d="M-6.5 -6Q-8.4 -3.6 -7.4 -1.2" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" stroke-linecap="round"/>' +
+      '</g></g>';
+    };
+    // o PIX: a fadinha voando em cima da borda; base em (x, y)
+    const mascoteSVG = (x, y, s, espelho) => {
+      masc = { x, y, s, espelho, topo: y - 34 * s };
+      const asa = m => '<g class="px-asa-' + (m < 0 ? 'e' : 'd') + '">' +
+        '<path d="M' + f(2 * m) + ' -14C' + f(10 * m) + ' -24 ' + f(20 * m) + ' -24 ' + f(21 * m) + ' -16C' + f(21.6 * m) + ' -9.6 ' + f(12 * m) + ' -8.4 ' + f(2.6 * m) + ' -11.4Z" fill="url(#gAsa)" stroke="' + CONT + '" stroke-width="1" stroke-linejoin="round"/>' +
+        '<path d="M' + f(2.6 * m) + ' -10.4C' + f(9 * m) + ' -6.4 ' + f(15.4 * m) + ' -6 ' + f(17 * m) + ' -9.4C' + f(17.6 * m) + ' -12.6 ' + f(11 * m) + ' -13.6 ' + f(3.4 * m) + ' -12.2Z" fill="url(#gAsa)" stroke="' + CONT + '" stroke-width=".9" stroke-linejoin="round"/>' +
+      '</g>';
+      return '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(espelho ? -s : s) + ' ' + f(s) + ')"><g class="mascote"><g class="pop" data-x="' + f(x) + '"><g class="ms-nada">' +
+        '<g transform="translate(0 -15)">' +
+          '<circle r="14" fill="url(#gPixAura)"/>' +
+          asa(-1) + asa(1) +
+          '<path d="M-4.6 -4.4L-1.8 10L1.8 10L4.6 -4.4Q0 -7 -4.6 -4.4Z" fill="url(#gPix)" ' + ct(1.1) + '/>' +
+          '<circle cy="-8.2" r="5.2" fill="url(#gPix)" ' + ct(1.1) + '/>' +
+          '<g class="ms-olhos"><circle cx="-1.9" cy="-8.8" r="1" fill="' + CONT + '"/><circle cx="1.9" cy="-8.8" r="1" fill="' + CONT + '"/></g>' +
+          '<path d="M-1.2 -6.2Q0 -5.2 1.2 -6.2" fill="none" stroke="' + CONT + '" stroke-width=".8" stroke-linecap="round"/>' +
+          '<path d="M-2.4 -12.8Q-3.6 -15.2 -2.6 -16.8M2.4 -12.8Q3.6 -15.2 2.6 -16.8" fill="none" stroke="' + CONT + '" stroke-width=".9" stroke-linecap="round"/>' +
+          '<circle cx="-2.6" cy="-17.1" r=".9" fill="' + COR.verdeClaro + '" stroke="' + CONT + '" stroke-width=".5"/><circle cx="2.6" cy="-17.1" r=".9" fill="' + COR.verdeClaro + '" stroke="' + CONT + '" stroke-width=".5"/>' +
+        '</g>' +
+      '</g></g></g></g>';
+    };
+    // estrelinhas douradas nos cantos da placa
+    const placaExtra = p => {
+      const est = (x2, y2) => '<path d="' + dEstrela(x2, y2, 2.6 * k) + '" fill="url(#gOuro)" stroke="' + CONT + '" stroke-width="' + f(.7 * k) + '"/>';
+      return est(p.x0 + 4.2 * k, p.y0 + 4 * k) + est(p.x1 - 4.2 * k, p.y0 + 4 * k) +
+             est(p.x0 + 4.2 * k, p.y1 - 4 * k) + est(p.x1 - 4.2 * k, p.y1 - 4 * k);
+    };
+    // o sininho de fada pendurado perto do canto direito
+    const argolaSVG = (x, y, s) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(s) + ')"><g class="pop" data-x="' + f(x) + '">' +
+        '<circle cy="-7" r="4.6" fill="none" stroke="' + CONT + '" stroke-width="4.2"/>' +
+        '<circle cy="-7" r="4.6" fill="none" stroke="url(#gOuro)" stroke-width="2.4"/>' +
+        '<path d="M-5.4 1.2C-5.4 -3.4 -3 -6.2 0 -6.2C3 -6.2 5.4 -3.4 5.4 1.2L6.6 3.2L-6.6 3.2Z" fill="url(#gOuro)" ' + ct(1.1) + '/>' +
+        '<circle cy="4.8" r="1.5" fill="url(#gOuro)" stroke="' + CONT + '" stroke-width=".8"/>' +
+        '<path d="M-3.4 -3.6A3.6 3.6 0 0 1 -1 -5.4" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".9" stroke-linecap="round"/>' +
+      '</g></g>';
+    // folhinha com frutinha abraçando o canto da borda
+    const cantoneiraSVG = (x, y, s, rot) =>
+      '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + rot + ') scale(' + f(s) + ')">' +
+        '<path d="M-4 -4C6 -7 14 -4 19 2C12 5 4 4 -1 0C2 6 3 13 1 20C-5 14 -7.6 6 -5.6 -2Z" fill="url(#gCipo)" ' + ct(1.2) + '/>' +
+        '<path d="M-2.6 -2.6Q6 -1.4 12 2M-2.6 -2.6Q-.6 6 .4 13" fill="none" stroke="' + COR.verdeEscuro + '" stroke-width="1" stroke-linecap="round"/>' +
+        '<circle cx="-3.6" cy="-3.6" r="1.8" fill="' + COR.rosa + '" stroke="' + CONT + '" stroke-width=".7"/>' +
+      '</g>';
+    // a LULU do resgate: chapéu gigante, vestido roxo e o cajado erguido (carimbo; a ponta do cajado é G = [-27, -82])
+    const bonecoSVG = () => {
+      const pele = '#d8bcf2', ct2 = w => 'stroke="' + CONT + '" stroke-width="' + w + '" stroke-linejoin="round"';
+      return '<defs>' +
+        '<linearGradient id="lxVest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b78aea"/><stop offset=".55" stop-color="#8f5bd0"/><stop offset="1" stop-color="#6e3fb0"/></linearGradient>' +
+        '<linearGradient id="lxChapeu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a2f0"/><stop offset=".5" stop-color="#9568d4"/><stop offset="1" stop-color="#6e3fb0"/></linearGradient>' +
+        '<linearGradient id="lxVerde" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8ffa8"/><stop offset=".5" stop-color="#8ce85a"/><stop offset="1" stop-color="#4da82e"/></linearGradient>' +
+        '<linearGradient id="lxOuro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9ad"/><stop offset=".45" stop-color="#f2c75c"/><stop offset="1" stop-color="#bb8524"/></linearGradient>' +
+        '<linearGradient id="lxCabelo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf8ff"/><stop offset="1" stop-color="#d7c2f2"/></linearGradient>' +
+      '</defs>' +
+        // botinhas
+        '<path d="M-10.4 0C-11 -4 -8.6 -6.6 -5.8 -6L-4.6 -.6Q-7.8 .8 -10.4 0Z" fill="#5f3698" ' + ct2(1.2) + '/>' +
+        '<path d="M3.4 0C2.8 -4 5.2 -6.6 8 -6L9.2 -.6Q6 .8 3.4 0Z" transform="scale(-1 1) translate(-2 0)" fill="#5f3698" ' + ct2(1.2) + '/>' +
+        // o vestido em sino, com barrado verde de folhinhas
+        '<path d="M-17.6 -6C-16.2 -22 -10 -36 -1.4 -38.6C7.2 -36.6 12.8 -24 14 -6C8 -1.6 -11 -1.6 -17.6 -6Z" fill="url(#lxVest)" ' + ct2(1.5) + '/>' +
+        '<path d="M-16.8 -9.4Q-9 -5.4 -1.6 -5.8Q6 -5.4 13.2 -9.2Q13.6 -7.2 13.8 -6.4Q6 -2 -1.8 -2.4Q-10 -2 -17.4 -6.2Z" fill="url(#lxVerde)" ' + ct2(1.1) + '/>' +
+        '<path d="M-13.6 -16.6Q-7 -13.4 -1.2 -13.8M-1.2 -13.8Q5 -13.4 10.4 -16" fill="none" stroke="#5f3698" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>' +
+        // o braço de trás segurando a barra da saia
+        '<path d="M8.6 -32L13.6 -22" fill="none" stroke="' + CONT + '" stroke-width="5" stroke-linecap="round"/>' +
+        '<path d="M8.6 -32L13.6 -22" fill="none" stroke="' + pele + '" stroke-width="3.5" stroke-linecap="round"/>' +
+        // o braço erguido com a luvinha, segurando o cajado
+        '<path d="M-10 -34L-16.4 -45" fill="none" stroke="' + CONT + '" stroke-width="5.2" stroke-linecap="round"/>' +
+        '<path d="M-10 -34L-16.4 -45" fill="none" stroke="' + pele + '" stroke-width="3.6" stroke-linecap="round"/>' +
+        // o cajado de madeira com a espiral e a gema verde na ponta
+        '<path d="M-13 -39L-25.6 -77" fill="none" stroke="' + CONT + '" stroke-width="4.6" stroke-linecap="round"/>' +
+        '<path d="M-13 -39L-25.6 -77" fill="none" stroke="#9c6b3a" stroke-width="2.8" stroke-linecap="round"/>' +
+        '<path d="M-25.6 -77C-30.4 -78.6 -31.8 -83.6 -28.6 -86.4C-25.8 -88.8 -21.6 -87.4 -21.2 -83.8C-21 -81 -23.2 -79.2 -25.2 -80" fill="none" stroke="' + CONT + '" stroke-width="4.2" stroke-linecap="round"/>' +
+        '<path d="M-25.6 -77C-30.4 -78.6 -31.8 -83.6 -28.6 -86.4C-25.8 -88.8 -21.6 -87.4 -21.2 -83.8C-21 -81 -23.2 -79.2 -25.2 -80" fill="none" stroke="#b9854c" stroke-width="2.4" stroke-linecap="round"/>' +
+        '<circle cx="-27" cy="-82" r="3.4" fill="url(#lxVerde)" ' + ct2(1) + '/>' +
+        '<circle cx="-16.6" cy="-45.4" r="3.4" fill="#fff" ' + ct2(1) + '/>' +
+        // a cabeça: pele lilás, bochechas, olhões âmbar e o sorriso
+        '<circle cx="-2" cy="-49" r="12.6" fill="' + pele + '" ' + ct2(1.4) + '/>' +
+        '<path d="M-14 -52C-16.4 -50.6 -17.4 -47.6 -16.4 -45.2M10 -52C12.4 -50.6 13.4 -47.6 12.4 -45.2" fill="none" stroke="' + CONT + '" stroke-width="3.6" stroke-linecap="round"/>' +
+        '<path d="M-14 -52C-16.4 -50.6 -17.4 -47.6 -16.4 -45.2M10 -52C12.4 -50.6 13.4 -47.6 12.4 -45.2" fill="none" stroke="' + pele + '" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<ellipse cx="-7" cy="-48.6" rx="2.5" ry="3.5" fill="#fff"/><ellipse cx="-7" cy="-48.2" rx="2.1" ry="3" fill="url(#lxOuro)"/><circle cx="-7.6" cy="-49.6" r=".9" fill="#fff"/>' +
+        '<ellipse cx="2.6" cy="-48.6" rx="2.5" ry="3.5" fill="#fff"/><ellipse cx="2.6" cy="-48.2" rx="2.1" ry="3" fill="url(#lxOuro)"/><circle cx="2" cy="-49.6" r=".9" fill="#fff"/>' +
+        '<path d="M-9.8 -51.6Q-7 -53.2 -4.4 -51.8M0 -51.8Q2.6 -53.2 5.4 -51.6" fill="none" stroke="' + CONT + '" stroke-width="1.1" stroke-linecap="round"/>' +
+        '<path d="M-3.4 -43.6Q-2 -42.2 -.4 -43.4" fill="none" stroke="' + CONT + '" stroke-width="1.1" stroke-linecap="round"/>' +
+        '<circle cx="-10.2" cy="-44.4" r="1.9" fill="#f0a0c8" opacity=".8"/><circle cx="6" cy="-44.4" r="1.9" fill="#f0a0c8" opacity=".8"/>' +
+        // o cabelo branco-lilás saindo do chapéu
+        '<path d="M-14 -54C-16.4 -46 -16.2 -38 -13.4 -32C-11.6 -36.6 -11.2 -41.6 -12 -46Z" fill="url(#lxCabelo)" ' + ct2(1.2) + '/>' +
+        '<path d="M10 -54C12.4 -46 12.2 -39 9.8 -33.4C8.2 -38 7.8 -42.6 8.4 -46.6Z" fill="url(#lxCabelo)" ' + ct2(1.2) + '/>' +
+        '<path d="M-10.4 -56.6Q-2 -60 6.6 -56.6Q-2 -54.4 -10.4 -56.6Z" fill="url(#lxCabelo)" ' + ct2(1.1) + '/>' +
+        // as orelhonas de yordle saindo de baixo do chapéu
+        '<path d="M-12.6 -58C-19.6 -59.4 -25.4 -57.6 -28.8 -53.4C-24 -51.6 -18.2 -52.6 -13.6 -55.4Z" fill="' + pele + '" ' + ct2(1.3) + '/>' +
+        '<path d="M8.6 -58C15.6 -59.4 21.4 -57.6 24.8 -53.4C20 -51.6 14.2 -52.6 9.6 -55.4Z" fill="' + pele + '" ' + ct2(1.3) + '/>' +
+        // o CHAPÉU gigante: aba larga, copa torta com a pontinha caída, faixa dourada e a luinha
+        '<path d="M-26.6 -59.6C-15 -64.6 10 -64.6 22.6 -59.6C23.8 -57.2 22.8 -55 20 -54.6C6 -57.6 -10 -57.6 -24 -54.6C-26.8 -55 -27.8 -57.2 -26.6 -59.6Z" fill="url(#lxChapeu)" ' + ct2(1.4) + '/>' +
+        '<path d="M-20 -60.4C-18.6 -70 -13.4 -78.4 -5.4 -83.6C-1.4 -86.2 3.8 -87.6 8 -86.8C9.2 -83 7.6 -78.4 4.4 -76.2C8.6 -76.6 12.6 -74.6 14.6 -70.8C12.4 -65.6 8 -61.8 3 -60.4Z" fill="url(#lxChapeu)" ' + ct2(1.5) + '/>' +
+        '<path d="M8 -86.8C13.4 -88.4 18.4 -86.8 20.6 -82.6C22.4 -79 21 -74.6 17.4 -72.8C15.6 -76.4 15.2 -80.4 8 -86.8Z" fill="url(#lxChapeu)" ' + ct2(1.3) + '/>' +
+        '<circle cx="19.2" cy="-74.4" r="2.8" fill="url(#lxVerde)" ' + ct2(1)+ '/>' +
+        '<path d="M-19 -61.4Q-8 -64.4 2.4 -61.2" fill="none" stroke="url(#lxOuro)" stroke-width="3.4" stroke-linecap="round"/>' +
+        '<path d="M-19 -61.4Q-8 -64.4 2.4 -61.2" fill="none" stroke="' + CONT + '" stroke-opacity=".35" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="1 5"/>' +
+        '<path d="M-11.2 -66.2A4.6 4.6 0 1 0 -6.2 -70.8A3.6 3.6 0 1 1 -11.2 -66.2Z" fill="url(#lxOuro)" ' + ct2(.9) + '/>' +
+        '<path d="M-16 -74Q-10 -78.6 -3.4 -80.2" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.6" stroke-linecap="round"/>';
+    };
+    // borboleta (carimbo): dois pares de asas e as anteninhas
+    const peixeSVG = c =>
+      '<defs><linearGradient id="px" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></linearGradient></defs>' +
+      '<ellipse cx="-6.4" cy="-3" rx="6.8" ry="4.8" transform="rotate(-26 -6.4 -3)" fill="url(#px)" stroke="' + CONT + '" stroke-opacity=".8" stroke-width="1" stroke-linejoin="round"/>' +
+      '<ellipse cx="6.4" cy="-3" rx="6.8" ry="4.8" transform="rotate(26 6.4 -3)" fill="url(#px)" stroke="' + CONT + '" stroke-opacity=".8" stroke-width="1" stroke-linejoin="round"/>' +
+      '<ellipse cx="-5.2" cy="4.2" rx="4.4" ry="3.2" transform="rotate(-42 -5.2 4.2)" fill="' + c[2] + '" stroke="' + CONT + '" stroke-opacity=".8" stroke-width=".9"/>' +
+      '<ellipse cx="5.2" cy="4.2" rx="4.4" ry="3.2" transform="rotate(42 5.2 4.2)" fill="' + c[2] + '" stroke="' + CONT + '" stroke-opacity=".8" stroke-width=".9"/>' +
+      '<circle cx="-7.4" cy="-4" r="1.6" fill="#fff" opacity=".85"/><circle cx="7.4" cy="-4" r="1.6" fill="#fff" opacity=".85"/>' +
+      '<ellipse rx="1.3" ry="4.6" fill="' + CONT + '"/>' +
+      '<path d="M-.8 -4Q-2.6 -7.4 -4.6 -8.2M.8 -4Q2.6 -7.4 4.6 -8.2" fill="none" stroke="' + CONT + '" stroke-width=".7" stroke-linecap="round"/>' +
+      '<circle cx="-4.8" cy="-8.4" r=".8" fill="' + CONT + '"/><circle cx="4.8" cy="-8.4" r=".8" fill="' + CONT + '"/>';
+    // a JINX do resgate (olhando pra esquerda): tranças azuis, a pow-pow e o sorriso maluco
+    const jinxSVG = () => {
+      const pele = '#f4ddd0', ct2 = w => 'stroke="' + CONT + '" stroke-width="' + w + '" stroke-linejoin="round"';
+      return '<defs>' +
+        '<linearGradient id="jxAzul" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa0f0"/><stop offset=".5" stop-color="#3d6fd9"/><stop offset="1" stop-color="#2a4fa8"/></linearGradient>' +
+        '<linearGradient id="jxRosa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb3d9"/><stop offset="1" stop-color="#e0559e"/></linearGradient>' +
+        '<linearGradient id="jxArma" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fa3b8"/><stop offset=".5" stop-color="#5c7085"/><stop offset="1" stop-color="#3a4a5c"/></linearGradient>' +
+      '</defs>' +
+        // as tranças ENORMES jogadas pra trás
+        '<path d="M8 -58C20 -62 30 -56 32 -42C33.6 -30 29 -16 20 -6C24 -18 24.6 -32 20.6 -42C17.6 -50 13 -55 7 -56Z" fill="url(#jxAzul)" ' + ct2(1.4) + '/>' +
+        '<path d="M10 -64C22 -70 32 -66 35.4 -54C38 -44 36 -30 29 -20C32 -32 31.6 -45 26.6 -53C23 -59.6 17 -63 10.6 -62Z" fill="url(#jxAzul)" ' + ct2(1.4) + '/>' +
+        '<path d="M20 -6L19 -1.4M29 -20L29.6 -14.6" stroke="' + CONT + '" stroke-width="3.4" stroke-linecap="round"/>' +
+        '<path d="M24.2 -40Q25.6 -30 22.4 -18M30.6 -50Q33 -40 31 -28" fill="none" stroke="#1d3a80" stroke-width="1.1" stroke-linecap="round"/>' +
+        // perninhas com o meião listrado
+        '<path d="M-6 -16L-7 -1M4 -16L5.4 -1" stroke="' + CONT + '" stroke-width="5.4" stroke-linecap="round"/>' +
+        '<path d="M-6 -16L-7 -1M4 -16L5.4 -1" stroke="#2c3a52" stroke-width="3.8" stroke-linecap="round"/>' +
+        '<path d="M-6.5 -11L-6.2 -8M4.6 -11L4.9 -8" stroke="#7ac8ff" stroke-width="3.8" stroke-linecap="round"/>' +
+        '<ellipse cx="-8.4" cy="-1" rx="3.6" ry="2.2" fill="#e0559e" ' + ct2(1) + '/><ellipse cx="7" cy="-1" rx="3.6" ry="2.2" fill="#e0559e" ' + ct2(1) + '/>' +
+        // shortinho e a barriguinha com o top rosa
+        '<path d="M-9 -24C-9.6 -19 -8.6 -16 -1.2 -16C6 -16 7 -19 6.4 -24Z" fill="#4a3660" ' + ct2(1.2) + '/>' +
+        '<path d="M-8 -36C-8.6 -30 -8 -26 -1.4 -25.6C5 -26 6 -30 5.4 -36Z" fill="' + pele + '" ' + ct2(1.2) + '/>' +
+        '<path d="M-8.4 -40C-8.8 -35.6 -7.6 -33 -1.4 -32.8C4.6 -33 5.8 -35.6 5.4 -40Z" fill="url(#jxRosa)" ' + ct2(1.2) + '/>' +
+        // a POW-POW (metralhadora) atravessada, apontando pra esquerda
+        '<path d="M-30 -27L-6 -31" stroke="' + CONT + '" stroke-width="8.4" stroke-linecap="round"/>' +
+        '<path d="M-30 -27L-6 -31" stroke="url(#jxArma)" stroke-width="6.2" stroke-linecap="round"/>' +
+        '<path d="M-31.6 -29.8L-31 -24.6" stroke="' + CONT + '" stroke-width="4.6" stroke-linecap="round"/>' +
+        '<path d="M-31.6 -29.8L-31 -24.6" stroke="#e0559e" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M-22 -33.4L-21.2 -25" stroke="' + CONT + '" stroke-width="1.1" stroke-linecap="round"/>' +
+        '<path d="M-4 -26L-2.6 -20.6L-7.4 -21.4Z" fill="url(#jxArma)" ' + ct2(1.1) + '/>' +
+        // os bracinhos segurando a arma
+        '<path d="M-6 -36L-13 -30M5 -35L-2 -29" stroke="' + CONT + '" stroke-width="4.6" stroke-linecap="round"/>' +
+        '<path d="M-6 -36L-13 -30M5 -35L-2 -29" stroke="' + pele + '" stroke-width="3.2" stroke-linecap="round"/>' +
+        // a cabeça: franja azul, olhões rosa e o sorriso maluco
+        '<circle cx="-1" cy="-48" r="11.4" fill="' + pele + '" ' + ct2(1.4) + '/>' +
+        '<ellipse cx="-6.2" cy="-47.6" rx="2.4" ry="3.4" fill="#fff"/><ellipse cx="-6.2" cy="-47.2" rx="2" ry="2.9" fill="url(#jxRosa)"/><circle cx="-6.8" cy="-48.4" r=".8" fill="#fff"/>' +
+        '<ellipse cx="3" cy="-47.6" rx="2.4" ry="3.4" fill="#fff"/><ellipse cx="3" cy="-47.2" rx="2" ry="2.9" fill="url(#jxRosa)"/><circle cx="2.4" cy="-48.4" r=".8" fill="#fff"/>' +
+        '<path d="M-8.8 -50.8Q-6.2 -52 -3.8 -50.8M.6 -50.8Q3 -52 5.4 -50.8" fill="none" stroke="' + CONT + '" stroke-width="1" stroke-linecap="round"/>' +
+        '<path d="M-6.4 -42.4Q-2 -38.6 3.4 -42Q-.4 -40 -6.4 -42.4Z" fill="#fff" ' + ct2(1) + '/>' +
+        '<path d="M-10 -55C-6 -58.6 2 -59.4 8.4 -57C9.6 -53.6 9 -50 7 -48C7.6 -52 6 -55 2.6 -55.8C-2 -56.8 -6.6 -56 -10 -53Z" fill="url(#jxAzul)" ' + ct2(1.3) + '/>' +
+        '<path d="M-10 -53C-12.4 -51 -13 -47.6 -11.8 -44.6L-9.4 -47.4Z" fill="url(#jxAzul)" ' + ct2(1.1) + '/>';
+    };
+    // a ASHE inimiga (olhando pra esquerda; na cena ela entra espelhada): capuz de gelo, tiara e o arco
+    const asheSVG = () => {
+      const pele = '#f2e0d8', ct2 = w => 'stroke="' + CONT + '" stroke-width="' + w + '" stroke-linejoin="round"';
+      return '<defs>' +
+        '<linearGradient id="asAzul" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ea8cf"/><stop offset=".5" stop-color="#4a6f96"/><stop offset="1" stop-color="#2e4a68"/></linearGradient>' +
+        '<linearGradient id="asGelo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8f6ff"/><stop offset=".5" stop-color="#9ad4f0"/><stop offset="1" stop-color="#5ca8d8"/></linearGradient>' +
+        '<linearGradient id="asCabelo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd9ea"/></linearGradient>' +
+        '<linearGradient id="asOuro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9ad"/><stop offset=".5" stop-color="#f2c75c"/><stop offset="1" stop-color="#bb8524"/></linearGradient>' +
+      '</defs>' +
+        // a capa esvoaçante atrás
+        '<path d="M6 -52C16 -48 21 -36 20 -20C18.6 -10 14 -3.4 8 -1C11.6 -10 12.6 -22 10.4 -33C9 -40.6 7.6 -47 5 -51Z" fill="url(#asAzul)" ' + ct2(1.4) + '/>' +
+        // botas e o vestido de gelo
+        '<path d="M-8.6 0C-9.2 -4.6 -6.8 -7.4 -3.8 -6.6L-2.6 -.8Q-6 .8 -8.6 0Z" fill="#2e4a68" ' + ct2(1.2) + '/>' +
+        '<path d="M2.6 0C2 -4.6 4.4 -7.4 7.4 -6.6L8.6 -.8Q5.2 .8 2.6 0Z" fill="#2e4a68" ' + ct2(1.2) + '/>' +
+        '<path d="M-13.4 -5C-12.4 -20 -7.6 -33 -.6 -35.6C6.4 -33.6 10.6 -21 11.4 -5C5.6 -1 -7 -1 -13.4 -5Z" fill="url(#asGelo)" ' + ct2(1.4) + '/>' +
+        '<path d="M-11.8 -12Q-6 -8.8 -.8 -9.2Q4.6 -8.8 9.8 -11.8" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round"/>' +
+        '<path d="M-7.4 -22Q-1 -19.6 5.2 -21.8" fill="none" stroke="#5ca8d8" stroke-width="1" stroke-linecap="round"/>' +
+        // o cinto dourado
+        '<path d="M-10.6 -26Q-.8 -22.6 8.6 -25.6" fill="none" stroke="url(#asOuro)" stroke-width="2.6" stroke-linecap="round"/>' +
+        // o braço do arco, estendido pra frente
+        '<path d="M-7 -33L-18 -38" stroke="' + CONT + '" stroke-width="4.8" stroke-linecap="round"/>' +
+        '<path d="M-7 -33L-18 -38" stroke="url(#asGelo)" stroke-width="3.4" stroke-linecap="round"/>' +
+        // o ARCO de gelo (vertical, na mão da frente) com a corda
+        '<path d="M-19 -56C-26.6 -50 -26.6 -26 -19 -20" fill="none" stroke="' + CONT + '" stroke-width="4.8" stroke-linecap="round"/>' +
+        '<path d="M-19 -56C-26.6 -50 -26.6 -26 -19 -20" fill="none" stroke="url(#asGelo)" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M-19 -56L-19 -20" stroke="#fff" stroke-opacity=".85" stroke-width="1"/>' +
+        '<path d="M-23.8 -52L-26.8 -55M-23.8 -24L-26.8 -21" stroke="' + CONT + '" stroke-width="2.6" stroke-linecap="round"/>' +
+        '<path d="M-23.8 -52L-26.8 -55M-23.8 -24L-26.8 -21" stroke="url(#asGelo)" stroke-width="1.4" stroke-linecap="round"/>' +
+        '<circle cx="-18.6" cy="-37.6" r="3" fill="#fff" ' + ct2(1) + '/>' +
+        // o outro braço puxado atrás
+        '<path d="M4 -33L10.4 -29" stroke="' + CONT + '" stroke-width="4.4" stroke-linecap="round"/>' +
+        '<path d="M4 -33L10.4 -29" stroke="url(#asGelo)" stroke-width="3" stroke-linecap="round"/>' +
+        // a cabeça com o capuz, a tiara e o cabelo prata
+        '<circle cx="-2.6" cy="-45.6" r="10.8" fill="' + pele + '" ' + ct2(1.4) + '/>' +
+        '<ellipse cx="-7.4" cy="-45" rx="2.2" ry="3" fill="#fff"/><ellipse cx="-7.4" cy="-44.6" rx="1.8" ry="2.5" fill="url(#asAzul)"/><circle cx="-7.9" cy="-45.8" r=".7" fill="#fff"/>' +
+        '<ellipse cx="1" cy="-45" rx="2.2" ry="3" fill="#fff"/><ellipse cx="1" cy="-44.6" rx="1.8" ry="2.5" fill="url(#asAzul)"/><circle cx=".5" cy="-45.8" r=".7" fill="#fff"/>' +
+        '<path d="M-9.8 -48.2Q-7.4 -49.4 -5.2 -48.4M-1.4 -48.4Q.8 -49.4 3 -48.2" fill="none" stroke="' + CONT + '" stroke-width=".9" stroke-linecap="round"/>' +
+        '<path d="M-5.2 -40.2Q-3.4 -39.2 -1.6 -40.2" fill="none" stroke="' + CONT + '" stroke-width="1" stroke-linecap="round"/>' +
+        '<path d="M6 -42C9 -34 9 -22 6.4 -12C4.6 -20 4 -31 4.6 -39Z" fill="url(#asCabelo)" ' + ct2(1.2) + '/>' +
+        '<path d="M-12.6 -42C-14 -36 -13.8 -29 -12 -23C-10.6 -29 -10.4 -35 -11 -40Z" fill="url(#asCabelo)" ' + ct2(1.1) + '/>' +
+        '<path d="M-13.4 -48C-12 -56.6 -5 -61.6 2.4 -59.6C8.6 -58 11.6 -52.6 10.6 -46.6C8.8 -51.8 5.6 -55 1 -55.6C-5.2 -56.6 -10.4 -53.4 -13.4 -48Z" fill="url(#asAzul)" ' + ct2(1.4) + '/>' +
+        '<path d="M-10.6 -51.4Q-2.6 -55.8 6.4 -52.8" fill="none" stroke="url(#asOuro)" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<path d="M-2.8 -56.6L-2 -59.8L-.2 -57Z" fill="url(#asOuro)" ' + ct2(.8) + '/>';
+    };
+    // os defs do tema (os mesmos ids dos outros temas)
+    const defs = hs =>
+      '<linearGradient id="gOuro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.douradoClaro + '"/><stop offset=".45" stop-color="' + COR.dourado + '"/><stop offset="1" stop-color="' + COR.douradoEscuro + '"/></linearGradient>' +
+      '<radialGradient id="gAura"><stop offset="0" stop-color="' + COR.verde + '" stop-opacity=".7"/><stop offset=".5" stop-color="' + COR.verde + '" stop-opacity=".26"/><stop offset="1" stop-color="' + COR.verde + '" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="gHalo"><stop offset="0" stop-color="' + COR.roxo + '" stop-opacity=".3"/><stop offset=".72" stop-color="' + COR.roxo + '" stop-opacity=".14"/><stop offset="1" stop-color="' + COR.roxo + '" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="gCog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.cogumeloClaro + '"/><stop offset=".55" stop-color="' + COR.cogumelo + '"/><stop offset="1" stop-color="#a83442"/></linearGradient>' +
+      '<linearGradient id="gCipo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8e07f"/><stop offset="1" stop-color="' + COR.verdeEscuro + '"/></linearGradient>' +
+      '<linearGradient id="gEstMar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.douradoClaro + '"/><stop offset="1" stop-color="' + COR.douradoEscuro + '"/></linearGradient>' +
+      '<linearGradient id="gLilas" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.lilas + '"/><stop offset="1" stop-color="' + COR.roxoClaro + '"/></linearGradient>' +
+      '<linearGradient id="gBorb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.lilas + '"/><stop offset="1" stop-color="' + COR.roxo + '"/></linearGradient>' +
+      '<linearGradient id="gBorb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + COR.rosa + '"/><stop offset="1" stop-color="' + COR.rosaEscuro + '"/></linearGradient>' +
+      '<linearGradient id="gAsa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf6ff" stop-opacity=".95"/><stop offset="1" stop-color="' + COR.pix + '" stop-opacity=".8"/></linearGradient>' +
+      '<radialGradient id="gPix" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#eaf6ff"/><stop offset=".6" stop-color="#a8d8ff"/><stop offset="1" stop-color="' + COR.pix + '"/></radialGradient>' +
+      '<radialGradient id="gPixAura"><stop offset="0" stop-color="' + COR.pix + '" stop-opacity=".55"/><stop offset="1" stop-color="' + COR.pix + '" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="gBorda" gradientUnits="userSpaceOnUse" x1="' + f(X) + '" y1="' + f(Y) + '" x2="' + f(X + W) + '" y2="' + f(Y + H) + '">' +
+        '<stop offset="0" stop-color="' + COR.roxoClaro + '"/><stop offset=".2" stop-color="' + COR.roxo + '"/><stop offset=".4" stop-color="#d4b4f4"/><stop offset=".6" stop-color="' + COR.roxo + '"/><stop offset=".8" stop-color="#8450c4"/><stop offset="1" stop-color="' + COR.roxoEscuro + '"/></linearGradient>' +
+      '<linearGradient id="gMiolo" gradientUnits="userSpaceOnUse" x1="0" y1="' + f(Y) + '" x2="0" y2="' + f(Y + H) + '"><stop offset="0" stop-color="#f3eafc"/><stop offset="1" stop-color="#e2cdf7"/></linearGradient>' +
+      '<linearGradient id="gPlaca" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bb8ce8"/><stop offset=".5" stop-color="' + COR.roxo + '"/><stop offset="1" stop-color="#7a46b8"/></linearGradient>' +
+      '<linearGradient id="gTexto" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="' + COR.lilas + '"/></linearGradient>' +
+      '<linearGradient id="gReflexo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>' +
+      '<pattern id="pMiolo" patternUnits="userSpaceOnUse" width="' + f(hs) + '" height="' + f(hs) + '">' +
+        '<path d="' + dEstrela(hs * .3, hs * .32, 2 * k) + '" fill="' + COR.roxo + '" opacity=".8"/>' +
+        '<circle cx="' + f(hs * .78) + '" cy="' + f(hs * .76) + '" r="' + f(.8 * k) + '" fill="' + COR.verde + '" opacity=".75"/>' +
+      '</pattern>';
+    return {
+      defs, emblemaSVG, aroSVG, caudaSVG, conchasSVG, adesivo, mascoteSVG, placaExtra, bonecoSVG, peixeSVG, ancoraSVG: null, argolaSVG, cantoneiraSVG,
+      extras: [{ id: 'jinx', vb: [-36, -90, 76, 96], tam: .9, svg: jinxSVG }, { id: 'ashe', vb: [-32, -88, 64, 94], tam: .9, svg: asheSVG }],
+      adesivoTipos: ['flor', 'estrela'],
+      renda: { cores: [CONT, COR.verde, COR.verdeClaro] },              // os pontinhos de glitter por dentro da borda
+      halo: [COR.roxo, COR.verdeClaro],
+      filete: COR.dourado,
+      sombraPlaca: COR.roxoEscuro,
+      balaoTrim: COR.roxoClaro, balaoTexto: '#4b2a78',
+      emblemaS: .95, aroS: .82, mascS: .9, conchaS: 1,
+      BON_VB: [-42, -94, 84, 100], TAM_BON: .98, G: [-27, -82],         // o carimbo da Lulu e a gema do cajado
+      PEIXE_VB: [-15, -12, 30, 24], TAM_PEIXE: .66,
+      CORES_PEIXE: [['#e7d4fa', '#a06ae0', '#8ce85a'], ['#ffd6ec', '#ff9ad4', '#c9a2f0'], ['#d6f8ff', '#7ac8ff', '#ffe9ad'], ['#fff3c8', '#f2c75c', '#ff9ad4']],
+    };
+  }
+
+  // ================================================================
   //  o tema escolhido
   // ================================================================
-  let masc = null;                                      // o mascote (o caranguejo / koizinho); preenchido por mascoteSVG
-  const ARTE = NAUT ? arteNautilus() : arteNami();
+  let masc = null;                                      // o mascote (o caranguejo / koizinho / Pix); preenchido por mascoteSVG
+  const ARTE = NAUT ? arteNautilus() : LULU ? arteLulu() : arteNami();
   const BON_VB = ARTE.BON_VB, TAM_BON = ARTE.TAM_BON, G = ARTE.G;
   const PEIXE_VB = ARTE.PEIXE_VB, TAM_PEIXE = ARTE.TAM_PEIXE, CORES_PEIXE = ARTE.CORES_PEIXE;
 
@@ -1152,7 +1524,7 @@ const CONFIG = {
   // ================================================================
   //  carimbos (desenhos prontos, pintados no canvas): os peixinhos e o campeão
   // ================================================================
-  let carimbosPeixe = [], carimboBon = null;
+  let carimbosPeixe = [], carimboBon = null, carimbosExtras = {};
 
   function svgPronto(vb, w, h, miolo) {
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="' + vb.join(' ') + '">' + miolo + '</svg>';
@@ -1167,10 +1539,15 @@ const CONFIG = {
     });
   }
   async function prepararCarimbos() {
-    const eP = TAM_PEIXE * 1.3 * k * K, eB = TAM_BON * 1.15 * k * K;
-    const [ps, b] = await Promise.all([Promise.all(CORES_PEIXE.map(c => carimbo(PEIXE_VB, ARTE.peixeSVG(c), eP))), BONECO ? carimbo(BON_VB, ARTE.bonecoSVG(), eB) : null]);
+    const eP = TAM_PEIXE * 1.3 * k * K, eB = TAM_BON * 1.15 * k * K, ex = BONECO ? ARTE.extras || [] : [];
+    const [ps, b, ...exs] = await Promise.all([
+      Promise.all(CORES_PEIXE.map(c => carimbo(PEIXE_VB, ARTE.peixeSVG(c), eP))),
+      BONECO ? carimbo(BON_VB, ARTE.bonecoSVG(), eB) : null,
+      ...ex.map(e => carimbo(e.vb, e.svg(), e.tam * 1.15 * k * K)),
+    ]);
     if (ps.every(Boolean)) carimbosPeixe = ps;
     if (b) carimboBon = b;
+    ex.forEach((e, i) => { if (exs[i]) carimbosExtras[e.id] = { c: exs[i], vb: e.vb, tam: e.tam }; });
   }
 
   // ================================================================
@@ -1217,6 +1594,12 @@ const CONFIG = {
       const a = nasce * Math.max(0, Math.min(1, (p.y - p.z.y0) / (40 * k))) * pertoCam(p.x, p.y, 16 * k) * naFonte(p.x, p.y, 34);
       if (a <= .01) continue;
       const r = p.r * (.8 + .2 * nasce) * (1 + .06 * Math.sin(t * 3 + p.fase));
+      if (LULU) {                                       // no tema da Lulu sobe GLITTER em vez de bolha
+        ctx.globalAlpha = a * (.65 + .35 * Math.sin(t * 4 + p.fase));
+        ctx.fillStyle = ['#fff', brilhos[1], brilhos[2]][p.i % 3];
+        desenhaBrilho(p.x, p.y, r * 1.5, t * .7 + p.fase);
+        continue;
+      }
       ctx.globalAlpha = a;
       const g = ctx.createRadialGradient(p.x - r * .3, p.y - r * .35, r * .1, p.x, p.y, r);
       if (NAUT) { g.addColorStop(0, 'rgba(230,255,250,.5)'); g.addColorStop(.75, 'rgba(120,230,210,.1)'); g.addColorStop(1, 'rgba(90,210,190,.3)'); }
@@ -1240,27 +1623,35 @@ const CONFIG = {
   const EV = { surge: .3, carga: 1, solta: 1.15, arrasta: 1.6, chega: 2.1, some: NAUT ? 3.2 : 4.4 };   // tempos (s) desde o começo
   const CONGELA = num('pausa', 0, 0, 10);               // só pra conferir o desenho: para o campeão nesse instante
   const SBON = TAM_BON * k;
-  let evT0 = -99, evAte = -99, bon = null, bonOx = 0, ancora = null, ondaAgua = null, tiraEv = 0;
+  let evT0 = -99, evAte = -99, bon = null, bonOx = 0, ancora = null, ondaAgua = null, resgate = null, tiraEv = 0;
   const suave = u => u * u * (3 - 2 * u);
   const volta = u => 1 + 2.7 * Math.pow(u - 1, 3) + 1.7 * Math.pow(u - 1, 2);   // passa um pouquinho e volta
   const doBon = (lx, ly) => [bonP.x + bonOx + lx * SBON, bonP.y + ly * SBON];   // ponto do campeão (unidades do desenho) na tela
   const tempoBon = t => CONGELA ? Math.min(t - bon.t0, CONGELA) : t - bon.t0;
-  const gotaCores = NAUT ? ['#b8fff0', '#7fe3d2', '#52e8cc', '#fff'] : ['#a4f4e9', '#6fe3d4', '#3fd4c5', '#fff'];
+  const gotaCores = NAUT ? ['#b8fff0', '#7fe3d2', '#52e8cc', '#fff'] : LULU ? ['#c8ffa8', '#c9a2f0', '#8ce85a', '#fff'] : ['#a4f4e9', '#6fe3d4', '#3fd4c5', '#fff'];
 
   function evento(t) {
-    evT0 = t; evAte = t + (NAUT ? 4 : 5);
+    if (BONECO && (!carimboBon || (LULU && !(carimbosExtras.jinx && carimbosExtras.ashe)))) return false;   // as bonecas ainda estão carregando: tenta já já
+    evT0 = t; evAte = t + (NAUT ? 4 : LULU ? 6.3 : 5);
     cena.classList.add('evento');
     clearTimeout(tiraEv);
-    tiraEv = setTimeout(() => cena.classList.remove('evento'), NAUT ? 4000 : 5000);
+    tiraEv = setTimeout(() => cena.classList.remove('evento'), NAUT ? 4000 : LULU ? 6300 : 5000);
     if (aroEl && aroEl.animate) aroEl.animate([{ transform: 'rotate(0deg) scale(1)' }, { transform: 'rotate(220deg) scale(1.25)', offset: .4 }, { transform: 'rotate(360deg) scale(1)' }],
       { duration: 1800, easing: 'cubic-bezier(.2,.7,.3,1)' });
     if (embP) for (let i = 0; i < 8; i++) faisca(embP.x + rnd(-14, 14) * k, embP.y + rnd(-16, 12) * k, rnd(4, 7) * k, rnd(.5, .9), escolhe(brilhos));
-    if (BONECO && carimboBon) {
+    if (LULU) {                                         // o RESGATE precisa das três bonecas prontas
+      if (BONECO && carimboBon && carimbosExtras.jinx && carimbosExtras.ashe) resgate = { t0: t, flechas: [], hp: .3 };
+      else {                                            // sem as bonecas: só uma chuva de glitter
+        if (embP) for (let i = 0; i < 14; i++) faisca(embP.x + rnd(-30, 30) * k, embP.y + rnd(-40, 20) * k, rnd(4, 8) * k, rnd(.5, 1), escolhe(brilhos));
+        brilhoPlaca(); onda();
+      }
+    } else if (BONECO && carimboBon) {
       bon = { t0: t, soltou: false, sumiu: false, bateu: false };
       bonOx = 0;
       puf(bonP.x - 4 * k, bonP.y - 40 * SBON, .55);
     } else if (NAUT) lancarAncora(t, embP ? embP.x + 16 * k : X + 10 * k, embP ? embP.y - 12 * k : Y + 10 * k, true);
     else ondaAgua = { t0: t + .2, kois: [], spray: [] };
+    return true;
   }
   function lancarAncora(t, x, y, sozinha) {             // a âncora sai voando da mão (ou da escotilha) até a argola
     ancora = { x0: x, y0: y, x, y, t0: t, fase: 'voa', sozinha, dur: Math.max(.24, Math.hypot(gancho.x - x, gancho.y - y) / (860 * k)) };
@@ -1524,7 +1915,176 @@ const CONFIG = {
   }
 
   // ================================================================
-  //  partículas (canvas): faíscas, gotas, peixes, bolhas soltas, o estouro e a chuva de gotinhas
+  //  o RESGATE da Lulu: a Jinx quase low foge da Ashe (time vermelho),
+  //  a Lulu surge, ULTA a Jinx — Crescimento Selvagem! — e salva o dia
+  // ================================================================
+  const CT = { paraJ: .9, tiros: [1.05, 1.4, 1.75], lulu: 2.15, ulta: 2.75, cresce: 3.0, susto: 3.35, foge: 3.65, some: 5.3, fim: 5.9 };
+  const AZUL_TIME = '#3b82f6', VERM_TIME = '#e23c3c';
+  const tempoResgate = t => CONGELA ? Math.min(t - resgate.t0, CONGELA) : t - resgate.t0;
+  const baseResgate = () => SOLTA ? Y + 1.2 * k : Y - 2 * k;
+  const palcoResgate = () => SOLTA
+    ? { ax: X + W * .1, jx: X + W * .52, lx: X + W * .8, fuga: X - 70 * k }
+    : { ax: Math.max(RX + 60 * k, X - 330 * k), jx: X - 150 * k, lx: X - 50 * k, fuga: RX - 60 * k };
+  function posJinx(tl) {
+    const P = palcoResgate(), b = baseResgate();
+    const u = Math.min(1, tl / CT.paraJ), x = P.ax + 30 * k + (P.jx - P.ax - 30 * k) * (1 - Math.pow(1 - u, 2));
+    let y = b, esc = 1;
+    if (tl < CT.paraJ) y -= Math.abs(Math.sin(tl * 16)) * 7 * k;                 // chega correndo aos pulinhos
+    if (tl >= CT.ulta) y -= Math.sin(Math.min(1, (tl - CT.ulta) / .5) * Math.PI) * 24 * k;   // o knock-up do crescimento
+    if (tl >= CT.cresce) esc = 1 + .8 * volta(Math.min(1, (tl - CT.cresce) / .45));          // GIGANTE
+    else if (tl >= CT.ulta) esc = 1 + .05 * Math.sin((tl - CT.ulta) * 30);                   // tremidinha de mágica
+    if (resgate && resgate.cresceu && tl < CT.some) y -= Math.abs(Math.sin((tl - CT.cresce) * 6)) * 8 * k;   // pulinhos de festa
+    return [x, y, esc];
+  }
+  function posAshe(tl) {
+    const P = palcoResgate(), b = baseResgate();
+    let x;
+    if (tl < CT.foge) { const u = Math.min(1, tl / (CT.paraJ * .9)); x = P.ax - 70 * k + 70 * k * (1 - Math.pow(1 - u, 2)); }
+    else { const u = Math.min(1, (tl - CT.foge) / .9); x = P.ax + (P.fuga - P.ax) * u * u; }
+    let y = b;
+    if (tl < CT.paraJ * .9 || tl >= CT.foge) y -= Math.abs(Math.sin(tl * 17)) * 6 * k;       // correndo
+    if (tl >= CT.susto && tl < CT.foge) y -= Math.sin(Math.min(1, (tl - CT.susto) / .2) * Math.PI) * 14 * k;   // pulinho de susto
+    const beira = SOLTA ? 20 * k : RX + 26 * k;
+    const a = Math.max(0, Math.min(1, (x - beira) / (36 * k)));
+    return [x, y, a];
+  }
+  function atualizaResgate(t) {
+    const tl = tempoResgate(t), P = palcoResgate(), b = baseResgate();
+    for (const ti of CT.tiros) if (tl >= ti && !resgate['t' + ti]) {             // a Ashe atira
+      resgate['t' + ti] = true;
+      resgate.flechas.push({ t0: resgate.t0 + ti, dur: .16 });
+    }
+    for (let i = resgate.flechas.length - 1; i >= 0; i--) {
+      const u = (t - resgate.flechas[i].t0) / resgate.flechas[i].dur;
+      if (u >= 1) {                                                              // acertou: a vida despenca
+        resgate.flechas.splice(i, 1);
+        resgate.hp = Math.max(.06, resgate.hp - .09);
+        const [jx2, jy2] = posJinx(tl);
+        for (let j = 0; j < 5; j++) faisca(jx2 + rnd(-10, 10) * k, jy2 - rnd(26, 46) * k, rnd(2.5, 4.5) * k, rnd(.25, .45), escolhe(['#fff', '#9ad4f0']));
+      }
+    }
+    if (tl < CT.cresce && Math.random() < .12) { const [jx2, jy2] = posJinx(tl); gota(jx2 + 8 * k, jy2 - 78 * k, .3, true); }   // suorzinho
+    if (tl >= CT.lulu && !resgate.lulou) { resgate.lulou = true; puf(P.lx, b - 42 * k, .5); }
+    if (tl >= CT.ulta && tl < CT.cresce && Math.random() < .8) {                 // a mágica juntando na Jinx
+      const [jx2, jy2] = posJinx(tl);
+      faisca(jx2 + rnd(-16, 16) * k, jy2 - rnd(10, 70) * k, rnd(2.5, 5) * k, rnd(.3, .5), escolhe(brilhos));
+    }
+    if (tl >= CT.cresce && !resgate.cresceu) {                                   // CRESCER!
+      resgate.cresceu = true;
+      const [jx2, jy2] = posJinx(tl);
+      parts.push({ tipo: 'estouro', x: jx2, y: jy2 - 44 * k, tam: .7, rot: rnd(0, 1), idade: 0, vida: .6 });
+      for (let i = 0; i < 12; i++) faisca(jx2 + rnd(-34, 34) * k, jy2 - rnd(10, 90) * k, rnd(4, 7.5) * k, rnd(.5, .9), escolhe(brilhos));
+      brilhoPlaca(); onda();
+      if (masc && FALAS.length) falar(T.falaEvento, 2.4);
+    }
+    if (resgate.cresceu && tl < CT.some && Math.random() < .3)                   // chuvinha de glitter na festa
+      faisca(rnd(P.ax, P.lx + 16 * k), b - rnd(50, 140) * k, rnd(3, 6) * k, rnd(.4, .8), escolhe(brilhos));
+    if (tl >= CT.some && !resgate.pufou) {
+      resgate.pufou = true;
+      const [jx2, jy2, esc2] = posJinx(tl);
+      puf(jx2, jy2 - 50 * k * esc2, .6); puf(P.lx, b - 42 * k, .45);
+    }
+    if (tl >= CT.fim) resgate = null;
+  }
+  function desenhaResgate(t) {
+    if (!resgate) return;
+    const tl = tempoResgate(t), b = baseResgate(), P = palcoResgate();
+    const sJ = carimbosExtras.jinx, sA = carimbosExtras.ashe;
+    if (!sJ || !sA || !carimboBon) return;
+    const anel = (x2, y2, r, cor, a2) => { ctx.save(); ctx.translate(x2, y2 + 1.5 * k); ctx.scale(1, .3); ctx.globalAlpha = .6 * a2; ctx.strokeStyle = cor; ctx.lineWidth = 2.4 * k; ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.stroke(); ctx.restore(); };
+    const stampa = (st, tam, x2, y2, esc2, flip2, a2) => {
+      ctx.save(); ctx.globalAlpha = a2; ctx.translate(x2, y2);
+      if (flip2) ctx.scale(-1, 1);
+      ctx.scale(tam * k * esc2, tam * k * esc2);
+      ctx.drawImage(st.c, st.vb[0], st.vb[1], st.vb[2], st.vb[3]);
+      ctx.restore();
+    };
+    const barra = (x2, y2, frac, cor, larg, escudo, a2) => {
+      const bw = larg, bh = 5 * k;
+      ctx.globalAlpha = a2;
+      ctx.fillStyle = 'rgba(8,6,18,.85)'; ctx.fillRect(x2 - bw / 2 - 1.2 * k, y2 - bh - 1.2 * k, bw + 2.4 * k, bh + 2.4 * k);
+      ctx.fillStyle = '#2a2a34'; ctx.fillRect(x2 - bw / 2, y2 - bh, bw, bh);
+      ctx.fillStyle = cor; ctx.fillRect(x2 - bw / 2, y2 - bh, bw * Math.max(0, Math.min(1, frac)), bh);
+      if (escudo) { ctx.fillStyle = 'rgba(255,255,255,' + f(.4 + .25 * Math.sin(t * 10)) + ')'; ctx.fillRect(x2 - bw / 2, y2 - bh, bw * Math.min(1, frac), 1.8 * k); }
+      ctx.globalAlpha = 1;
+    };
+    // a ASHE (time vermelho): entra atirando, se assusta e foge
+    const [ax2, ay2, aA] = posAshe(tl);
+    if (aA > 0) {
+      anel(ax2, ay2, 24 * k, VERM_TIME, aA);
+      if (tl >= CT.foge) {                              // rastrinho de quem saiu correndo
+        ctx.globalAlpha = aA * .5; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6 * k; ctx.lineCap = 'round';
+        for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.moveTo(ax2 + (16 + i * 7) * k, ay2 - (24 + i * 16) * k); ctx.lineTo(ax2 + (34 + i * 7) * k, ay2 - (24 + i * 16) * k); ctx.stroke(); }
+        ctx.globalAlpha = 1;
+      }
+      stampa(sA, sA.tam, ax2, ay2, 1, tl < CT.foge, aA);
+      barra(ax2, ay2 - 88 * k, 1, VERM_TIME, 32 * k, false, aA);
+      if (tl >= CT.susto && tl < CT.foge + .3) {        // o "!" do susto
+        ctx.globalAlpha = aA; ctx.font = '700 ' + f(17 * k) + 'px ' + FAMILIA; ctx.textAlign = 'center';
+        ctx.lineWidth = 3.4 * k; ctx.strokeStyle = CONT; ctx.strokeText('!', ax2, ay2 - 96 * k);
+        ctx.fillStyle = VERM_TIME; ctx.fillText('!', ax2, ay2 - 96 * k);
+        ctx.globalAlpha = 1;
+      }
+    }
+    // a JINX (time azul): quase low até a Lulu chegar
+    const [jx2, jy2, esc2] = posJinx(tl);
+    const aJ = tl >= CT.some ? Math.max(0, 1 - (tl - CT.some) / .3) : 1;
+    if (aJ > 0) {
+      anel(jx2, jy2, 24 * k * esc2, AZUL_TIME, aJ);
+      stampa(sJ, sJ.tam, jx2, jy2, esc2, false, aJ);
+      const hpJ = resgate.cresceu ? Math.min(1, resgate.hp + (tl - CT.cresce) * 1.6) : resgate.hp;
+      barra(jx2, jy2 - 88 * k * esc2, hpJ, AZUL_TIME, 34 * k * Math.min(1.5, esc2), resgate.cresceu, aJ);
+    }
+    // a LULU: surge num puf de glitter, ulta e vai embora
+    if (tl >= CT.lulu) {
+      const pop = volta(Math.min(1, (tl - CT.lulu) / .3));
+      const aL = tl >= CT.some ? Math.max(0, 1 - (tl - CT.some) / .3) : Math.min(1, (tl - CT.lulu) / .18);
+      if (aL > 0) {
+        ctx.save();                                     // o circulinho de fada debaixo dela
+        ctx.translate(P.lx, b + 1.5 * k); ctx.scale(1, .3); ctx.globalAlpha = .55 * aL;
+        ctx.strokeStyle = COR.verdeClaro; ctx.lineWidth = 1.8 * k;
+        ctx.beginPath(); ctx.arc(0, 0, 20 * k, 0, 7); ctx.stroke();
+        ctx.fillStyle = '#fff';
+        for (let i = 0; i < 7; i++) { const an = t * 2 + i * Math.PI * 2 / 7; ctx.beginPath(); ctx.arc(Math.cos(an) * 20 * k, Math.sin(an) * 20 * k, 1.3 * k, 0, 7); ctx.fill(); }
+        ctx.restore();
+        anel(P.lx, b, 22 * k, AZUL_TIME, aL * .8);
+        const sL = SBON * pop;
+        ctx.save(); ctx.globalAlpha = aL; ctx.translate(P.lx, b); ctx.scale(sL, sL);
+        ctx.drawImage(carimboBon, BON_VB[0], BON_VB[1], BON_VB[2], BON_VB[3]);
+        ctx.restore();
+        barra(P.lx, b - 92 * k, 1, AZUL_TIME, 30 * k, false, aL);
+        if (tl >= CT.ulta && tl < CT.cresce + .3) {     // o raio do Crescimento Selvagem
+          const gx2 = P.lx + G[0] * sL, gy2 = b + G[1] * sL, alvoX = jx2, alvoY = jy2 - 44 * k * esc2;
+          const g2 = ctx.createLinearGradient(gx2, gy2, alvoX, alvoY);
+          g2.addColorStop(0, 'rgba(200,255,168,.9)'); g2.addColorStop(.5, 'rgba(160,106,224,.7)'); g2.addColorStop(1, 'rgba(200,255,168,.9)');
+          ctx.globalAlpha = aL * (.7 + .3 * Math.sin(t * 24));
+          ctx.strokeStyle = g2; ctx.lineWidth = 3.4 * k; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(gx2, gy2); ctx.lineTo(alvoX, alvoY); ctx.stroke();
+          ctx.globalAlpha = 1;
+          if (Math.random() < .8) { const v = Math.random(); faisca(gx2 + (alvoX - gx2) * v, gy2 + (alvoY - gy2) * v + rnd(-5, 5) * k, rnd(2.5, 4.5) * k, rnd(.25, .45), escolhe(brilhos)); }
+          const rg = (4 + 6 * Math.min(1, (tl - CT.ulta) / .3)) * k, gl2 = ctx.createRadialGradient(gx2, gy2, 0, gx2, gy2, rg);
+          gl2.addColorStop(0, 'rgba(255,255,255,.95)'); gl2.addColorStop(.5, 'rgba(200,255,168,.6)'); gl2.addColorStop(1, 'rgba(140,232,90,0)');
+          ctx.fillStyle = gl2; ctx.beginPath(); ctx.arc(gx2, gy2, rg, 0, 7); ctx.fill();
+        }
+      }
+    }
+    // as flechas de gelo voando
+    for (const fl of resgate.flechas) {
+      const u = Math.max(0, Math.min(1, (t - fl.t0) / fl.dur));
+      const x1 = ax2 + 26 * k, y1 = ay2 - 44 * k, x2 = jx2 - 6 * k, y2 = jy2 - 38 * k;
+      const fx = x1 + (x2 - x1) * u, fy = y1 + (y2 - y1) * u;
+      const L2 = 16 * k, n2 = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / n2, uy = (y2 - y1) / n2;
+      const g3 = ctx.createLinearGradient(fx - ux * L2, fy - uy * L2, fx, fy);
+      g3.addColorStop(0, 'rgba(154,212,240,0)'); g3.addColorStop(1, '#eaf6ff');
+      ctx.strokeStyle = g3; ctx.lineWidth = 2.2 * k; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(fx - ux * L2, fy - uy * L2); ctx.lineTo(fx, fy); ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.moveTo(fx + ux * 4.4 * k, fy + uy * 4.4 * k); ctx.lineTo(fx - uy * 2 * k, fy + ux * 2 * k); ctx.lineTo(fx + uy * 2 * k, fy - ux * 2 * k); ctx.closePath(); ctx.fill();
+    }
+  }
+
+  // ================================================================
+  //  partículas (canvas): faíscas, gotas, peixes/borboletas, bolhas soltas e o estouro
   // ================================================================
   const parts = [], MAXP = 420;
   function faisca(x, y, tam, vida, cor) { if (parts.length < MAXP) parts.push({ tipo: 'faisca', x, y, vx: rnd(-10, 10) * k, vy: rnd(-14, 6) * k, tam, vida, idade: 0, rot: rnd(0, 1.5), cor }); }
@@ -1587,7 +2147,7 @@ const CONFIG = {
           ctx.strokeStyle = '#f3cd7d'; ctx.lineWidth = 2 * s * e + .4;
           ctx.beginPath(); ctx.arc(p.x, p.y, (6 + 60 * u) * s, 0, 7); ctx.stroke();
         } else {
-          ctx.globalAlpha = e; ctx.strokeStyle = NAUT ? '#b8fff0' : '#d9fffa'; ctx.lineWidth = 3 * s * e + .5;
+          ctx.globalAlpha = e; ctx.strokeStyle = NAUT ? '#b8fff0' : LULU ? '#e3d1fa' : '#d9fffa'; ctx.lineWidth = 3 * s * e + .5;
           ctx.beginPath(); ctx.arc(p.x, p.y, (12 + 80 * u) * s, 0, 7); ctx.stroke();
         }
         ctx.strokeStyle = '#fff'; ctx.lineWidth = 2 * s * e + .3; ctx.lineCap = 'round';
@@ -1752,7 +2312,7 @@ const CONFIG = {
     try {
     const t = ms / 1000, dt = Math.min(.05, Math.max(0, t - last));
     last = t;
-    if (EVENTO > 0 && t >= proxEvento && !bon && !ancora && !ondaAgua) { evento(t); proxEvento = t + EVENTO; }
+    if (EVENTO > 0 && t >= proxEvento && !bon && !ancora && !ondaAgua && !resgate) proxEvento = t + (evento(t) ? EVENTO : .5);
     if (FALAS.length && t >= proxFala) {               // balãozinho do mascote (fora do evento, que já tem a fala dele)
       const livre = t > evAte + .5;
       if (livre) fala();
@@ -1780,6 +2340,7 @@ const CONFIG = {
     for (const p of bolhas) moverBolha(p, dt);
     if (bon) atualizaBoneco(t);
     if (ancora) atualizaAncora(t);
+    if (resgate) atualizaResgate(t);
 
     ctx.setTransform(K, 0, 0, K, -RX * K, -RY * K);
     ctx.clearRect(RX, RY, RW, RH);
@@ -1788,6 +2349,7 @@ const CONFIG = {
     desenhaBoneco(t);
     desenhaAncoraVoo(t);
     desenhaOnda(t, dt);
+    desenhaResgate(t);
     } catch (e) { console.error('moldura:', e); }   // um tropeço num frame não derruba a animação
     agenda();
   }
@@ -1806,7 +2368,7 @@ const CONFIG = {
     last = t; proxEvento = t + (CONGELA ? .6 : 3); proxFaisca = t + 1; proxFala = t + 7; proxPeixe = t + rnd(4, 9);
     addEventListener('pointerdown', () => {            // clique (ou "Interagir" no OBS) = âncora / onda agora
       const now = performance.now() / 1000;
-      if (now - evT0 > 1.2 && !bon && !ancora && !ondaAgua) { evento(now); if (EVENTO > 0) proxEvento = now + EVENTO; }
+      if (now - evT0 > 1.2 && !bon && !ancora && !ondaAgua && !resgate) { if (evento(now) && EVENTO > 0) proxEvento = now + EVENTO; }
     });
     agenda();
   }
