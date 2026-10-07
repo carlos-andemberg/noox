@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nooxblad3 · Moldura da Câmera</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --agua:#39d7c0; --agua2:#1d9c82; --claro:#d9fff7; --bronze:#e0a84f; --laranja:#ffb347; --cont:#06222e; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 16px;
+         font-family:'Nunito','Segoe UI',Arial,sans-serif; color:#eafff9;
+         background:
+           radial-gradient(2px 2px at 12% 84%, #b8fff088 50%, transparent 51%), radial-gradient(1.5px 1.5px at 82% 91%, #b8fff077 50%, transparent 51%),
+           radial-gradient(1.5px 1.5px at 36% 66%, #fff6 50%, transparent 51%), radial-gradient(1px 1px at 91% 56%, #fff6 50%, transparent 51%),
+           radial-gradient(1px 1px at 6% 38%, #fff5 50%, transparent 51%), radial-gradient(2px 2px at 64% 78%, #b8fff066 50%, transparent 51%),
+           radial-gradient(ellipse at 50% -10%, rgba(120,230,210,.22), transparent 55%),
+           radial-gradient(ellipse at 50% 30%, #0e3c4c 0%, #082534 50%, #04141f 100%);
+         background-attachment:fixed; }
+  main { width:100%; max-width:760px; }
+  h1 { font-family:'Lilita One', sans-serif; font-weight:400; font-size:clamp(46px, 12vw, 84px); line-height:1.05; margin:0; text-align:center;
+       color:var(--agua); background:linear-gradient(#fff, #c9fff2 45%, var(--agua)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+       filter:drop-shadow(2px 0 0 var(--cont)) drop-shadow(-2px 0 0 var(--cont)) drop-shadow(0 2px 0 var(--cont)) drop-shadow(0 -2px 0 var(--cont)) drop-shadow(0 5px 0 #0c5c4e); }
+  p.sub { text-align:center; margin:14px 0 30px; color:rgba(234,255,249,.62); font-weight:600; }
+  .card { padding:24px; border-radius:20px; background:rgba(5,26,36,.88);
+          border:2px solid var(--agua); box-shadow:0 0 0 3px var(--cont), 0 0 0 5px rgba(224,168,79,.35), 0 14px 40px rgba(0,0,0,.45); margin-bottom:20px; }
+  .card h2 { margin:0 0 6px; font-family:'Lilita One', sans-serif; font-weight:400; font-size:30px; color:var(--agua); }
+  .card p { margin:0 0 18px; color:rgba(234,255,249,.76); line-height:1.5; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px; margin-bottom:20px; }
+  .field { display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .field > span { font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(234,255,249,.52); font-weight:700; }
+  .field.wide { grid-column:span 2; }
+  .field.full { grid-column:1 / -1; }
+  .pair { display:flex; align-items:center; gap:6px; }
+  .pair i { font-style:normal; color:rgba(234,255,249,.4); }
+  input, select { font:inherit; font-size:16px; color:#eafff9; background:rgba(0,0,0,.35); border:2px solid rgba(57,215,192,.35);
+                  border-radius:10px; padding:7px 10px; width:100%; min-width:0; }
+  input:focus, select:focus { outline:none; border-color:var(--bronze); }
+  input:disabled { opacity:.4; }
+  select option { background:#082534; }
+  input[type=range] { padding:0; border:0; background:none; accent-color:var(--agua); height:38px; }
+  .checks { display:flex; flex-wrap:wrap; gap:10px; }
+  .check { display:flex; align-items:center; gap:8px; padding:7px 12px; border-radius:10px; cursor:pointer;
+           background:rgba(0,0,0,.25); border:2px solid rgba(57,215,192,.3); }
+  .check:has(input:checked) { border-color:var(--agua); background:rgba(57,215,192,.12); }
+  .check input { width:18px; height:18px; margin:0; accent-color:var(--agua); }
+  .check span { font-size:16px; color:#eafff9; font-weight:700; }
+  .field > span output { color:var(--agua); text-transform:none; letter-spacing:0; }
+  @media (max-width:520px) { .field.wide { grid-column:auto; } }
+  .label { font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(234,255,249,.52); font-weight:700; margin-bottom:8px; }
+  .url { display:flex; gap:8px; align-items:stretch; margin-bottom:14px; }
+  .url code { flex:1; min-width:0; overflow-x:auto; white-space:nowrap; font-size:14px; padding:10px 12px; border-radius:10px;
+              background:rgba(0,0,0,.4); border:2px solid rgba(57,215,192,.25); color:var(--claro); }
+  button.act, a.act { font:inherit; font-weight:800; font-size:16px; border:2px solid var(--cont); border-radius:12px; padding:8px 18px; cursor:pointer;
+                      color:var(--cont); background:linear-gradient(#fff, #a8f0e0 50%, var(--agua)); text-decoration:none;
+                      display:inline-flex; align-items:center; white-space:nowrap; box-shadow:0 3px 0 var(--cont); }
+  button.act:active, a.act:active { transform:translateY(2px); box-shadow:0 1px 0 var(--cont); }
+  a.act.ghost { background:transparent; color:#eafff9; border-color:rgba(57,215,192,.6); box-shadow:none; }
+  .links { display:flex; gap:8px; flex-wrap:wrap; }
+  .tips { color:rgba(234,255,249,.66); font-size:15px; line-height:1.7; margin:0; }
+  .tips b { color:var(--agua); font-weight:700; }
+  .live { position:relative; width:100%; aspect-ratio:16 / 9; border-radius:12px; overflow:hidden; background:#000; margin-bottom:12px; }
+  .live:empty { display:none; }
+  .live iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .live iframe.moldura { pointer-events:none; }
+  .escolhas { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+  @media (max-width:520px) { .escolhas { grid-template-columns:1fr; } }
+  .escolha { font:inherit; text-align:left; padding:12px 14px; border-radius:14px; cursor:pointer; color:#eafff9;
+             background:rgba(0,0,0,.25); border:2px solid rgba(57,215,192,.3); }
+  .escolha b { display:block; font-size:17px; font-weight:800; }
+  .escolha span { font-size:14px; color:rgba(234,255,249,.64); }
+  .escolha[aria-pressed="true"] { border-color:var(--agua); background:rgba(57,215,192,.14); }
+  .escolha[aria-pressed="true"] b { color:var(--agua); }
+  .escolha.naut[aria-pressed="true"] { border-color:var(--laranja); background:rgba(255,179,71,.12); }
+  .escolha.naut[aria-pressed="true"] b { color:var(--laranja); }
+  .info { margin:0 0 18px; padding:12px 14px; border-radius:12px; background:rgba(57,215,192,.1); border:2px dashed rgba(224,168,79,.4);
+          color:rgba(234,255,249,.86); line-height:1.6; }
+  .info b { color:var(--bronze); }
+  .info:empty, [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Nooxblad3</h1>
+  <p class="sub">moldura da câmera · fonte Navegador do OBS ⚓🌊</p>
+
+  <section class="card">
+    <h2 id="titulo">Moldura de Nautilus</h2>
+    <p id="descricao"></p>
+
+    <div class="label">O campeão</div>
+    <div class="escolhas">
+      <button class="escolha naut" data-campeao="nautilus" aria-pressed="true"><b>⚓ Nautilus</b><span>aço naval, corrente, escotilha com timão, caranguejo e a âncora</span></button>
+      <button class="escolha" data-campeao="nami" aria-pressed="false"><b>🌊 Nami</b><span>água viva, pérolas, conchas, koizinho e o vagalhão</span></button>
+    </div>
+
+    <div class="label">O modelo</div>
+    <div class="escolhas">
+      <button class="escolha" data-modelo="lol" aria-pressed="true"><b>🎮 Tela do LoL</b><span>câmera embaixo, entre o painel de itens e o minimapa</span></button>
+      <button class="escolha" data-modelo="solta" aria-pressed="false"><b>🎥 Só a câmera</b><span>borda em volta toda, agrupa com a webcam e arrasta junto</span></button>
+    </div>
+    <p class="info" id="info"></p>
+
+    <div class="fields">
+      <label class="field"><span>Nome</span><input type="text" id="nome" value="Nooxblad3" maxlength="24"></label>
+      <label class="field" id="campoTela"><span>Tela do OBS</span>
+        <select id="resolucao">
+          <option value="1920x1080">1920 × 1080</option>
+          <option value="1280x720">1280 × 720</option>
+        </select>
+      </label>
+      <div class="field wide" id="campoPos"><span>Posição da câmera (x, y)</span>
+        <div class="pair">
+          <input type="number" id="x" min="0" max="3840" aria-label="Posição x">
+          <i>,</i>
+          <input type="number" id="y" min="0" max="2160" aria-label="Posição y">
+        </div>
+      </div>
+      <div class="field wide"><span>Tamanho da câmera</span>
+        <div class="pair">
+          <input type="number" id="largura" min="60" max="3840" aria-label="Largura">
+          <i>×</i>
+          <input type="number" id="altura" min="34" max="2160" aria-label="Altura">
+        </div>
+      </div>
+      <div class="field full"><span>Enfeites</span>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="emblema" checked><span id="rotEmblema"></span></label>
+          <label class="check"><input type="checkbox" id="corrente" checked><span id="rotCorrente"></span></label>
+          <label class="check"><input type="checkbox" id="conchas" checked><span id="rotConchas"></span></label>
+          <label class="check"><input type="checkbox" id="mascote" checked><span id="rotMascote"></span></label>
+          <label class="check"><input type="checkbox" id="boneco" checked><span id="rotBoneco"></span></label>
+          <label class="check"><input type="checkbox" id="temBolhas" checked><span>💧 Bolhas</span></label>
+          <label class="check"><input type="checkbox" id="peixes" checked><span>🐠 Peixinhos</span></label>
+          <label class="check"><input type="checkbox" id="temFalas" checked><span>💬 Falas</span></label>
+        </div>
+      </div>
+      <label class="field"><span>Quantas bolhas</span><input type="number" id="bolhas" value="10" min="1" max="300"></label>
+      <label class="field"><span>Velocidade · <output id="velTxt"></output></span><input type="range" id="velocidade" value="1" min="0.2" max="2" step="0.1" title="1× é o padrão · 2× é rápido · 0,5× é bem devagar"></label>
+      <label class="field"><span id="rotEvento">Âncora a cada (s)</span><input type="number" id="evento" value="30" min="0" max="3600" step="1"></label>
+      <label class="field full"><span>Falas do mascote (separe com vírgula)</span><input type="text" id="falas"></label>
+    </div>
+
+    <div class="label">Link pro OBS</div>
+    <div class="url"><code id="url"></code><button class="act" id="copy">Copiar</button></div>
+    <div class="links">
+      <a class="act ghost" id="preview" target="_blank" rel="noopener">Prévia</a>
+      <a class="act ghost" id="zoom" target="_blank" rel="noopener">De pertinho</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Em cima da live</h2>
+    <p>A live do Nooxblad3 com a moldura da tela do LoL por cima, pra conferir o encaixe.</p>
+    <div class="live" id="live"></div>
+    <a class="act ghost" id="verLive" href="#">Mostrar a live</a>
+  </section>
+
+  <p class="tips">
+    <b>Tela do LoL no OBS:</b> Fontes → + → Navegador → cole o link. Largura e altura = tamanho da tela do OBS (1920 × 1080). Deixe a moldura acima da câmera.<br>
+    <b>Só a câmera no OBS:</b> Fontes → + → Navegador → cole o link, com o tamanho que aparece na caixinha. Encaixe a câmera no buraco da moldura, selecione as duas → botão direito → Agrupar itens selecionados. Daí é só arrastar e redimensionar o grupo.<br>
+    <b>Mudou a câmera de lugar?</b> Botão direito na câmera → Transformar → Editar transformação: copie a posição e o tamanho pros campos acima. O tamanho da tela fica em Configurações → Vídeo → Resolução base.<br>
+    <b>Enfeites:</b> desmarque o que não quiser. <b>Nome vazio</b> esconde a placa. <b>Evento 0</b> desliga a âncora / onda. Na prévia, clique pra soltar.
+  </p>
+</main>
+
+<script>
+  const $ = id => document.getElementById(id);
+  // a tela da live, medida da transmissão (a mesma tabela do CONFIG de moldura-camera.html), numa tela 1920 x 1080
+  const TELAS = { lol: { x: 1270, y: 863, largura: 365, altura: 217 } };
+  const SOLTA = { largura: 365, altura: 217 };
+  const FALAS = {
+    nautilus: ['Soltem as âncoras!', 'Ninguém escapa das profundezas', 'O mar guarda os seus segredos', 'Peso morto no convés!',
+               'As profundezas chamam...', 'Afundem com o navio!', 'Glub glub...', 'Cuidado onde pisa, invocador'],
+    nami: ['A maré está subindo!', 'Eu decido o rumo da maré', 'Sinta o puxão da maré', 'A calmaria vem antes da onda',
+           'A água sempre acha o caminho', 'As marés obedecem a mim', 'Glub!', 'Vem nadar comigo!'],
+  };
+  const ROTULOS = {
+    nautilus: { titulo: 'Moldura de Nautilus', evento: 'Âncora a cada (s)',
+      descricao: 'Borda de aço naval com filete de bronze e elos de corrente por dentro. No canto, a escotilha verde-água brilha na frente do timão girando, e a placa de metal com o nome desce da borda. O caranguejinho mexe as garras perto das cracas, bolhas sobem, peixinhos cruzam a tela — e de tempos em tempos o Nautilus surge num redemoinho e arremessa a âncora, que estoura numa carga de profundidade.',
+      emblema: '🧭 Escotilha e timão', corrente: '⛓️ Corrente da âncora', conchas: '🐚 Cracas e algas', mascote: '🦀 Caranguejo', boneco: '🤿 Nautilus no evento' },
+    nami: { titulo: 'Moldura de Nami', evento: 'Onda a cada (s)',
+      descricao: 'Borda de água viva com filete dourado e cordão de pérolas por dentro. No canto, a pérola do Invocamarés brilha na frente do aro das marés girando, e o estandarte de onda com o nome desce da borda. O koizinho nada parado perto das conchas, bolhas sobem, kois cruzam a tela — e de tempos em tempos a Nami surge num redemoinho, ergue o cetro e solta a bolha d\'água que estoura num vagalhão, com kois pulando.',
+      emblema: '🔮 Pérola das marés', corrente: '📿 Cordão de pérolas', conchas: '🐚 Conchas e corais', mascote: '🐟 Koizinho', boneco: '🧜‍♀️ Nami no evento' },
+  };
+  const PADRAO = { nome: 'Nooxblad3', resolucao: '1920x1080', bolhas: 10, velocidade: 1, evento: 30 };
+  const campos = ['x', 'y', 'largura', 'altura'];
+  let resolucao = PADRAO.resolucao, modelo = 'lol', campeao = 'nautilus';
+
+  const escala = r => parseInt(r) / 1920;
+  const camPadrao = (m, r) => {
+    const c = m === 'solta' ? SOLTA : TELAS[m], e = m === 'solta' ? 1 : escala(r);
+    return Object.fromEntries(Object.entries(c).map(([kk, v]) => [kk, Math.round(v * e)]));
+  };
+  const n = id => { const v = parseFloat($(id).value); return Number.isFinite(v) ? v : null; };
+  const preenche = () => { const c = camPadrao(modelo, resolucao); for (const kk of campos) $(kk).value = c[kk] ?? ''; };
+  const lista = s => s.split(',').map(x => x.trim()).filter(Boolean).join(',');
+
+  // os rótulos, a descrição e as falas acompanham o campeão
+  function aplicaTema(antes) {
+    const R = ROTULOS[campeao];
+    $('titulo').textContent = R.titulo;
+    $('descricao').textContent = R.descricao;
+    $('rotEvento').textContent = R.evento;
+    for (const id of ['emblema', 'corrente', 'conchas', 'mascote', 'boneco']) $('rot' + id[0].toUpperCase() + id.slice(1)).textContent = R[id];
+    if (!antes || lista($('falas').value) === lista(FALAS[antes].join(', '))) $('falas').value = FALAS[campeao].join(', ');
+  }
+
+  // trocou a resolução: campos que ainda estão no padrão acompanham
+  $('resolucao').onchange = () => {
+    const antes = camPadrao(modelo, resolucao), depois = camPadrao(modelo, $('resolucao').value);
+    for (const c of campos) if (n(c) === antes[c]) $(c).value = depois[c];
+    resolucao = $('resolucao').value;
+    build();
+  };
+
+  // trocou de campeão ou de modelo
+  for (const b of document.querySelectorAll('.escolha[data-campeao]')) b.onclick = () => {
+    const antes = campeao;
+    campeao = b.dataset.campeao;
+    for (const o of document.querySelectorAll('.escolha[data-campeao]')) o.setAttribute('aria-pressed', o === b);
+    aplicaTema(antes);
+    build();
+  };
+  for (const b of document.querySelectorAll('.escolha[data-modelo]')) b.onclick = () => {
+    modelo = b.dataset.modelo;
+    for (const o of document.querySelectorAll('.escolha[data-modelo]')) o.setAttribute('aria-pressed', o === b);
+    preenche();
+    build();
+  };
+
+  // modelo solto: a fonte é a câmera + margem pros enfeites (a mesma conta de moldura-camera.html)
+  function fonteSolta(w, h) {
+    const k = Math.min(2.4, Math.max(.4, Math.sqrt(w * h / 92000))), esq = Math.round(110 * k), cima = Math.round(215 * k);
+    return { esq, cima, w: Math.round(esq + w + 110 * k), h: Math.round(cima + h + 70 * k) };
+  }
+
+  // o link leva o campeão, o modelo e o que for diferente do padrão
+  function params(m) {
+    const solta = m === 'solta', p = [solta ? 'solta' : 'tela=' + m], cam = camPadrao(m, resolucao);
+    if (campeao !== 'nautilus') p.push('campeao=' + campeao);
+    if (!solta && resolucao !== PADRAO.resolucao) p.push('resolucao=' + resolucao);
+    for (const c of solta ? ['largura', 'altura'] : campos) {
+      const v = n(c); if (v !== null && Math.abs(v - cam[c]) >= 1) p.push(c + '=' + Math.round(v));
+    }
+    const nome = $('nome').value.trim();
+    if (nome !== PADRAO.nome) p.push('nome=' + encodeURIComponent(nome));
+    for (const id of ['emblema', 'corrente', 'conchas', 'mascote', 'peixes']) if (!$(id).checked) p.push(id + '=0');
+    if (!$('boneco').checked) p.push(campeao + '=0');
+    if (!$('temBolhas').checked) p.push('bolhas=0');
+    else {
+      const bo = n('bolhas');
+      if (bo !== null && bo !== PADRAO.bolhas) p.push('bolhas=' + Math.max(0, Math.min(300, Math.round(bo))));
+      const vel = n('velocidade');
+      if (vel !== null && Math.abs(vel - PADRAO.velocidade) > .01) p.push('velocidade=' + vel);
+    }
+    const ev = n('evento');
+    if (ev !== null && ev !== PADRAO.evento) p.push('evento=' + Math.max(0, ev));
+    if (!$('temFalas').checked) p.push('falas=0');
+    else if (lista($('falas').value) !== lista(FALAS[campeao].join(', ')) && lista($('falas').value)) p.push('falas=' + encodeURIComponent(lista($('falas').value)));
+    return p;
+  }
+
+  function build() {
+    $('velTxt').textContent = String(n('velocidade')).replace('.', ',') + '×';
+    $('bolhas').disabled = $('velocidade').disabled = !$('temBolhas').checked;
+    $('falas').disabled = !$('temFalas').checked;
+    const link = p => { const u = new URL('moldura-camera.html', location.href); u.search = '?' + p.join('&'); return u.href; };
+    const solta = modelo === 'solta', p = params(modelo), url = link(p);
+    $('url').textContent = url;
+    $('preview').href = url;
+    $('zoom').href = url + '&zoom';
+    $('zoom').hidden = solta;
+    $('campoPos').hidden = solta;
+    $('campoTela').hidden = solta;
+    if (solta) {
+      const w = n('largura') || SOLTA.largura, h = n('altura') || SOLTA.altura, ft = fonteSolta(w, h);
+      $('info').innerHTML = 'No OBS: fonte Navegador com <b>' + ft.w + ' × ' + ft.h + '</b>. A câmera fica ' + ft.esq + ' px da esquerda e ' + ft.cima + ' px do topo da fonte. ' +
+        'Encaixe a webcam no buraco e agrupe as duas (botão direito → Agrupar itens selecionados) pra arrastar e redimensionar juntas.';
+    } else {
+      $('info').innerHTML = 'No OBS: fonte Navegador com <b>' + resolucao.replace('x', ' × ') + '</b> (a tela toda). A moldura cai sozinha em volta da câmera, em ' + (n('x') ?? '') + ', ' + (n('y') ?? '') + '.';
+    }
+    const m = document.querySelector('#live .moldura');           // na live vai a moldura de tela inteira (no solto, a do LoL)
+    if (m) {
+      let pt = params(solta ? 'lol' : modelo);
+      if (solta) pt = pt.filter(x => !/^(x|y|largura|altura)=/.test(x));
+      m.src = link(pt) + '&semfundo';
+    }
+  }
+  for (const id of ['nome', 'x', 'y', 'largura', 'altura', 'emblema', 'corrente', 'conchas', 'mascote', 'boneco', 'temBolhas', 'peixes', 'temFalas', 'bolhas', 'velocidade', 'evento', 'falas']) {
+    $(id).addEventListener('input', build); $(id).addEventListener('change', build);
+  }
+
+  // a live só carrega quando pedir (o player da Twitch é pesado)
+  $('verLive').onclick = e => {
+    e.preventDefault();
+    const box = $('live');
+    if (box.firstChild) { box.innerHTML = ''; e.target.textContent = 'Mostrar a live'; return; }
+    const player = document.createElement('iframe');
+    player.allow = 'autoplay; fullscreen';
+    player.src = 'https://player.twitch.tv/?channel=nooxblad3&muted=true&autoplay=true&parent=' + encodeURIComponent(location.hostname);
+    const moldura = document.createElement('iframe');
+    moldura.className = 'moldura';
+    box.append(player, moldura);
+    e.target.textContent = 'Esconder a live';
+    build();
+  };
+
+  $('copy').onclick = async e => {
+    try { await navigator.clipboard.writeText($('url').textContent); e.target.textContent = 'Copiado!'; }
+    catch { e.target.textContent = 'Selecione e copie'; }
+    setTimeout(() => e.target.textContent = 'Copiar', 1500);
+  };
+  aplicaTema(null);
+  preenche();
+  build();
+</script>
+</body>
+</html>
